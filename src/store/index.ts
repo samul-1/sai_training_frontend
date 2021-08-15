@@ -33,7 +33,11 @@ export default createStore({
       state.token = token;
       localStorage.setItem("token", token)
       axios.defaults.headers.common['Authorization'] = 'Bearer ' + token
-      console.log(axios.defaults.headers.common)
+    },
+    resetToken: (state) => {
+      state.token = "";
+      localStorage.removeItem("token")
+      axios.defaults.headers.common['Authorization'] = ''
     },
     setRefreshToken: (state, token) => {
       state.refreshToken = token;

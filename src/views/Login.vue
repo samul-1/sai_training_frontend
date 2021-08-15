@@ -130,6 +130,9 @@ export default {
       handleClickLogin,
       isSignIn
     }
+  },
+  created () {
+    this.$store.commit('resetToken')
   }
 }
 </script>

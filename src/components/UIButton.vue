@@ -5,8 +5,9 @@
     :class="{
       'py px-2 text-sm rounded-md': size == 'xs',
       'py-1.5 px-4 rounded-md': size == 'sm',
-      'py-2 px-6 rounded-lg': size == 'md',
+      'py-1.5 px-6 rounded-lg': size == 'md',
       'py-3 px-16 text-xl rounded-xl': size == 'lg',
+      'py-6 px-28 text-2xl rounded-xl': size == 'xl',
       'bg-green-600 hover:bg-green-700 active:bg-green-800 text-white':
         variant == 'green',
       'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white':
