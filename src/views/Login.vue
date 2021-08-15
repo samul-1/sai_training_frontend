@@ -1,11 +1,44 @@
 <template>
   <div>
-    <!-- <h1>IsInit: {{ Vue3GoogleOauth.isInit }}</h1>
-    <h1>IsAuthorized: {{ Vue3GoogleOauth.isAuthorized }}</h1>
-    <h2 v-if="user">signed user: {{ user }}</h2> -->
-    <UIButton @click="handleClickSignIn">
-      <i class="fas mr-1 fa-lock"></i> Entra
-    </UIButton>
+    <h1 class="mx-auto mb-10 text-4xl text-center">
+      Esercitazioni Unipi
+    </h1>
+    <div
+      class="w-full px-12 py-16 mx-2 my-auto text-center border rounded-lg shadow-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
+    >
+      <p class="mb-3">
+        Effettua l'accesso con il tuo indirizzo email
+        <strong>@studenti.unipi.it</strong>.
+      </p>
+      <p class="mb-3">
+        <i class="mr-1 text-sm text-red-700 fas fa-exclamation-circle"></i>
+        <span class="font-semibold text-red-700">Attenzione:</span> i cookie
+        devono essere abilitati per effettuare il login, e non si deve essere in
+        modalità incognito.
+      </p>
+      <div class="mb-4">
+        <span class="mr-3 font-medium">Browser supportati:</span>
+        <img
+          class="inline-block w-5 h-5 my-auto mr-2 drop-shadow"
+          src="../assets/chrome.png"
+        />
+        <img
+          class="inline-block w-5 h-5 my-auto drop-shadow"
+          src="../assets/firefox.png"
+        />
+      </div>
+      <div class="text-center">
+        <UIButton
+          @click="handleClickSignIn"
+          :variant="'green'"
+          :disabled="false"
+          :size="'lg'"
+        >
+          <i class="mr-1 fas fa-lock"></i> Entra
+        </UIButton>
+      </div>
+    </div>
+
     <!-- <button @click="handleClickGetAuthCode" :disabled="!Vue3GoogleOauth.isInit">
       get authCode
     </button>

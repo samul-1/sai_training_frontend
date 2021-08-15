@@ -7,10 +7,10 @@
       crossorigin="anonymous"
     />
     <nav class="flex w-full px-6 py-2 text-white bg-gray-900">
-      <img class="w-32" src="./assets/unipi-logo.svg" />
+      <img class="w-28 md:w-32" src="./assets/unipi-logo.svg" />
       <div class="my-auto ml-auto">
         <template v-if="$store.getters.isAuthenticated">
-          <span
+          <span class="text-sm md:text-md"
             ><i class="mr-2 far fa-user"></i>{{ $store.state.user.email }}</span
           >
           <router-link v-if="$store.state.user.is_teacher" to="/dashboard"
@@ -23,33 +23,14 @@
     <main class="my-auto">
       <div
         v-if="$store.state.msg"
-        class="
-          py-12
-          mx-auto
-          text-white
-          bg-gray-900
-          rounded-lg
-          shadow-md
-          px-36
-          w-max
-        "
+        class="py-12 mx-auto text-white bg-gray-900 rounded-lg shadow-md px-36 w-max"
       >
         <h1 class="text-xl text-center" v-html="$store.state.msg"></h1>
       </div>
       <router-view v-else />
       <transition name="fade">
         <div
-          class="
-            fixed
-            px-20
-            py-4
-            transform
-            -translate-x-1/2
-            rounded-md
-            shadow-xl
-            left-1/2
-            top-20
-          "
+          class="fixed px-20 py-4 transform -translate-x-1/2 rounded-md shadow-xl left-1/2 top-20"
           :class="{
             'bg-green-400 text-green-900': $store.state.smallMsg.severity == 1,
             'bg-red-400 text-red-900': $store.state.smallMsg.severity == 2

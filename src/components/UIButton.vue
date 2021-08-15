@@ -1,5 +1,20 @@
 <template>
-  <button class="py-2 px-10 bg-green-500 text-white rounded-lg shadow-sm">
+  <button
+    class="shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
+    :disabled="disabled"
+    :class="{
+      'py px-2 text-sm rounded-md': size == 'xs',
+      'py-1.5 px-4 rounded-md': size == 'sm',
+      'py-2 px-6 rounded-lg': size == 'md',
+      'py-3 px-16 text-xl rounded-xl': size == 'lg',
+      'bg-green-600 hover:bg-green-700 active:bg-green-800 text-white':
+        variant == 'green',
+      'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white':
+        variant == 'indigo',
+      'bg-red-700 hover:bg-red-800 active:bg-red-900 text-white':
+        variant == 'red'
+    }"
+  >
     <slot></slot>
   </button>
 </template>
@@ -7,10 +22,12 @@
 <script>
 export default {
   name: 'UIButton',
-  methods: {
-    // eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
-    handleClick () {
-      console.log('clicked')
+  props: {
+    variant: String,
+    disabled: Boolean,
+    size: {
+      type: String,
+      default: 'md'
     }
   }
 }
