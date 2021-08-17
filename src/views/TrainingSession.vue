@@ -1,5 +1,4 @@
 <template>
-  <div>TrainingSession</div>
   <TrainingTemplateSelector
     v-if="showTemplateSelection"
     :courseId="$route.params.courseId"

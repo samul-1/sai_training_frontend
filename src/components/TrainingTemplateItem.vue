@@ -1,6 +1,6 @@
 <template>
-  <div class="p-6 border rounded-lg w-max">
-    <h1 class="mb-4 text-lg">{{ trainingTemplate.name }}</h1>
+  <div class="px-10 py-6 border rounded-lg w-max">
+    <h1 class="mb-4 text-xl">{{ trainingTemplate.name }}</h1>
     <TrainingTemplateRule
       v-for="(rule, index) in trainingTemplate.rules"
       :key="'template-' + trainingTemplate.id + '-rule-' + index"

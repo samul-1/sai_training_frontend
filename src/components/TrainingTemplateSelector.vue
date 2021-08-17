@@ -1,19 +1,23 @@
 <template>
-  <div class="relative h-full p-12 mx-6 border shadow-xl rounded-xl">
-    <p class="mb-4 ">Scelgi un modello per l'esercitazione o creane uno.</p>
-    <TrainingTemplateItem
-      v-for="template in templates"
-      :key="'template-' + template.id"
-      :trainingTemplate="template"
-      :class="{
-        'ring-green-600 ring-inset ring ring-opacity-60 bg-gray-50':
-          template.id == selected
-      }"
-      @click="selected = template.id"
-    >
-    </TrainingTemplateItem>
+  <div class="relative h-full p-12 pb-20 mx-6 border shadow-xl rounded-xl">
+    <h1 class="mb-4 text-3xl">Nuova esercitazione</h1>
+    <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
+    <div class="flex flex-col space-y-6 md:space-y-0 md:space-x-6 md:flex-row">
+      <TrainingTemplateItem
+        v-for="template in templates"
+        :key="'template-' + template.id"
+        :trainingTemplate="template"
+        class="transition-all duration-75 cursor-pointer"
+        :class="{
+          'ring-green-600 ring-inset ring ring-opacity-60 bg-green-50':
+            template.id == selected
+        }"
+        @click="selected = template.id"
+      >
+      </TrainingTemplateItem>
+    </div>
     <UIButton
-      class="absolute right-0 mr-12"
+      class="absolute bottom-0 right-0 mb-8 mr-12"
       :variant="'green'"
       :disabled="!selected"
       @click="$emit('setTemplate', selected)"
