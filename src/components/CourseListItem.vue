@@ -25,15 +25,17 @@
       </div>
     </div>
     <div class="my-auto ml-auto text-center">
-      <UIButton :variant="course.enrolled ? 'indigo' : 'green'">
-        <i
-          :class="{
-            'fas fa-plus-circle mr-1': !course.enrolled,
-            'fas fa-arrow-right mr-1': course.enrolled
-          }"
-        ></i>
-        {{ course.enrolled ? 'Vai al corso' : 'Iscriviti' }}
-      </UIButton>
+      <router-link :to="'/course/' + course.id">
+        <UIButton :variant="course.enrolled ? 'indigo' : 'green'">
+          <i
+            :class="{
+              'fas fa-plus-circle mr-1': !course.enrolled,
+              'fas fa-arrow-right mr-1': course.enrolled
+            }"
+          ></i>
+          {{ course.enrolled ? 'Vai al corso' : 'Iscriviti' }}
+        </UIButton></router-link
+      >
     </div>
   </div>
 </template>

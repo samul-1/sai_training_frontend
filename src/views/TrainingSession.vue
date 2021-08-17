@@ -1,14 +1,24 @@
 <template>
   <div>TrainingSession</div>
+  <TrainingTemplateSelector
+    v-if="showTemplateSelection"
+    :courseId="$route.params.courseId"
+    @setTemplate="templateId = $event"
+  ></TrainingTemplateSelector>
+  <p v-for="question in session.questions" :key="question.id">
+    {{ question.text }}
+  </p>
 </template>
 
 <script lang="ts">
 import { TrainingSession } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import { getCurrentTrainingSession } from '@/api/trainingSessions'
+import TrainingTemplateSelector from '@/components/TrainingTemplateSelector.vue'
 
 export default defineComponent({
   name: 'TrainingSession',
+  components: { TrainingTemplateSelector },
   data () {
     return {
       session: {} as TrainingSession,
@@ -18,6 +28,14 @@ export default defineComponent({
   },
   async created () {
     await this.getOrCreateSession()
+  },
+  watch: {
+    async templateId (newVal) {
+      if (newVal) {
+        this.showTemplateSelection = false
+        await this.getOrCreateSession()
+      }
+    }
   },
   methods: {
     async getOrCreateSession () {
