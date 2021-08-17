@@ -10,7 +10,7 @@
       'py-6 px-28 text-2xl rounded-xl': size == 'xl',
       'bg-green-600 hover:bg-green-700 active:bg-green-800 text-white':
         variant == 'green',
-      'bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white':
+      'bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-900 text-white':
         variant == 'indigo',
       'bg-red-700 hover:bg-red-800 active:bg-red-900 text-white':
         variant == 'red'
@@ -24,8 +24,14 @@
 export default {
   name: 'UIButton',
   props: {
-    variant: String,
-    disabled: Boolean,
+    variant: {
+      type: String,
+      default: 'indigo'
+    },
+    disabled: {
+      type: Boolean,
+      default: false
+    },
     size: {
       type: String,
       default: 'md'

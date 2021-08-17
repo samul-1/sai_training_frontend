@@ -5,6 +5,8 @@ import Home from "../views/Home.vue";
 import Login from '../views/Login.vue'
 import Courses from '../views/Courses.vue'
 import StudentDashboard from '../views/StudentDashboard.vue'
+import StudentCourseDashboard from '../views/StudentCourseDashboard.vue'
+import TrainingSession from "../views/TrainingSession.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,6 +29,17 @@ const routes: Array<RouteRecordRaw> = [
     name: "Courses",
     component: Courses,
   },
+  {
+    path: "/course/:courseId",
+    name: "StudentCourseDashboard",
+    component: StudentCourseDashboard,
+
+  },
+  {
+    path: "/course/:courseId/train",
+    name: "TrainingSession",
+    component: TrainingSession
+  }
 ];
 
 const router = createRouter({

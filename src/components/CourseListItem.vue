@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 mx-3 my-2 border rounded-lg md:flex hover:shadow-inner">
+  <div class="p-4 mx-6 my-4 border rounded-2xl md:flex hover:shadow-inner">
     <div>
       <p class="text-xl font-medium">
         {{ course.name }}
@@ -7,9 +7,11 @@
           <i class="fas fa-certificate"></i> Iscritto</span
         >
       </p>
-      <p v-if="course.description.length" class="mt-2">
-        {{ course.description }}
-      </p>
+      <p
+        v-if="course.description.length"
+        v-html="course.description"
+        class="mt-2"
+      ></p>
       <div class="mt-4 text-sm font-light">
         <p>
           <i class="mr-1 text-xs text-indigo-900 fas fa-user-shield"></i
