@@ -6,7 +6,7 @@
       {{ humanizedTimstamp }}
     </p>
     <div class="flex flex-col mt-6 md:space-x-4 md:flex-row">
-      <span>Corrette: {{ session.score }}</span>
+      <span class="mb-2 md:mb-0">Corrette: {{ session.score }}</span>
       <progress-bar
         class="my-auto"
         :value="session.score"

@@ -13,16 +13,27 @@
       ></router-link
     >
   </div>
+  <modal
+    v-if="!course.enrolled"
+    @yes="enroll()"
+    @no="$router.push('/courses')"
+    :title="'Nuova iscrizione'"
+  >
+    Vuoi iscriverti al corso <span class="font-medium">{{ course.name }}</span
+    >?
+  </modal>
 </template>
 
 <script lang="ts">
 import { getCourse } from '@/api/courses'
+import Modal from '@/components/Modal.vue'
 import UIButton from '@/components/UIButton.vue'
 import { Course } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
+import { enroll } from '@/api/courses'
 
 export default defineComponent({
-  components: { UIButton },
+  components: { UIButton, Modal },
   name: 'StudentCourseDashboard',
   async created () {
     const courseId = this.$route.params.courseId as string
@@ -31,6 +42,17 @@ export default defineComponent({
   data () {
     return {
       course: {} as Course
+    }
+  },
+  methods: {
+    async enroll (): Promise<void> {
+      const courseId = this.$route.params.courseId as string
+      this.course = await enroll(courseId)
+      this.$store.commit('pushNotification', {
+        message: 'Iscrizione avvenuta con successo',
+        autoHide: 2500,
+        severity: 1
+      })
     }
   }
 })

@@ -1,6 +1,6 @@
 <template>
   <button
-    class="shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
+    class="transition-colors duration-100 shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
     :disabled="disabled"
     :class="{
       'py-1 px-2 text-sm rounded-lg': size == 'xs',
@@ -14,6 +14,8 @@
         variant == 'indigo',
       'bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white':
         variant == 'dark',
+      'bg-gray-100 border border-gray-200 hover:bg-gray-200 hover:shadow-inner active:bg-gray-300 text-black':
+        variant == 'light',
       'bg-red-700 hover:bg-red-800 active:bg-red-900 text-white':
         variant == 'red'
     }"

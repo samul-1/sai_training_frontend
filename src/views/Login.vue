@@ -62,7 +62,7 @@
 import UIButton from '@/components/UIButton.vue'
 import { inject, toRefs } from 'vue'
 export default {
-  name: 'Lofin',
+  name: 'Login',
   components: {
     UIButton
   },

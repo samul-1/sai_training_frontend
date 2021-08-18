@@ -20,6 +20,13 @@
       </div>
     </nav>
 
+    <transition name="fade">
+      <Notification
+        :notification="$store.state.notification"
+        v-if="$store.state.notification.message"
+      ></Notification
+    ></transition>
+
     <main class="my-auto">
       <div
         v-if="$store.state.msg"
@@ -30,17 +37,6 @@
       <div class="mx-5 my-6 md:mx-10" v-else>
         <router-view />
       </div>
-      <transition name="fade">
-        <div
-          class="fixed px-20 py-4 transform -translate-x-1/2 rounded-md shadow-xl left-1/2 top-20"
-          :class="{
-            'bg-green-400 text-green-900': $store.state.smallMsg.severity == 1,
-            'bg-red-400 text-red-900': $store.state.smallMsg.severity == 2
-          }"
-          v-if="$store.state.smallMsg"
-          v-html="$store.state.smallMsg.msg"
-        ></div>
-      </transition>
     </main>
     <footer class="flex w-full px-6 py-3 text-sm text-white bg-gray-900">
       <p>
@@ -62,15 +58,46 @@
     </footer>
   </div>
 </template>
-<script>
-import axios from 'axios'
-export default {
+<script lang="ts">
+import Notification from '@/components/Notification.vue'
+import { defineComponent } from '@vue/runtime-core'
+export default defineComponent({
   name: 'App',
-  beforeCreate () {
+  beforeCreate (): void {
     this.$store.commit('initStore')
   },
-  data () {
-    return {}
+  components: { Notification }
+})
+</script>
+
+<style>
+.bounce-enter-active {
+  animation: bounce-in 0.3s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.3s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  50% {
+    transform: scale(1.03);
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
   }
 }
-</script>
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.1s ease;
+}
+
+.fade-enter-from,
+.fade-leave-to {
+  opacity: 0;
+}
+</style>

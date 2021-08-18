@@ -1,5 +1,7 @@
 <template>
-  <div class="w-32 h-4 rounded-lg bg-gradient-to-tl from-gray-100 to-gray-200">
+  <div
+    class="w-full h-4 rounded-lg md:w-32 lg:w-44 bg-gradient-to-tl from-gray-100 to-gray-200"
+  >
     <div
       class="h-4 rounded-lg"
       :class="{
