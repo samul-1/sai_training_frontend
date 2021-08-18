@@ -32,11 +32,11 @@ export default defineComponent({
         case 'easy_only':
           return 'solo facili'
         case 'mostly_easy':
-          return 'prevalent. facili'
+          return 'prevalentemente facili'
         case 'balanced':
-          return 'diff. bilanciata'
+          return 'difficoltà bilanciata'
         case 'mostly_hard':
-          return 'prevalent. difficili'
+          return 'prevalentemente difficili'
         case 'hard_only':
           return 'solo difficili'
       }

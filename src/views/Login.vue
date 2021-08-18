@@ -27,7 +27,7 @@
           src="../assets/firefox.png"
         />
       </div>
-      <div class="text-center">
+      <div class="mt-6 text-center">
         <UIButton
           @click="handleClickSignIn"
           :variant="'green'"

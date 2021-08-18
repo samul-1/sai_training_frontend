@@ -1,5 +1,5 @@
 <template>
-  <div class="px-10 py-6 border rounded-lg w-max">
+  <div class="px-10 py-6 border rounded-lg">
     <h1 class="mb-4 text-xl">{{ trainingTemplate.name }}</h1>
     <TrainingTemplateRule
       v-for="(rule, index) in trainingTemplate.rules"
