@@ -1,4 +1,7 @@
-import { TrainingSession } from '@/interfaces';
+import {
+  TrainingSession,
+  TrainingSessionResults,
+} from '@/interfaces';
 import axios from 'axios';
 export function getCurrentTrainingSession(
   courseId: string,
@@ -18,10 +21,23 @@ export function getCurrentTrainingSession(
   });
 }
 
+export function getTrainingSessions(
+  courseId: string
+): Promise<TrainingSessionResults[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`/courses/${courseId}/sessions/`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function turnInTrainingSession(
   courseId: string,
   answers: Record<string, string | null>
-): Promise<unknown> {
+): Promise<TrainingSessionResults> {
   return new Promise((resolve, reject) => {
     axios
       .post(`/courses/${courseId}/sessions/turn_in/`, { answers })
@@ -35,7 +51,7 @@ export function turnInTrainingSession(
 export function getTrainingSessionResults(
   courseId: string,
   sessionId: string
-): Promise<unknown> {
+): Promise<TrainingSessionResults> {
   return new Promise((resolve, reject) => {
     axios
       .get(`/courses/${courseId}/sessions/${sessionId}/`)

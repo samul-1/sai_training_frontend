@@ -12,6 +12,7 @@ import StudentDashboard from '../views/StudentDashboard.vue';
 import StudentCourseDashboard from '../views/StudentCourseDashboard.vue';
 import TrainingSession from '../views/TrainingSession.vue';
 import TrainingSessionResults from '../components/TrainingSessionResults.vue';
+import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -43,6 +44,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course/:courseId/train',
     name: 'TrainingSession',
     component: TrainingSession,
+  },
+  {
+    path: '/course/:courseId/sessions',
+    name: 'TrainingSessionHistory',
+    component: TrainingSessionsHistory,
   },
   {
     path: '/course/:courseId/sessions/:sessionId',

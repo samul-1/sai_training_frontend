@@ -1,6 +1,6 @@
 <template>
   <!--<div class="relative h-full p-12 pb-20 mx-6 border shadow-xl rounded-xl">-->
-  <div class="px-8 my-6">
+  <div class="my-6">
     <h1 class="mb-4 text-3xl">Nuova esercitazione</h1>
     <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
     <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
@@ -17,7 +17,7 @@
       >
       </TrainingTemplateItem>
       <div
-        class="px-10 py-6 text-gray-400 border rounded-lg cursor-pointer h-44 bg-gray-50"
+        class="px-10 py-6 text-gray-400 border cursor-pointer rounded-xl h-44 bg-gradient-to-b from-gray-50 to-gray-100"
       >
         <h1 class="mb-4 text-xl">Nuovo modello personalizzato</h1>
         <div class="flex text-6xl">
@@ -31,7 +31,7 @@
       :variant="'green'"
       :disabled="!selected"
       @click="$emit('setTemplate', selected)"
-      ><i class="mr-1 fas fa-check"></i>Conferma</UIButton
+      ><!--<i class="mr-1 fas fa-check"></i>-->Conferma</UIButton
     >
   </div>
   <!--</div>-->

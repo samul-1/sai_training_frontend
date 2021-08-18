@@ -2,15 +2,15 @@
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
   <p v-if="course.description.length" v-html="course.description"></p>
   <div class="flex flex-col mx-auto space-y-6 w-max">
-    <router-link
-      :to="{ path: `/course/${$route.params.courseId}/train/` }"
-      append
+    <router-link :to="`/course/${$route.params.courseId}/train/`"
       ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
         >Inizia esercitazione</UIButton
       ></router-link
     >
-    <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-      >Cronologia eserciazioni</UIButton
+    <router-link :to="`/course/${$route.params.courseId}/sessions/`">
+      <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
+        >Cronologia eserciazioni</UIButton
+      ></router-link
     >
   </div>
 </template>

@@ -1,11 +1,11 @@
 <template>
-  <div class="mx-6">
+  <TrainingTemplateSelector
+    v-if="showTemplateSelection"
+    :courseId="$route.params.courseId"
+    @setTemplate="templateId = $event"
+  ></TrainingTemplateSelector>
+  <div v-else>
     <h1>Esercitazione</h1>
-    <TrainingTemplateSelector
-      v-if="showTemplateSelection"
-      :courseId="$route.params.courseId"
-      @setTemplate="templateId = $event"
-    ></TrainingTemplateSelector>
     <div class="my-4" v-for="question in questions" :key="'q-' + question.id">
       <div v-html="question.text"></div>
       <div
@@ -81,6 +81,7 @@ export default defineComponent({
       const courseId = this.$route.params.courseId as string
       const response = await turnInTrainingSession(courseId, this.answers)
       console.log(response)
+      this.$router.push(`/course/${courseId}/sessions/${response.id}`)
     }
   },
   computed: {

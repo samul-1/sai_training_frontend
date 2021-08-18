@@ -27,7 +27,9 @@
       >
         <h1 class="text-xl text-center" v-html="$store.state.msg"></h1>
       </div>
-      <router-view v-else />
+      <div class="mx-5 my-6 md:mx-10" v-else>
+        <router-view />
+      </div>
       <transition name="fade">
         <div
           class="fixed px-20 py-4 transform -translate-x-1/2 rounded-md shadow-xl left-1/2 top-20"
