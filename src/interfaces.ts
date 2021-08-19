@@ -13,6 +13,7 @@ export interface TrainingTemplateRule {
 }
 
 export interface TrainingTemplate {
+  id: string;
   name: string;
   description?: string;
   rules: TrainingTemplateRule[];
@@ -42,6 +43,6 @@ export interface TrainingSessionResults {
 }
 
 export interface Topic {
-  id: string;
+  id?: string;
   name: string;
 }

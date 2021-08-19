@@ -6,7 +6,7 @@
       :width="'90%'"
       :height="8"
       v-if="!readOnly"
-      v-model="profile_data"
+      v-model="profileData"
       :v-data="profilesKeys"
       :marks="profilesEntries"
       :tooltip="'none'"
@@ -38,19 +38,31 @@ export default defineComponent({
       required: true
     },
     profile: {
-      type: String as PropType<string>,
-      required: true
+      type: String as PropType<string>
+      //required: true
+    },
+    modelValue: {
+      type: String as PropType<string>
+      //required: true
     }
   },
   components: {
     VueSlider
   },
+  watch: {
+    profileData (newVal: string) {
+      this.$emit('update:modelValue', newVal)
+    },
+    modelValue (newVal: string) {
+      this.profileData = newVal
+    }
+  },
   created () {
-    this.profile_data = this.profile
+    this.profileData = this.modelValue as string
   },
   data () {
     return {
-      profile_data: ''
+      profileData: ''
     }
   },
   computed: {
@@ -62,20 +74,20 @@ export default defineComponent({
     },
     profileAsCanonString (): string {
       const _profiles = profiles as Record<string, string>
-      return _profiles[this.profile]
+      return _profiles[this.profile as string]
     },
     processColor () {
-      switch (this.profile_data) {
+      switch (this.profileData) {
         case 'easy_only':
-          return '#00ce44'
+          return '#10B981'
         case 'mostly_easy':
-          return '#009322'
+          return '#34D399'
         case 'balanced':
-          return '#6068ff'
+          return '#60A5FA'
         case 'mostly_hard':
-          return '#f96363'
+          return '#F87171'
         case 'hard_only':
-          return '#ed4242'
+          return '#EF4444'
       }
       return ''
     }
@@ -89,8 +101,8 @@ export default defineComponent({
   font-variant-caps: all-small-caps;
   font-variant: small-caps;
 }
-.vue-slider-mark-label-active: {
-  font-weight: bold;
+.vue-slider-mark-label {
+  letter-spacing: -0.35px;
 }
 /* .vue-slider-process {
   background-color: brown;
@@ -104,7 +116,7 @@ export default defineComponent({
   height: 100%;
   border-radius: 50%;
   background-color: #fff;
-  border: 2px solid #9cd5ff;
+  border: 3.5px solid #9cd5ff;
   box-sizing: border-box;
   transition: box-shadow 0.3s, border-color 0.3s;
 }

@@ -11,31 +11,34 @@
       <transition name="bounce" @after-leave="$emit(choice)">
         <div
           v-if="showContent"
-          class="z-20 w-full px-10 py-10 mx-1.5 bg-white rounded-lg shadow-lg md:mx-0"
+          class="z-20 max-h-full overflow-y-auto w-full px-10 py-10 mx-1.5 bg-white rounded-lg shadow-lg md:mx-0"
           :class="{ 'md:w-3/5': !large, 'md:w-4/5': large }"
         >
           <div class="mb-10 text-black">
             <h1 v-html="title" class="mb-4 text-2xl"></h1>
             <!--<p v-html="subText" class="mt-4 text-md"></p>-->
-            <slot></slot>
+            <slot name="body"></slot>
           </div>
 
-          <div class="flex mt-5">
-            <UIButton
-              class="ml-auto mr-2"
-              :disabled="disableOk"
-              :variant="severity == 1 ? 'green' : 'red'"
-              @click="chooseAndHide('yes')"
-            >
-              {{ confirmOnly ? 'Ok' : 'Sì' }}
-            </UIButton>
-            <UIButton
-              :variant="'light'"
-              @click="chooseAndHide('no')"
-              v-if="!confirmOnly"
-            >
-              No
-            </UIButton>
+          <div class="flex flex-col mt-5 md:flex-row">
+            <div class="mt-auto"><slot name="footerButtons"></slot></div>
+            <div class="flex mt-4 ml-auto md:mt-0">
+              <UIButton
+                class="mr-2"
+                :disabled="disableOk"
+                :variant="severity == 1 ? 'green' : 'red'"
+                @click="chooseAndHide('yes')"
+              >
+                {{ confirmOnly ? 'Ok' : yesText || 'Sì' }}
+              </UIButton>
+              <UIButton
+                :variant="'light'"
+                @click="chooseAndHide('no')"
+                v-if="!confirmOnly"
+              >
+                {{ noText || 'No' }}
+              </UIButton>
+            </div>
           </div>
         </div>
       </transition>
@@ -58,6 +61,14 @@ export default defineComponent({
     severity: {
       type: Number,
       default: 1
+    },
+    yesText: {
+      type: String,
+      default: ''
+    },
+    noText: {
+      type: String,
+      default: ''
     },
     confirmOnly: Boolean,
     disableOk: Boolean

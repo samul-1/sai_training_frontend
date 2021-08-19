@@ -3,7 +3,7 @@
   <div class="my-6">
     <h1 class="mb-4 text-3xl">Nuova esercitazione</h1>
     <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
-    <div class="grid grid-cols-1 gap-10 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <TrainingTemplateItem
         v-for="template in templates"
         :key="'template-' + template.id"
@@ -37,22 +37,33 @@
     <modal
       v-if="showTemplateEditor"
       :title="'Crea modello personalizzato'"
+      :yesText="'Crea e usa'"
+      :noText="'Annulla'"
+      @no="showTemplateEditor = false"
+      @yes="_createTrainingTemplate()"
       :large="true"
     >
-      <p class="mb-2">
-        Seleziona il numero di domande per ogni argomento e la distribuzione di
-        difficoltà delle domande.
-      </p>
-      <TrainingTemplateEditor
-        :courseId="$route.params.courseId"
-      ></TrainingTemplateEditor>
+      <template v-slot:body>
+        <p class="mb-2">
+          Seleziona il numero di domande per ogni argomento e la distribuzione
+          di difficoltà delle domande. Questo modello verrà usato immediatamente
+          per l'esercitazione che stai per iniziare.
+        </p>
+        <TrainingTemplateEditor
+          :courseId="$route.params.courseId"
+          @update="updateDraftTemplate($event)"
+        ></TrainingTemplateEditor>
+      </template>
+      <template v-slot:footerButtons>
+        <div id="training-template-editor-footer"></div
+      ></template>
     </modal>
   </div>
   <!--</div>-->
 </template>
 
 <script lang="ts">
-import { getTrainingTemplates } from '@/api/courses'
+import { createTrainingTemplate, getTrainingTemplates } from '@/api/courses'
 import { TrainingTemplate } from '@/interfaces'
 import TrainingTemplateItem from '@/components/TrainingTemplateItem.vue'
 import { defineComponent } from '@vue/runtime-core'
@@ -75,13 +86,28 @@ export default defineComponent({
     }
   },
   async created () {
+    this.loading = true
     this.templates = await getTrainingTemplates(this.courseId)
+    this.loading = false
   },
   data () {
     return {
       templates: [] as TrainingTemplate[],
-      selected: null,
-      showTemplateEditor: false
+      selected: null as string | null,
+      showTemplateEditor: false,
+      drafTemplate: {} as TrainingTemplate,
+      loading: false
+    }
+  },
+  methods: {
+    updateDraftTemplate (newVal: string) {
+      this.drafTemplate = JSON.parse(newVal)
+    },
+    async _createTrainingTemplate () {
+      const courseId = this.$route.params.courseId as string
+      const response = await createTrainingTemplate(courseId, this.drafTemplate)
+      this.showTemplateEditor = false
+      this.$emit('setTemplate', response.id)
     }
   }
 })

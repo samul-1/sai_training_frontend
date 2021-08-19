@@ -1,6 +1,17 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 exports.__esModule = true;
-exports.enroll = exports.getTopics = exports.getTrainingTemplates = exports.getCourse = exports.getCourses = void 0;
+exports.enroll = exports.createTopic = exports.updateTopic = exports.getTopics = exports.createTrainingTemplate = exports.getTrainingTemplates = exports.getCourse = exports.getCourses = void 0;
 var axios_1 = require("axios");
 function getCourses() {
     return new Promise(function (resolve, reject) {
@@ -32,6 +43,16 @@ function getTrainingTemplates(courseId) {
     });
 }
 exports.getTrainingTemplates = getTrainingTemplates;
+function createTrainingTemplate(courseId, template) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .post("/courses/" + courseId + "/templates/", __assign({}, template))
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.createTrainingTemplate = createTrainingTemplate;
 function getTopics(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
@@ -42,6 +63,26 @@ function getTopics(courseId) {
     });
 }
 exports.getTopics = getTopics;
+function updateTopic(courseId, topicId, topic) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .put("/courses/" + courseId + "/topics/" + topicId + "/", __assign({}, topic))
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.updateTopic = updateTopic;
+function createTopic(courseId, topic) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .post("/courses/" + courseId + "/topics/", __assign({}, topic))
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.createTopic = createTopic;
 function enroll(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]

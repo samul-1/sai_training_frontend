@@ -10,8 +10,10 @@ import Login from '../views/Login.vue';
 import Courses from '../views/Courses.vue';
 import StudentDashboard from '../views/StudentDashboard.vue';
 import StudentCourseDashboard from '../views/StudentCourseDashboard.vue';
+import TeacherCourseDashboard from '../views/TeacherCourseDashboard.vue';
 import TrainingSession from '../views/TrainingSession.vue';
 import TrainingSessionResults from '../components/TrainingSessionResults.vue';
+import CourseTopicList from '../components/CourseTopicList.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -54,6 +56,22 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course/:courseId/sessions/:sessionId',
     name: 'TrainingSessionResults',
     component: TrainingSessionResults,
+  },
+  {
+    path: '/course-panel/:courseId',
+    name: 'TeacherCourseDashboard',
+    component: TeacherCourseDashboard,
+    // children: [
+    //   {
+    //     path: 'topics',
+    //     component: CourseTopicList,
+    //   },
+    // ],
+  },
+  {
+    path: '/course-panel/:courseId/topics',
+    name: 'CourseTopicList',
+    component: CourseTopicList,
   },
 ];
 

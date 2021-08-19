@@ -1,6 +1,8 @@
 <template>
+  <h1 v-if="!showTemplateSelection" class="mb-4 text-3xl">Esercitazione</h1>
+  <Skeleton v-if="loading"></Skeleton>
   <TrainingTemplateSelector
-    v-if="showTemplateSelection"
+    v-else-if="showTemplateSelection"
     :courseId="$route.params.courseId"
     @setTemplate="templateId = $event"
   ></TrainingTemplateSelector>
@@ -38,20 +40,25 @@ import {
 } from '@/api/trainingSessions'
 import TrainingTemplateSelector from '@/components/TrainingTemplateSelector.vue'
 import UIButton from '@/components/UIButton.vue'
+import Skeleton from '@/components/Skeleton.vue'
 
 export default defineComponent({
   name: 'TrainingSession',
-  components: { TrainingTemplateSelector, UIButton },
+  components: { TrainingTemplateSelector, UIButton, Skeleton },
   data () {
     return {
       session: {} as TrainingSession,
       answers: {} as { [key: string]: string | null },
       templateId: null,
-      showTemplateSelection: false
+      showTemplateSelection: false,
+      loading: false
     }
   },
   async created () {
+    this.loading = true
     await this.getOrCreateSession()
+    console.log('false')
+    this.loading = false
   },
   watch: {
     async templateId (newVal) {
@@ -64,7 +71,7 @@ export default defineComponent({
   methods: {
     async getOrCreateSession () {
       const courseId = this.$route.params.courseId as string
-      getCurrentTrainingSession(courseId, this.templateId)
+      return getCurrentTrainingSession(courseId, this.templateId)
         .then(response => {
           this.session = response
         })

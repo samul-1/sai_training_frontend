@@ -7,8 +7,10 @@ var Login_vue_1 = require("../views/Login.vue");
 var Courses_vue_1 = require("../views/Courses.vue");
 var StudentDashboard_vue_1 = require("../views/StudentDashboard.vue");
 var StudentCourseDashboard_vue_1 = require("../views/StudentCourseDashboard.vue");
+var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue");
 var TrainingSession_vue_1 = require("../views/TrainingSession.vue");
 var TrainingSessionResults_vue_1 = require("../components/TrainingSessionResults.vue");
+var CourseTopicList_vue_1 = require("../components/CourseTopicList.vue");
 var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vue");
 var routes = [
     {
@@ -50,6 +52,16 @@ var routes = [
         path: '/course/:courseId/sessions/:sessionId',
         name: 'TrainingSessionResults',
         component: TrainingSessionResults_vue_1["default"]
+    },
+    {
+        path: '/course-panel/:courseId',
+        name: 'TeacherCourseDashboard',
+        component: TeacherCourseDashboard_vue_1["default"]
+    },
+    {
+        path: '/course-panel/:courseId/topics',
+        name: 'CourseTopicList',
+        component: CourseTopicList_vue_1["default"]
     },
 ];
 var router = vue_router_1.createRouter({
