@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.enroll = exports.getTrainingTemplates = exports.getCourse = exports.getCourses = void 0;
+exports.enroll = exports.getTopics = exports.getTrainingTemplates = exports.getCourse = exports.getCourses = void 0;
 var axios_1 = require("axios");
 function getCourses() {
     return new Promise(function (resolve, reject) {
@@ -32,6 +32,16 @@ function getTrainingTemplates(courseId) {
     });
 }
 exports.getTrainingTemplates = getTrainingTemplates;
+function getTopics(courseId) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .get("/courses/" + courseId + "/topics")
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.getTopics = getTopics;
 function enroll(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]

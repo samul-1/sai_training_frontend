@@ -11,7 +11,8 @@
       <transition name="bounce" @after-leave="$emit(choice)">
         <div
           v-if="showContent"
-          class="z-20 w-3/5 px-10 py-10 bg-white rounded-lg shadow-lg "
+          class="z-20 w-full px-10 py-10 mx-1.5 bg-white rounded-lg shadow-lg md:mx-0"
+          :class="{ 'md:w-3/5': !large, 'md:w-4/5': large }"
         >
           <div class="mb-10 text-black">
             <h1 v-html="title" class="mb-4 text-2xl"></h1>
@@ -49,7 +50,10 @@ export default defineComponent({
   name: 'Modal',
   props: {
     title: String,
-    //subText: String,
+    large: {
+      type: Boolean,
+      default: false
+    },
     dismissible: Boolean,
     severity: {
       type: Number,

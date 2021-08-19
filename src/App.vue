@@ -9,6 +9,14 @@
     <nav class="flex w-full px-6 py-2 text-white bg-gray-900">
       <img class="w-28 md:w-32" src="./assets/unipi-logo.svg" />
       <div class="my-auto ml-auto">
+        <UIButton
+          v-if="$route.path != '/student' && $route.path != '/login'"
+          @click="$router.go(-1)"
+          :variant="'transparent'"
+          :size="'xs'"
+          class="hidden mr-5 md:inline"
+          ><i class="mr-1 text-xs fas fa-chevron-left"></i>Indietro</UIButton
+        >
         <template v-if="$store.getters.isAuthenticated">
           <span class="text-sm md:text-md"
             ><i class="mr-2 far fa-user"></i>{{ $store.state.user.email }}</span
@@ -60,13 +68,17 @@
 </template>
 <script lang="ts">
 import Notification from '@/components/Notification.vue'
+import UIButton from '@/components/UIButton.vue'
 import { defineComponent } from '@vue/runtime-core'
 export default defineComponent({
   name: 'App',
   beforeCreate (): void {
     this.$store.commit('initStore')
   },
-  components: { Notification }
+  components: {
+    Notification,
+    UIButton
+  }
 })
 </script>
 

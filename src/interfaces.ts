@@ -40,3 +40,8 @@ export interface TrainingSessionResults {
   end_timestamp: string;
   questions: Question[];
 }
+
+export interface Topic {
+  id: string;
+  name: string;
+}

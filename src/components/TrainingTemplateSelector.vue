@@ -17,6 +17,7 @@
       >
       </TrainingTemplateItem>
       <div
+        @click="showTemplateEditor = true"
         class="px-10 py-6 text-gray-400 border cursor-pointer rounded-xl h-44 bg-gradient-to-b from-gray-50 to-gray-100"
       >
         <h1 class="mb-4 text-xl">Nuovo modello personalizzato</h1>
@@ -33,6 +34,19 @@
       @click="$emit('setTemplate', selected)"
       ><!--<i class="mr-1 fas fa-check"></i>-->Conferma</UIButton
     >
+    <modal
+      v-if="showTemplateEditor"
+      :title="'Crea modello personalizzato'"
+      :large="true"
+    >
+      <p class="mb-2">
+        Seleziona il numero di domande per ogni argomento e la distribuzione di
+        difficoltà delle domande.
+      </p>
+      <TrainingTemplateEditor
+        :courseId="$route.params.courseId"
+      ></TrainingTemplateEditor>
+    </modal>
   </div>
   <!--</div>-->
 </template>
@@ -43,12 +57,16 @@ import { TrainingTemplate } from '@/interfaces'
 import TrainingTemplateItem from '@/components/TrainingTemplateItem.vue'
 import { defineComponent } from '@vue/runtime-core'
 import UIButton from '@/components/UIButton.vue'
+import TrainingTemplateEditor from '@/components/TrainingTemplateEditor.vue'
+import Modal from './Modal.vue'
 
 export default defineComponent({
   name: 'TrainingTemplateSelector',
   components: {
     TrainingTemplateItem,
-    UIButton
+    UIButton,
+    TrainingTemplateEditor,
+    Modal
   },
   props: {
     courseId: {
@@ -62,7 +80,8 @@ export default defineComponent({
   data () {
     return {
       templates: [] as TrainingTemplate[],
-      selected: null
+      selected: null,
+      showTemplateEditor: false
     }
   }
 })
