@@ -1,6 +1,6 @@
 <template>
   <!-- <h1 class="mb-8 text-4xl text-center">Argomenti</h1> -->
-  <div class="grid grid-cols-2">
+  <div class="grid md:grid-cols-2">
     <div
       v-for="topic in topics"
       :key="'topic-' + topic.id"
@@ -21,6 +21,7 @@
         :variant="'light'"
         :size="'xs'"
         @click="editTopic(topic)"
+        :disabled="editing && editing != topic.id"
         ><i class="text-xs fas fa-edit"></i
       ></UIButton>
       <div class="flex space-x-2" v-else>
@@ -39,11 +40,11 @@
   </div>
   <teleport v-if="!loading" :to="'#topicsModalFooterButtons'">
     <UIButton
-      class="mt-4"
-      v-if="editing != '_'"
+      class="my-auto"
       :variant="'green'"
       :size="'sm'"
       @click="newTopic()"
+      :disabled="editing"
       ><i class="mr-2 text-xs fas fa-plus-circle"></i
       ><span>Nuovo argomento</span></UIButton
     ></teleport
@@ -87,7 +88,12 @@ export default defineComponent({
       const target = this.topics.findIndex(
         t => t.id === this.editedBeforeState.id
       )
-      this.topics[target] = { ...this.editedBeforeState } as Topic
+      if (this.editing == '_') {
+        this.topics.pop()
+      } else {
+        this.topics[target] = { ...this.editedBeforeState } as Topic
+      }
+      this.editedBeforeState = {} as Topic
       this.editing = null
     },
     async _updateTopic (topic: Topic): Promise<void> {
