@@ -6,6 +6,14 @@ export const profiles = {
   hard_only: 'solo difficili',
 };
 
+export const difficulties = {
+  '0': 'molto facile',
+  '1': 'facile',
+  '2': 'media',
+  '3': 'difficile',
+  '4': 'molto difficile',
+};
+
 export const abbreviatedProfiles = {
   easy_only: {
     label: 'solo facili',

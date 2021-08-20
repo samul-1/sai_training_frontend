@@ -24,11 +24,15 @@ export interface Choice {
   text: string;
   correct?: boolean;
 }
+export interface HTMLInputEvent extends Event {
+  target: HTMLInputElement & EventTarget;
+}
 export interface Question {
   id: string;
   text: string;
   choices: Choice[];
   selected_choice?: string;
+  difficulty?: string | number;
 }
 export interface TrainingSession {
   questions: Question[];

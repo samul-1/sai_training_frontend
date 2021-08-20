@@ -14,6 +14,7 @@ import TeacherCourseDashboard from '../views/TeacherCourseDashboard.vue';
 import TrainingSession from '../views/TrainingSession.vue';
 import TrainingSessionResults from '../components/TrainingSessionResults.vue';
 import CourseTopicList from '../components/CourseTopicList.vue';
+import QuestionImport from '../components/QuestionImport.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -72,6 +73,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course-panel/:courseId/topics',
     name: 'CourseTopicList',
     component: CourseTopicList,
+  },
+  {
+    path: '/course-panel/:courseId/import',
+    name: 'QuestionImport',
+    component: QuestionImport,
   },
 ];
 
