@@ -3,6 +3,7 @@
     class="transition-colors duration-150 shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
     :disabled="disabled"
     :class="{
+      'py-0.5 px-1.5 text-sm rounded-lg': size == '2xs',
       'py-1 px-2 text-sm rounded-lg': size == 'xs',
       'py-1.5 px-4 rounded-lg': size == 'sm',
       'py-1.5 px-6 rounded-lg': size == 'md',
@@ -19,7 +20,9 @@
       'bg-red-700 hover:bg-red-800 active:bg-red-900 text-white':
         variant == 'red',
       ' hover:bg-white hover:text-black border border-white text-white active:bg-gray-200':
-        variant == 'transparent'
+        variant == 'transparent',
+      ' hover:bg-gray-900 hover:text-white border border-gray-900 text-black active:bg-gray-800':
+        variant == 'negative'
     }"
   >
     <slot></slot>

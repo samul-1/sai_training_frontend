@@ -30,6 +30,7 @@ export interface HTMLInputEvent extends Event {
 export interface Question {
   id: string;
   text: string;
+  topic: string;
   choices: Choice[];
   selected_choice?: string;
   difficulty?: string | number;

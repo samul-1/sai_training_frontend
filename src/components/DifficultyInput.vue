@@ -5,24 +5,11 @@
       :dotStyle="'border-color:' + processColor"
       :width="'90%'"
       :height="8"
-      v-if="!readOnly"
       v-model="difficultyData"
       :v-data="difficultiesKeys"
       :marks="difficultiesEntries"
       :tooltip="'none'"
     ></vue-slider>
-    <p
-      v-else
-      class="my-auto font-semibold small-caps"
-      :class="{
-        'text-green-700':
-          difficulty == 'easy_only' || difficulty == 'mostly_easy',
-        'text-gray-800': difficulty == 'balanced',
-        'text-red-800': difficulty == 'hard_only' || difficulty == 'mostly_hard'
-      }"
-    >
-      {{ difficultyAsCanonString }}
-    </p>
   </div>
 </template>
 
@@ -34,10 +21,6 @@ import { difficulties } from '@/difficultyProfiles'
 export default defineComponent({
   name: 'DifficultyInput',
   props: {
-    readOnly: {
-      type: Boolean,
-      required: true
-    },
     difficulty: {
       type: String as PropType<string>
       //required: true
@@ -72,10 +55,6 @@ export default defineComponent({
     },
     difficultiesEntries (): Record<string, unknown> {
       return { ...difficulties }
-    },
-    difficultyAsCanonString (): string {
-      const _difficulties = difficulties as Record<string, string>
-      return _difficulties[this.difficulty as string]
     },
     processColor () {
       switch (this.difficultyData) {
