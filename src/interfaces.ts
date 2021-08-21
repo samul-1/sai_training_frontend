@@ -33,7 +33,7 @@ export interface Question {
   topic: string;
   choices: Choice[];
   selected_choice?: string;
-  difficulty?: string | number;
+  difficulty?: string;
 }
 export interface TrainingSession {
   questions: Question[];

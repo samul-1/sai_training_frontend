@@ -8,7 +8,10 @@
         @click="collapse = !collapse"
         :size="'2xs'"
         :variant="'negative'"
-        ><i class="fas fa-compress-alt"></i
+        ><i
+          class="fas"
+          :class="{ 'fa-expand-alt': collapse, 'fa-compress-alt': !collapse }"
+        ></i
       ></UIButton>
     </div>
     <div class="grid mb-10 md:mb-0 md:gap-24 md:grid-cols-2">
@@ -16,7 +19,7 @@
         <h1 class="font-medium">Argomento</h1>
         <select
           v-model="questionData.topic"
-          class="col-span-4 bg-white border rounded-md p"
+          class="col-span-4 p-0.5 bg-white border rounded-md"
           :class="{
             'bg-red-100 text-red-900 border border-red-200': !questionData.topic
           }"
@@ -48,7 +51,6 @@
         cols="100"
         class="p-3 border rounded-lg"
         v-model="questionData.text"
-        @change="update('text', questionData.text)"
       ></textarea>
       <div class="flex mt-4 mb-2 space-x-2 ">
         <h1 class="font-medium">Risposte</h1>
@@ -58,7 +60,7 @@
       </div>
       <div
         v-for="(choice, c_index) in questionData.choices"
-        :key="'q-' + Math.random() + '-c-' + c_index"
+        :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
         class="flex mt-2"
       >
         <textarea
@@ -66,7 +68,6 @@
           cols="90"
           class="p-3 border rounded-lg"
           v-model="choice.text"
-          @change="update('text', questionData.text)"
         ></textarea>
         <div class="my-auto ml-4">
           <input type="checkbox" v-model="choice.correct" class="mr-1" /><label
@@ -102,6 +103,10 @@ export default defineComponent({
     modelValue: {
       type: Object as PropType<Question>,
       required: true
+    },
+    questionTempKey: {
+        type: [String, Number],
+        required: false
     },
     collapsible: {
         type: Boolean,

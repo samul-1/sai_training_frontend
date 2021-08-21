@@ -1,62 +1,53 @@
 <template>
-  <div>QuestionImport</div>
-  <input
-    type="file"
-    @change="processFile"
-    class="transition-all duration-200"
-  />
-  <!-- <div
-    v-if="questions.length"
-    class="grid grid-cols-10 gap-12 my-4 text-xl font-medium"
-  >
-    <div class="col-span-5">Domanda</div>
-    <div class="col-span-2">Argomento</div>
-    <div class="col-span-2">Difficoltà</div>
-  </div> -->
+  <h1 class="mb-8 text-4xl text-center">Importa domande</h1>
+  <div>
+    <p>
+      Seleziona un file in formato <strong>JSON</strong> contenente una lista di
+      domande. Per ogni domanda, seleziona un argomento in cui includerla e un
+      livello di difficoltà.
+    </p>
+    <input
+      v-if="!questions.length"
+      type="file"
+      @change="processFile"
+      class="mt-4 mb-10"
+    />
+    <!-- get rid of this -->
+    <div v-if="!questions.length" class="w-20 h-80"></div>
+  </div>
   <div
     class="grid grid-cols-10 gap-20 my-4 mr-10"
     v-for="(question, index) in questions"
     :key="'q-tmp-' + index"
   >
-    <!--       :question="question"
- -->
     <question-editor
       class="col-span-10"
       v-model="questions[index]"
       :topicChoices="topics"
       :startCollapsed="true"
+      :questionTempKey="index"
     ></question-editor>
-
-    <!-- <div class="col-span-5 overflow-x-auto" v-html="question.text"></div>
-    <select
-      v-model="questions[index].topic"
-      class="col-span-2 bg-white border rounded-md p"
-    >
-      <option
-        v-for="topic in topics"
-        :key="'topic-' + topic.id"
-        :value="topic.id"
-        >{{ topic.name }}</option
-      >
-    </select>
-    <difficulty-input
-      class="col-span-3"
-      v-model="questions[index].difficulty"
-    ></difficulty-input> -->
   </div>
-  <difficulty-input class="hidden col-span-3"></difficulty-input>
+  <UIButton
+    @click="_importQuestions()"
+    v-if="questions.length"
+    :variant="'green'"
+    :disabled="!valid || !questions.length"
+    >Importa</UIButton
+  >
 </template>
 
 <script lang="ts">
 import { defineComponent } from '@vue/runtime-core'
 import { getTopics } from '@/api/courses'
 import { HTMLInputEvent, Question, Topic } from '@/interfaces'
-import DifficultyInput from './DifficultyInput.vue'
 import QuestionEditor from './QuestionEditor.vue'
-//import FullQuestion from './FullQuestion.vue'
+import { isValidQuestion } from '@/validation'
+import UIButton from './UIButton.vue'
+import { bulkCreateQuestions } from '@/api/items'
 
 export default defineComponent({
-  components: { DifficultyInput, QuestionEditor },
+  components: { QuestionEditor, UIButton },
   //components: { FullQuestion },
   name: 'QuestionImport',
   data () {
@@ -70,6 +61,17 @@ export default defineComponent({
     this.topics = await getTopics(courseId)
   },
   methods: {
+    async _importQuestions () {
+      const courseId = this.$route.params.courseId as string
+      await bulkCreateQuestions(courseId, this.questions)
+      this.questions = []
+
+      this.$store.commit('pushNotification', {
+        message: 'Domande importate con successo',
+        autoHide: 2500,
+        severity: 1
+      })
+    },
     processFile (event: HTMLInputEvent) {
       console.log(event.target?.files)
       const fileReader = new FileReader()
@@ -91,6 +93,13 @@ export default defineComponent({
     processContent (content: unknown) {
       this.questions = content as Question[]
       //this.questions.forEach(q => (q.difficulty = '2'))
+    }
+  },
+  computed: {
+    valid (): boolean {
+      return this.questions
+        .map(question => isValidQuestion(question))
+        .every(val => val)
     }
   }
 })
