@@ -51,6 +51,23 @@ export function createTrainingTemplate(
   });
 }
 
+export function updateTrainingTemplate(
+  courseId: string,
+  templateId: string,
+  template: TrainingTemplate
+): Promise<TrainingTemplate> {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(`/courses/${courseId}/templates/${templateId}/`, {
+        ...template,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function getTopics(courseId: string): Promise<Topic[]> {
   return new Promise((resolve, reject) => {
     axios

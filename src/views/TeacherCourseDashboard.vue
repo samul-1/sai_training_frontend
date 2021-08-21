@@ -17,9 +17,11 @@
     <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
       >Gestisci insegnanti
     </UIButton>
-    <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
-      >Modelli esercitazioni
-    </UIButton>
+    <router-link :to="`/course-panel/${$route.params.courseId}/templates`">
+      <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
+        >Modelli esercitazioni
+      </UIButton></router-link
+    >
   </div>
   <router-view></router-view>
   <modal

@@ -1,6 +1,6 @@
 <template>
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
-  <p v-if="course.description.length" v-html="course.description"></p>
+  <p v-if="course.description?.length" v-html="course.description"></p>
   <div class="flex flex-col mx-auto space-y-6 w-max">
     <router-link :to="`/course/${$route.params.courseId}/train/`"
       ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
@@ -14,12 +14,12 @@
     >
   </div>
   <modal
-    v-if="!course.enrolled"
+    v-if="!course?.enrolled"
     @yes="enroll()"
     @no="$router.push('/courses')"
     :title="'Nuova iscrizione'"
   >
-    Vuoi iscriverti al corso <span class="font-medium">{{ course.name }}</span
+    Vuoi iscriverti al corso <span class="font-medium">{{ course?.name }}</span
     >?
   </modal>
 </template>

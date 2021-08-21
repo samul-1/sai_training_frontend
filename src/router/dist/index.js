@@ -10,9 +10,9 @@ var StudentCourseDashboard_vue_1 = require("../views/StudentCourseDashboard.vue"
 var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue");
 var TrainingSession_vue_1 = require("../views/TrainingSession.vue");
 var TrainingSessionResults_vue_1 = require("../components/TrainingSessionResults.vue");
-var CourseTopicList_vue_1 = require("../components/CourseTopicList.vue");
 var QuestionImport_vue_1 = require("../components/QuestionImport.vue");
 var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vue");
+var CourseTrainingTemplates_vue_1 = require("../views/CourseTrainingTemplates.vue");
 var routes = [
     {
         path: '/',
@@ -59,15 +59,20 @@ var routes = [
         name: 'TeacherCourseDashboard',
         component: TeacherCourseDashboard_vue_1["default"]
     },
-    {
-        path: '/course-panel/:courseId/topics',
-        name: 'CourseTopicList',
-        component: CourseTopicList_vue_1["default"]
-    },
+    // {
+    //   path: '/course-panel/:courseId/topics',
+    //   name: 'CourseTopicList',
+    //   component: CourseTopicList,
+    // },
     {
         path: '/course-panel/:courseId/import',
         name: 'QuestionImport',
         component: QuestionImport_vue_1["default"]
+    },
+    {
+        path: '/course-panel/:courseId/templates',
+        name: 'CourseTrainingTemplates',
+        component: CourseTrainingTemplates_vue_1["default"]
     },
 ];
 var router = vue_router_1.createRouter({

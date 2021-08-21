@@ -16,6 +16,7 @@ import TrainingSessionResults from '../components/TrainingSessionResults.vue';
 import CourseTopicList from '../components/CourseTopicList.vue';
 import QuestionImport from '../components/QuestionImport.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
+import CourseTrainingTemplates from '../views/CourseTrainingTemplates.vue';
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -69,15 +70,20 @@ const routes: Array<RouteRecordRaw> = [
     //   },
     // ],
   },
-  {
-    path: '/course-panel/:courseId/topics',
-    name: 'CourseTopicList',
-    component: CourseTopicList,
-  },
+  // {
+  //   path: '/course-panel/:courseId/topics',
+  //   name: 'CourseTopicList',
+  //   component: CourseTopicList,
+  // },
   {
     path: '/course-panel/:courseId/import',
     name: 'QuestionImport',
     component: QuestionImport,
+  },
+  {
+    path: '/course-panel/:courseId/templates',
+    name: 'CourseTrainingTemplates',
+    component: CourseTrainingTemplates,
   },
 ];
 

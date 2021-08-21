@@ -1,5 +1,21 @@
 <template>
   <div>
+    <div v-if="showFullForm">
+      <h1 class="mb-2 text-lg font-medium ">Nome modello</h1>
+      <textarea
+        class="p-3 border rounded-lg"
+        v-model="templateData.name"
+        rows="1"
+        cols="90"
+      ></textarea>
+      <h1 class="mb-2 text-lg font-medium ">Descrizione (opzionale)</h1>
+      <textarea
+        rows="2"
+        cols="90"
+        class="p-3 border rounded-lg"
+        v-model="templateData.description"
+      ></textarea>
+    </div>
     <div
       class="grid grid-cols-3 gap-2 mt-6 mb-2 text-lg font-medium md:grid-cols-7"
     >
@@ -17,13 +33,15 @@
         <input
           class="w-16 px-2 py-0.5 ml-2 border rounded-lg"
           type="number"
-          v-model="template.rules.find(rule => rule.topic == topic.name).amount"
+          v-model="
+            templateData.rules.find(rule => rule.topic == topic.name).amount
+          "
         />
         <DifficultyProfile
           class="col-span-3 border-b pb-14 md:pb-0 md:border-b-0"
           :readOnly="false"
           v-model="
-            template.rules.find(rule => rule.topic == topic.name)
+            templateData.rules.find(rule => rule.topic == topic.name)
               .difficulty_profile
           "
         ></DifficultyProfile>
@@ -42,7 +60,7 @@
 <script lang="ts">
 import { getTopics } from '@/api/courses'
 import { Topic, TrainingTemplate, TrainingTemplateRule } from '@/interfaces'
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent, PropType } from '@vue/runtime-core'
 import { profiles } from '@/difficultyProfiles'
 import DifficultyProfile from './DifficultyProfile.vue'
 import Skeleton from './Skeleton.vue'
@@ -54,6 +72,14 @@ export default defineComponent({
     courseId: {
       type: String,
       required: true
+    },
+    template: {
+      type: Object as PropType<TrainingTemplate>,
+      required: false
+    },
+    showFullForm: {
+      type: Boolean,
+      default: false
     }
   },
   watch: {
@@ -64,31 +90,57 @@ export default defineComponent({
   async created () {
     this.loading = true
     this.topics = await getTopics(this.courseId)
-    this.topics.forEach((topic: Topic) => {
-      this.template.rules.push({
-        topic: topic.name,
-        amount: 0,
-        difficulty_profile: 'balanced'
-      } as TrainingTemplateRule)
-    })
+    if (this.template) {
+      this.fillInEmptyRules()
+    } else {
+      this.topics.forEach((topic: Topic) => {
+        this.templateData.rules.push({
+          topic: topic.name,
+          amount: 0,
+          difficulty_profile: 'balanced'
+        } as TrainingTemplateRule)
+      })
+    }
     this.loading = false
   },
   data () {
     return {
       loading: false,
       topics: [] as Topic[],
-      template: {
+      templateData: {
         rules: [] as TrainingTemplateRule[]
       } as TrainingTemplate,
       profiles
     }
   },
+  methods: {
+    fillInEmptyRules (): void {
+      this.templateData = { ...(this.template as TrainingTemplate) }
+      this.topics.forEach(topic => {
+        if (!this.templateData.rules.find(rule => rule.topic == topic.name)) {
+          this.templateData.rules.push({
+            topic: topic.name,
+            amount: 0,
+            difficulty_profile: 'balanced'
+          })
+        }
+      })
+    }
+  },
   computed: {
-    templateAsJSON () {
-      return JSON.stringify(this.template)
+    templateAsJSON (): string {
+      return JSON.stringify(this.templateWithoutEmptyRules)
+    },
+    templateWithoutEmptyRules (): TrainingTemplate {
+      const { rules, ...rest } = this.templateData
+      const nonEmptyrules = rules.filter(rule => rule.amount != 0)
+      return {
+        rules: nonEmptyrules,
+        ...rest
+      }
     },
     questionsTotal () {
-      return this.template.rules
+      return this.templateData.rules
         .map(rule => rule.amount)
         .reduce((acc, curr) => acc + curr, 0)
     }

@@ -89,6 +89,7 @@ import { Choice, Question, Topic } from '@/interfaces'
 import { defineComponent, PropType } from '@vue/runtime-core'
 import DifficultyInput from './DifficultyInput.vue'
 import UIButton from './UIButton.vue'
+import { renderTex } from '@/utils'
 
 //import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
@@ -126,10 +127,16 @@ export default defineComponent({
     this.questionData.topic ??= ""
     this.questionData.difficulty ??= "2"
     this.collapse = this.startCollapsed
+    renderTex()
   },
   watch: {
     questionAsJSON (newVal: string) {
       this.$emit('update:modelValue', JSON.parse(newVal))
+    },
+    collapse(newVal:boolean) {
+      if(newVal) {
+        renderTex()
+      }
     }
   },
   data () {
