@@ -21,9 +21,9 @@
           <span class="text-sm md:text-md"
             ><i class="mr-2 far fa-user"></i>{{ $store.state.user.email }}</span
           >
-          <router-link v-if="$store.state.user.is_teacher" to="/dashboard"
+          <!-- <router-link v-if="$store.state.user.is_teacher" to="/dashboard"
             ><span><i class="ml-6 mr-2 text-lg fas fa-home"></i></span
-          ></router-link>
+          ></router-link> -->
         </template>
       </div>
     </nav>

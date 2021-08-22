@@ -56,6 +56,7 @@
       ><SelectableTeacherList
         v-model="course.allowed_teachers"
         :course="course"
+        :buttonsDisabled="loading"
       ></SelectableTeacherList
     ></template>
     <template v-slot:footerButtons>
@@ -91,14 +92,17 @@ export default defineComponent({
       const newVal = JSON.parse(_newVal)
       const courseId = this.$route.params.courseId as string
 
+      this.loading = true
       await updateAllowedTeachers(courseId, newVal)
+      this.loading = false
     }
   },
   data () {
     return {
       course: {} as Course,
       showTopics: false,
-      showAllowedTeachers: false
+      showAllowedTeachers: false,
+      loading: false
     }
   },
   computed: {

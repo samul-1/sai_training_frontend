@@ -43,6 +43,10 @@ export default defineComponent({
     course: {
       type: Object as PropType<Course>,
       required: true
+    },
+    buttonsDisabled: {
+      type: Boolean,
+      default: false
     }
   },
   async created () {

@@ -30,7 +30,7 @@
         :variant="'light'"
         :size="'xs'"
         @click="editTopic(topic)"
-        :disabled="editing && editing != topic.id"
+        :disabled="editing != '_' && editing != topic.id"
         class="mb-auto"
         ><i class="text-xs fas fa-edit"></i
       ></UIButton>

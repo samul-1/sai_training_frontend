@@ -14,6 +14,28 @@
         >Mostra {{ wrongOnly ? 'tutte' : 'solo sbagliate' }}</UIButton
       >
     </div>
+    <div
+      v-if="results.help_texts != {}"
+      class="p-8 pb-5 my-4 border rounded-xl"
+    >
+      <p class="mb-2">
+        <i class="text-red-700 fas fa-exclamation-triangle"></i> Hai sbagliato
+        almeno il 50% delle domande nelle seguenti categorie:
+      </p>
+      <div
+        v-for="(text, topic) in results.help_texts"
+        class="my-4"
+        :key="'help-text-' + topic"
+      >
+        <p class="text-lg font-medium">
+          <i class="my-auto text-xs md:mr-1 fas fa-caret-right"></i> {{ topic }}
+        </p>
+        <p>
+          <span class="mr-1 font-medium">Suggerimento:</span>
+          <span v-html="text"></span>
+        </p>
+      </div>
+    </div>
     <FullQuestion
       v-for="question in filteredQuestions"
       :key="'q-' + question.id"

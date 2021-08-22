@@ -48,6 +48,7 @@ export interface TrainingSessionResults {
   begin_timestamp: string;
   end_timestamp: string;
   questions: Question[];
+  help_texts?: Record<string, string>;
 }
 
 export interface Topic {
