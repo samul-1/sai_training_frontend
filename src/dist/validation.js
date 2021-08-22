@@ -7,6 +7,7 @@ function isValidQuestion(question) {
         question.text.length == 0 ||
         !question.topic ||
         question.topic.length == 0 ||
+        question.topic == '_' ||
         parseInt((_a = question.difficulty) !== null && _a !== void 0 ? _a : '-1') < 0 ||
         parseInt((_b = question.difficulty) !== null && _b !== void 0 ? _b : '-1') > 4 ||
         !question.choices ||

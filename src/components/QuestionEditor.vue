@@ -27,6 +27,9 @@
           <option :value="''" selected disabled class="text-red-900"
             >Seleziona un argomento</option
           >
+          <option :value="'_'" class="text-green-900 bg-green-100"
+            >Nuovo argomento...</option
+          >
           <option
             class="text-black bg-white"
             v-for="topic in topicChoices"
@@ -51,6 +54,15 @@
         cols="100"
         class="p-3 border rounded-lg"
         v-model="questionData.text"
+      ></textarea>
+      <h1 class="mt-4 mb-2 font-medium">
+        Soluzione (opzionale, mostrata a fine esercitazione)
+      </h1>
+      <textarea
+        rows="5"
+        cols="100"
+        class="p-3 border rounded-lg"
+        v-model="questionData.solution"
       ></textarea>
       <div class="flex mt-4 mb-2 space-x-2 ">
         <h1 class="font-medium">Risposte</h1>
@@ -81,6 +93,30 @@
       v-html="questionData.text"
       class="overflow-x-auto overflow-y-auto break-words max-h-20"
     ></div>
+
+    <modal
+      v-if="showTopicCreation"
+      :title="'Nuovo argomento'"
+      :yesText="'Crea'"
+      :noText="'Annulla'"
+      :disableOk="draftTopic.name.length == 0"
+      @no="cancelTopicCreation()"
+      @yes="_createTopic()"
+      ><template v-slot:body>
+        <h1 class="mt-2 font-medium">Nome argomento</h1>
+        <input
+          class="border rounded-md p px-1.5"
+          type="text"
+          v-model="draftTopic.name"/>
+        <h1 class="mt-2 font-medium">Testo di aiuto (opzionale)</h1>
+        <textarea
+          cols="50"
+          rows="4"
+          class="p-1 border rounded-lg"
+          v-model="draftTopic.help_text"
+          placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
+        ></textarea></template
+    ></modal>
   </div>
 </template>
 
@@ -93,12 +129,15 @@ import { renderTex } from '@/utils'
 
 //import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
+import Modal from './Modal.vue'
+import { createTopic } from '@/api/courses'
 
 export default defineComponent({
   name: 'QuestionEditor',
   components: {
     DifficultyInput,
-    UIButton
+    UIButton,
+    Modal
   },
   props: {
     modelValue: {
@@ -137,12 +176,23 @@ export default defineComponent({
       if(newVal) {
         renderTex()
       }
+    },
+    questionTopic(newVal: string) {
+      if(newVal == '_') {
+        this.showTopicCreation = true
+      }
     }
+
   },
   data () {
     return {
       questionData: {} as Question,
-      collapse: false
+      collapse: false,
+      showTopicCreation: false,
+      draftTopic: {
+        name:"",
+        help_text:""
+      } as Topic
     }
   },
   methods: {
@@ -151,11 +201,29 @@ export default defineComponent({
             text: "",
             correct: false,
         } as Choice)
+    },
+    async _createTopic (): Promise<void> {
+      const courseId = this.$route.params.courseId as string
+      const { id, ...rest } = this.draftTopic // throw away the dummy id
+      const response = await createTopic(courseId, rest)
+      this.$emit("updateTopics")
+      this.questionData.topic = response.id as string
+      this.showTopicCreation = false
+      this.draftTopic = {
+        name: "", help_text: ""
+      }
+    },
+    cancelTopicCreation() :void {
+      this.questionData.topic = ""
+      this.showTopicCreation = false
     }
   },
   computed: {
     questionAsJSON (): string {
       return JSON.stringify(this.questionData)
+    },
+    questionTopic() : string {
+      return this.questionData.topic
     }
   }
 })

@@ -24,6 +24,7 @@
       class="col-span-10"
       v-model="questions[index]"
       :topicChoices="topics"
+      @updateTopics="updateTopics()"
       :startCollapsed="true"
       :questionTempKey="index"
     ></question-editor>
@@ -57,10 +58,13 @@ export default defineComponent({
     }
   },
   async created () {
-    const courseId = this.$route.params.courseId as string
-    this.topics = await getTopics(courseId)
+    await this.updateTopics()
   },
   methods: {
+    async updateTopics () {
+      const courseId = this.$route.params.courseId as string
+      this.topics = await getTopics(courseId)
+    },
     async _importQuestions () {
       const courseId = this.$route.params.courseId as string
       await bulkCreateQuestions(courseId, this.questions)

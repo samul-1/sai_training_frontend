@@ -6,6 +6,7 @@ export function isValidQuestion(question: Question): boolean {
     question.text.length == 0 ||
     !question.topic ||
     question.topic.length == 0 ||
+    question.topic == '_' ||
     parseInt(question.difficulty ?? '-1') < 0 ||
     parseInt(question.difficulty ?? '-1') > 4 ||
     !question.choices ||

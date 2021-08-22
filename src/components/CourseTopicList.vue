@@ -1,5 +1,6 @@
 <template>
   <!-- <h1 class="mb-8 text-4xl text-center">Argomenti</h1> -->
+  <skeleton v-if="loading"></skeleton>
   <div class="grid md:grid-cols-2">
     <div
       v-for="topic in topics"
@@ -15,8 +16,9 @@
           class="border rounded-md p px-1.5"
           type="text"
           v-model="topics.find(t => t.id == topic.id).name"
+          :placeholder="editing == '_' ? 'Nome del nuovo argomento' : ''"
         />
-        <h1 class="mt-2 font-medium">Testo di aiuto</h1>
+        <h1 class="mt-2 font-medium">Testo di aiuto (opzionale)</h1>
         <textarea
           cols="1"
           rows="4"
@@ -30,7 +32,7 @@
         :variant="'light'"
         :size="'xs'"
         @click="editTopic(topic)"
-        :disabled="editing != '_' && editing != topic.id"
+        :disabled="editing && editing != topic.id"
         class="mb-auto"
         ><i class="text-xs fas fa-edit"></i
       ></UIButton>
@@ -65,9 +67,10 @@ import { createTopic, getTopics, updateTopic } from '@/api/courses'
 import { Topic } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import UIButton from './UIButton.vue'
+import Skeleton from '@/components/Skeleton.vue'
 
 export default defineComponent({
-  components: { UIButton },
+  components: { UIButton, Skeleton },
   name: 'CourseTopicList',
   async created () {
     this.loading = true
