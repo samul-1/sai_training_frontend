@@ -4,11 +4,18 @@
       Esercitazioni Unipi
     </h1>
     <div
-      class="w-full px-12 py-16 mx-2 my-auto text-center border rounded-lg shadow-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
+      class="w-full px-12 py-12 mx-2 my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
     >
+      <h1 class="mx-auto mb-4 text-2xl text-center">
+        Login {{ $route.params.role == 'teacher' ? 'docente' : 'studente' }}
+      </h1>
       <p class="mb-3">
         Effettua l'accesso con il tuo indirizzo email
-        <strong>@studenti.unipi.it</strong>.
+        <strong
+          >@{{
+            $route.params.role == 'teacher' ? '' : 'studenti.'
+          }}unipi.it</strong
+        >.
       </p>
       <p class="mb-3">
         <i class="mr-1 text-sm text-red-700 fas fa-exclamation-circle"></i>
@@ -38,22 +45,6 @@
         </UIButton>
       </div>
     </div>
-
-    <!-- <button @click="handleClickGetAuthCode" :disabled="!Vue3GoogleOauth.isInit">
-      get authCode
-    </button>
-    <button
-      @click="handleClickSignOut"
-      :disabled="!Vue3GoogleOauth.isAuthorized"
-    >
-      sign out
-    </button>
-    <button
-      @click="handleClickDisconnect"
-      :disabled="!Vue3GoogleOauth.isAuthorized"
-    >
-      disconnect
-    </button> -->
   </div>
 </template>
 
@@ -61,6 +52,7 @@
 /* eslint-disable */
 import UIButton from '@/components/UIButton.vue'
 import { inject, toRefs } from 'vue'
+import { getMainView } from '@/router'
 export default {
   name: 'Login',
   components: {
@@ -80,17 +72,11 @@ export default {
         }
         console.log('googleUser', googleUser)
         this.user = googleUser.getBasicProfile().getEmail()
-        console.log('getId', this.user)
-        console.log('getBasicProfile', googleUser.getBasicProfile())
-        console.log('getAuthResponse', googleUser.getAuthResponse())
-        console.log(
-          'getAuthResponse',
-          this.$gAuth.instance.currentUser.get().getAuthResponse()
-        )
         const token = googleUser.getAuthResponse().access_token
         console.log('token', token)
         await this.$store.dispatch('convertToken', token)
         await this.$store.dispatch('getUserData')
+        this.$router.push(getMainView())
       } catch (error) {
         //on fail do something
         console.error(error)
@@ -133,6 +119,7 @@ export default {
   },
   created () {
     this.$store.commit('resetToken')
+    console.log('options', this.$gAuth)
   }
 }
 </script>

@@ -85,7 +85,11 @@ export default defineComponent({
   name: 'TeacherCourseDashboard',
   async created () {
     const courseId = this.$route.params.courseId as string
-    this.course = await getCourse(courseId)
+    try {
+      this.course = await getCourse(courseId)
+    } catch (error) {
+      this.$router.push('/teacher')
+    }
   },
   watch: {
     async allowedTeachersAsJSON (_newVal) {
