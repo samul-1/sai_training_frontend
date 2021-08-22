@@ -8,7 +8,10 @@
     <p>{{ teacher.full_name }}</p>
     <UIButton
       @click="toggle(teacher.id)"
-      v-if="teacher.id != course.creator_id"
+      v-if="
+        (course.id && teacher.id != course.creator_id) ||
+          (!course.id && teacher.id != $store.state.user.id)
+      "
       :size="'xs'"
       :variant="course.allowed_teachers.includes(teacher.id) ? 'red' : 'green'"
       >{{

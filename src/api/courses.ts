@@ -22,6 +22,19 @@ export function getCourse(courseId: string): Promise<Course> {
   });
 }
 
+export function createCourse(course: Course): Promise<Course> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`/courses/`, {
+        ...course,
+      })
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function getTrainingTemplates(
   courseId: string
 ): Promise<TrainingTemplate[]> {

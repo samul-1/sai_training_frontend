@@ -6,6 +6,7 @@ var Home_vue_1 = require("../views/Home.vue");
 var Login_vue_1 = require("../views/Login.vue");
 var Courses_vue_1 = require("../views/Courses.vue");
 var StudentDashboard_vue_1 = require("../views/StudentDashboard.vue");
+var TeacherDashboard_vue_1 = require("../views/TeacherDashboard.vue");
 var StudentCourseDashboard_vue_1 = require("../views/StudentCourseDashboard.vue");
 var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue");
 var TrainingSession_vue_1 = require("../views/TrainingSession.vue");
@@ -28,6 +29,11 @@ var routes = [
         path: '/student',
         name: 'StudentDashboard',
         component: StudentDashboard_vue_1["default"]
+    },
+    {
+        path: '/teacher',
+        name: 'TeacherDashboard',
+        component: TeacherDashboard_vue_1["default"]
     },
     {
         path: '/courses',

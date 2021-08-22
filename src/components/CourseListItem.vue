@@ -25,7 +25,10 @@
       </div>
     </div>
     <div class="my-auto ml-auto text-center">
-      <router-link :to="'/course/' + course.id">
+      <router-link
+        v-if="!$store.state.user.is_teacher"
+        :to="'/course/' + course.id"
+      >
         <UIButton :variant="course.enrolled ? 'indigo' : 'green'">
           <i
             :class="{
@@ -34,6 +37,17 @@
             }"
           ></i>
           {{ course.enrolled ? 'Vai al corso' : 'Iscriviti' }}
+        </UIButton></router-link
+      >
+      <router-link v-else :to="'/course-panel/' + course.id">
+        <UIButton :variant="'green'">
+          <!-- <i
+            :class="{
+              'fas fa-plus-circle mr-1': !course.enrolled,
+              'fas fa-arrow-right mr-1': course.enrolled
+            }"
+          ></i> -->
+          Pannello di controllo
         </UIButton></router-link
       >
     </div>

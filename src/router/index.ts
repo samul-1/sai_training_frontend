@@ -9,6 +9,7 @@ import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
 import Courses from '../views/Courses.vue';
 import StudentDashboard from '../views/StudentDashboard.vue';
+import TeacherDashboard from '../views/TeacherDashboard.vue';
 import StudentCourseDashboard from '../views/StudentCourseDashboard.vue';
 import TeacherCourseDashboard from '../views/TeacherCourseDashboard.vue';
 import TrainingSession from '../views/TrainingSession.vue';
@@ -33,6 +34,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/student',
     name: 'StudentDashboard',
     component: StudentDashboard,
+  },
+  {
+    path: '/teacher',
+    name: 'TeacherDashboard',
+    component: TeacherDashboard,
   },
   {
     path: '/courses',
