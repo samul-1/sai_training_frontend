@@ -41,6 +41,7 @@
       :noText="'Annulla'"
       @no="showTemplateEditor = false"
       @yes="_createTrainingTemplate()"
+      :disableOk="!draftTemplateValid"
       :large="true"
     >
       <template v-slot:body>
@@ -52,6 +53,7 @@
         <TrainingTemplateEditor
           :courseId="$route.params.courseId"
           @update="updateDraftTemplate($event)"
+          @validity="draftTemplateValid = $event"
         ></TrainingTemplateEditor>
       </template>
       <template v-slot:footerButtons>
@@ -96,7 +98,8 @@ export default defineComponent({
       selected: null as string | null,
       showTemplateEditor: false,
       drafTemplate: {} as TrainingTemplate,
-      loading: false
+      loading: false,
+      draftTemplateValid: false
     }
   },
   methods: {

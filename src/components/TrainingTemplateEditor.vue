@@ -36,6 +36,11 @@
           v-model="
             templateData.rules.find(rule => rule.topic == topic.name).amount
           "
+          :class="{
+            'bg-red-100 text-red-900 border-red-200':
+              templateData.rules.find(rule => rule.topic == topic.name).amount <
+              0
+          }"
         />
         <DifficultyProfile
           class="col-span-3 border-b pb-14 md:pb-0 md:border-b-0"
@@ -85,6 +90,9 @@ export default defineComponent({
   watch: {
     templateAsJSON (newVal) {
       this.$emit('update', newVal)
+    },
+    valid (newVal) {
+      this.$emit('validity', newVal)
     }
   },
   async created () {
@@ -143,6 +151,12 @@ export default defineComponent({
       return this.templateData.rules
         .map(rule => rule.amount)
         .reduce((acc, curr) => acc + curr, 0)
+    },
+    valid (): boolean {
+      return (
+        this.templateWithoutEmptyRules.rules.length > 0 &&
+        !this.templateWithoutEmptyRules.rules.some(rule => rule.amount < 0)
+      )
     }
   }
 })

@@ -28,6 +28,7 @@
       :title="`${editing ? 'Modifica' : 'Crea'} modello`"
       :yesText="'Salva'"
       :noText="'Annulla'"
+      :disableOk="!draftTemplateValid"
       @no="discard()"
       @yes="saveTrainingTemplate()"
       :large="true"
@@ -42,7 +43,9 @@
           :courseId="$route.params.courseId"
           :showFullForm="true"
           @update="updateDraftTemplate($event)"
+          @validity="draftTemplateValid = $event"
           :template="templates.find(template => template.id == editing)"
+          ref="templateEditor"
         ></TrainingTemplateEditor>
       </template>
       <template v-slot:footerButtons>
@@ -61,7 +64,7 @@ import {
 } from '@/api/courses'
 import { TrainingTemplate } from '@/interfaces'
 import TrainingTemplateItem from '@/components/TrainingTemplateItem.vue'
-import { defineComponent } from '@vue/runtime-core'
+import { defineComponent, Ref } from '@vue/runtime-core'
 //import UIButton from '@/components/UIButton.vue'
 import TrainingTemplateEditor from '@/components/TrainingTemplateEditor.vue'
 import Modal from '@/components/Modal.vue'
@@ -95,6 +98,7 @@ export default defineComponent({
       editing: null as string | null,
       showTemplateEditor: false,
       drafTemplate: {} as TrainingTemplate,
+      draftTemplateValid: false,
       loading: false
     }
   },
