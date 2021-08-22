@@ -14,7 +14,11 @@
       @click="showTopics = true"
       >Argomenti
     </UIButton>
-    <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
+    <UIButton
+      :variant="'indigo'"
+      :size="'lg'"
+      class="w-full"
+      @click="showAllowedTeachers = true"
       >Gestisci insegnanti
     </UIButton>
     <router-link :to="`/course-panel/${$route.params.courseId}/templates`">
@@ -39,6 +43,25 @@
       <div id="topicsModalFooterButtons"></div>
     </template>
   </modal>
+
+  <modal
+    :large="true"
+    v-if="showAllowedTeachers"
+    @yes="showAllowedTeachers = false"
+    :confirmOnly="true"
+    :dismissible="true"
+    :title="'Insegnanti autorizzati per ' + course.name"
+  >
+    <template v-slot:body
+      ><SelectableTeacherList
+        v-model="course.allowed_teachers"
+        :course="course"
+      ></SelectableTeacherList
+    ></template>
+    <template v-slot:footerButtons>
+      <div id="topicsModalFooterButtons"></div>
+    </template>
+  </modal>
 </template>
 
 <script lang="ts">
@@ -48,25 +71,41 @@ import Modal from '@/components/Modal.vue'
 import UIButton from '@/components/UIButton.vue'
 import { Course } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
+import SelectableTeacherList from '@/components/SelectableTeacherList.vue'
+import { updateAllowedTeachers } from '@/api/users'
 
 export default defineComponent({
   components: {
     UIButton,
     Modal,
-    CourseTopicList
+    CourseTopicList,
+    SelectableTeacherList
   },
   name: 'TeacherCourseDashboard',
   async created () {
     const courseId = this.$route.params.courseId as string
     this.course = await getCourse(courseId)
   },
+  watch: {
+    async allowedTeachersAsJSON (_newVal) {
+      const newVal = JSON.parse(_newVal)
+      const courseId = this.$route.params.courseId as string
+
+      await updateAllowedTeachers(courseId, newVal)
+    }
+  },
   data () {
     return {
       course: {} as Course,
-      showTopics: false
+      showTopics: false,
+      showAllowedTeachers: false
     }
   },
-  methods: {}
+  computed: {
+    allowedTeachersAsJSON (): string {
+      return JSON.stringify(this.course.allowed_teachers)
+    }
+  }
 })
 </script>
 

@@ -6,25 +6,35 @@
       :key="'topic-' + topic.id"
       class="flex my-3 space-x-2"
     >
-      <p v-if="editing != topic.id" class="my-auto">{{ topic.name }}</p>
-      <input
-        v-else
-        :class="{
-          'bg-red-200 border-0 text-red-900': isDuplicated(topic)
-        }"
-        class="border rounded-md p px-1.5"
-        type="text"
-        v-model="topics.find(t => t.id == topic.id).name"
-      />
+      <p v-if="editing != topic.id" class="mb-auto">{{ topic.name }}</p>
+      <div class="flex flex-col" v-else>
+        <input
+          :class="{
+            'bg-red-200 border-0 text-red-900': isDuplicated(topic)
+          }"
+          class="border rounded-md p px-1.5"
+          type="text"
+          v-model="topics.find(t => t.id == topic.id).name"
+        />
+        <h1 class="mt-2 font-medium">Testo di aiuto</h1>
+        <textarea
+          cols="1"
+          rows="4"
+          class="p-1 border rounded-lg"
+          v-model="topics.find(t => t.id == topic.id).help_text"
+          placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
+        ></textarea>
+      </div>
       <UIButton
         v-if="editing != topic.id"
         :variant="'light'"
         :size="'xs'"
         @click="editTopic(topic)"
         :disabled="editing && editing != topic.id"
+        class="mb-auto"
         ><i class="text-xs fas fa-edit"></i
       ></UIButton>
-      <div class="flex space-x-2" v-else>
+      <div class="flex mb-auto space-x-2" v-else>
         <UIButton
           @click="topic.id == '_' ? _createTopic(topic) : _updateTopic(topic)"
           :variant="'green'"
@@ -45,7 +55,6 @@
       :size="'sm'"
       @click="newTopic()"
       :disabled="editing"
-      ><i class="mr-2 text-xs fas fa-plus-circle"></i
       ><span>Nuovo argomento</span></UIButton
     ></teleport
   >

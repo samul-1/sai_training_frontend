@@ -8,7 +8,7 @@
         v-for="template in templates"
         :key="'template-' + template.id"
         :trainingTemplate="template"
-        class="transition-all duration-75 cursor-pointer"
+        class="transition-all duration-75 cursor-pointer hover:shadow-inner"
         :class="{
           'ring-green-600 ring-inset ring ring-opacity-60 bg-green-50':
             template.id == selected

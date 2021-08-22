@@ -115,7 +115,7 @@ export default defineComponent({
   },
   methods: {
     fillInEmptyRules (): void {
-      this.templateData = { ...(this.template as TrainingTemplate) }
+      this.templateData = JSON.parse(JSON.stringify(this.template)) //{ ...(this.template as TrainingTemplate) }
       this.topics.forEach(topic => {
         if (!this.templateData.rules.find(rule => rule.topic == topic.name)) {
           this.templateData.rules.push({

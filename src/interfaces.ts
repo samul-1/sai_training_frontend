@@ -2,8 +2,10 @@ export interface Course {
   name: string;
   description: string;
   creator: string;
+  creator_id?: string;
   enrolled?: boolean;
   number_enrolled?: number;
+  allowed_teachers?: string[];
 }
 
 export interface TrainingTemplateRule {
@@ -50,4 +52,11 @@ export interface TrainingSessionResults {
 export interface Topic {
   id?: string;
   name: string;
+  help_text?: string;
+}
+
+export interface User {
+  email: string;
+  full_name: string;
+  is_teacher: boolean;
 }

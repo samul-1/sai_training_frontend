@@ -8,7 +8,7 @@
         v-for="template in templates"
         :key="'template-' + template.id"
         :trainingTemplate="template"
-        class="transition-all duration-75 cursor-pointer"
+        class="transition-all duration-75 cursor-pointer hover:shadow-inner"
         @click="editing = template.id"
       >
       </TrainingTemplateItem>
@@ -22,14 +22,7 @@
         </div>
       </div>
     </div>
-    <!-- class="absolute bottom-0 right-0 mb-8 mr-12"-->
-    <!-- <UIButton
-      class="mt-10"
-      :variant="'green'"
-      :disabled="!editing"
-      @click="$emit('setTemplate', selected)"
-      >Conferma</UIButton
-    > -->
+
     <modal
       v-if="showTemplateEditor"
       :title="`${editing ? 'Modifica' : 'Crea'} modello`"
@@ -120,10 +113,14 @@ export default defineComponent({
         response = await updateTrainingTemplate(
           courseId,
           this.editing,
-          this.templates.find(
-            template => template.id === this.editing
-          ) as TrainingTemplate
+          this.drafTemplate
+          // this.templates.find(
+          //   template => template.id === this.editing
+          // ) as TrainingTemplate
         )
+        this.templates[
+          this.templates.findIndex(template => template.id == this.editing)
+        ] = response
       } else {
         response = await createTrainingTemplate(courseId, this.drafTemplate)
         this.templates.push(response)

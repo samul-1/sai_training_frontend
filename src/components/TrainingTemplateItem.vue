@@ -1,6 +1,9 @@
 <template>
   <div class="px-10 py-6 border rounded-xl">
     <h1 class="mb-4 text-xl">{{ trainingTemplate.name }}</h1>
+    <p v-if="trainingTemplate.description">
+      {{ trainingTemplate.description }}
+    </p>
     <TrainingTemplateRule
       v-for="(rule, index) in trainingTemplate.rules"
       :key="'template-' + trainingTemplate.id + '-rule-' + index"
