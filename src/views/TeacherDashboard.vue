@@ -1,5 +1,8 @@
 <template>
   <h1 class="mb-8 text-4xl text-center">I tuoi corsi</h1>
+  <p class="mb-4" v-if="!loading && courses.length == 0">
+    Non ci sono corsi. Creane uno!
+  </p>
   <Skeleton v-if="loading"></Skeleton>
   <CourseListItem
     v-for="course in courses"
@@ -16,6 +19,7 @@
     v-if="showCourseCreation"
     @yes="_createCourse()"
     @no="showCourseCreation = false"
+    :disableOk="draftCourse.name.length == 0"
     :yesText="'Crea'"
     :noText="'Annulla'"
     :confirmOnly="false"
@@ -53,7 +57,9 @@ export default defineComponent({
       courses: [] as Course[],
       loading: false,
       showCourseCreation: false,
-      draftCourse: {} as Course
+      draftCourse: {
+        name: ''
+      } as Course
     }
   },
   methods: {
