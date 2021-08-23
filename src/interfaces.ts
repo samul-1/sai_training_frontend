@@ -7,6 +7,7 @@ export interface Course {
   enrolled?: boolean;
   number_enrolled?: number;
   allowed_teachers?: string[];
+  in_progress_session?: boolean;
 }
 
 export interface TrainingTemplateRule {

@@ -1,10 +1,13 @@
 <template>
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
-  <p v-if="course.description?.length" v-html="course.description"></p>
+  <!-- <p v-if="course.description?.length" v-html="course.description"></p> -->
   <div class="flex flex-col mx-auto space-y-6 w-max">
     <router-link :to="`/course/${$route.params.courseId}/train/`"
       ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-        >Inizia esercitazione</UIButton
+        >{{
+          course.in_progress_session ? 'Continua' : 'Inizia'
+        }}
+        esercitazione</UIButton
       ></router-link
     >
     <router-link :to="`/course/${$route.params.courseId}/sessions/`">
@@ -14,7 +17,7 @@
     >
   </div>
   <modal
-    v-if="!course?.enrolled"
+    v-if="!loading && !course?.enrolled"
     @yes="enroll()"
     @no="$router.push('/courses')"
     :title="'Nuova iscrizione'"
@@ -37,11 +40,14 @@ export default defineComponent({
   name: 'StudentCourseDashboard',
   async created () {
     const courseId = this.$route.params.courseId as string
+    this.loading = true
     this.course = await getCourse(courseId)
+    this.loading = false
   },
   data () {
     return {
-      course: {} as Course
+      course: {} as Course,
+      loading: false
     }
   },
   methods: {

@@ -1,13 +1,15 @@
 <template>
   <h1 v-if="!showTemplateSelection" class="mb-4 text-3xl">Esercitazione</h1>
-  <Skeleton v-if="loading"></Skeleton>
+  <div v-if="loading">
+    <Skeleton></Skeleton>
+    <Skeleton class="my-2"></Skeleton>
+  </div>
   <TrainingTemplateSelector
     v-else-if="showTemplateSelection"
     :courseId="$route.params.courseId"
     @setTemplate="templateId = $event"
   ></TrainingTemplateSelector>
   <div v-else>
-    <h1>Esercitazione</h1>
     <div class="my-4" v-for="question in questions" :key="'q-' + question.id">
       <div v-html="question.text"></div>
       <div
@@ -76,7 +78,7 @@ export default defineComponent({
           this.session = response
         })
         .catch(error => {
-          if (error.response.status == 400) {
+          if (error.status == 204) {
             // a new session needs to be created, therefore a template id is required
             this.showTemplateSelection = true
           } else {

@@ -58,7 +58,8 @@ export default defineComponent({
       loading: false,
       showCourseCreation: false,
       draftCourse: {
-        name: ''
+        name: '',
+        allowed_teachers: [] as string[]
       } as Course
     }
   },

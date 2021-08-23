@@ -7,7 +7,13 @@ function getCurrentTrainingSession(courseId, templateId) {
         axios_1["default"]
             .post("/courses/" + courseId + "/sessions/current" + (templateId ? '/?template_id=' + templateId : '/'))
             .then(function (response) {
-            resolve(response.data);
+            console.log(response.status);
+            if (response.status == 204) {
+                reject(response);
+            }
+            else {
+                resolve(response.data);
+            }
         })["catch"](function (error) { return reject(error); });
     });
 }

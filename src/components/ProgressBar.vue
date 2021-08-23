@@ -5,9 +5,9 @@
     <div
       class="h-4 rounded-lg"
       :class="{
-        'bg-red-500': widthAsPercentage < 45,
+        'bg-red-400': widthAsPercentage < 45,
         'bg-yellow-400': widthAsPercentage >= 45 && widthAsPercentage <= 50,
-        'bg-green-500': widthAsPercentage > 50
+        'bg-green-400': widthAsPercentage > 50
       }"
       :style="'width:' + widthAsPercentage + '%;'"
     ></div>

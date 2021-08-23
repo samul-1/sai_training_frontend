@@ -15,12 +15,14 @@
       >
     </div>
     <div
-      v-if="results.help_texts != {}"
+      v-if="Object.keys(results.help_texts).length > 0"
       class="p-8 pb-5 my-4 border rounded-xl"
     >
       <p class="mb-2">
-        <i class="text-red-700 fas fa-exclamation-triangle"></i> Hai sbagliato
-        almeno il 50% delle domande nelle seguenti categorie:
+        <i
+          class="mr-1 text-lg text-red-500 opacity-80 fas fa-exclamation-triangle"
+        ></i>
+        Hai sbagliato almeno il 50% delle domande nelle seguenti categorie:
       </p>
       <div
         v-for="(text, topic) in results.help_texts"

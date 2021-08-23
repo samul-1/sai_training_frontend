@@ -40,6 +40,8 @@ export default defineComponent({
   data () {
     return {
       course: {
+        name: '',
+        description: '',
         allowed_teachers: [] as string[]
       } as Course
     }

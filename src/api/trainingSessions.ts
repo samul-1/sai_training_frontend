@@ -15,7 +15,12 @@ export function getCurrentTrainingSession(
         }`
       )
       .then((response) => {
-        resolve(response.data);
+        console.log(response.status);
+        if (response.status == 204) {
+          reject(response);
+        } else {
+          resolve(response.data);
+        }
       })
       .catch((error) => reject(error));
   });
