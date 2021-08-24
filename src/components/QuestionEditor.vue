@@ -33,7 +33,9 @@
           <option
             class="text-black bg-white"
             v-for="topic in topicChoices"
-            :key="'topic-' + topic.id"
+            :key="
+              'q-' + questionData.id ?? questionTempKey + '-topic-' + topic.id
+            "
             :value="topic.id"
             >{{ topic.name }}</option
           >
@@ -87,6 +89,13 @@
           >
         </div>
       </div>
+      <UIButton
+        :disabled="!valid"
+        @click="$emit('save')"
+        class="mt-8"
+        :variant="'green'"
+        >Salva</UIButton
+      >
     </div>
     <div
       v-else
@@ -126,11 +135,10 @@ import { defineComponent, PropType } from '@vue/runtime-core'
 import DifficultyInput from './DifficultyInput.vue'
 import UIButton from './UIButton.vue'
 import { renderTex } from '@/utils'
-
-//import { QuillEditor } from '@vueup/vue-quill'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import Modal from './Modal.vue'
 import { createTopic } from '@/api/courses'
+import { isValidQuestion } from '@/validation'
 
 export default defineComponent({
   name: 'QuestionEditor',
@@ -159,6 +167,10 @@ export default defineComponent({
     topicChoices: {
       type: Array as PropType<Topic[]>,
       required: true
+    },
+    showSave: {
+      type: Boolean,
+      default: false,
     }
   },
   created () {
@@ -224,6 +236,9 @@ export default defineComponent({
     },
     questionTopic() : string {
       return this.questionData.topic
+    },
+    valid() : boolean {
+      return isValidQuestion(this.questionData)
     }
   }
 })

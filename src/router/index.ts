@@ -9,8 +9,8 @@ import {
   RouteRecordRaw,
 } from 'vue-router';
 import store from '../store';
-import Home from '../views/Home.vue';
 import Login from '../views/Login.vue';
+import CourseQuestionList from '../views/CourseQuestionList.vue';
 import Courses from '../views/Courses.vue';
 import StudentDashboard from '../views/StudentDashboard.vue';
 import TeacherDashboard from '../views/TeacherDashboard.vue';
@@ -104,6 +104,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course-panel/:courseId/import',
     name: 'QuestionImport',
     component: QuestionImport,
+    meta: {
+      teachersOnly: true,
+    },
+  },
+  {
+    path: '/course-panel/:courseId/questions',
+    name: 'CourseQuestionList',
+    component: CourseQuestionList,
     meta: {
       teachersOnly: true,
     },

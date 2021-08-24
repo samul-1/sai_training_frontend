@@ -5,6 +5,7 @@ exports.getMainView = void 0;
 var vue_router_1 = require("vue-router");
 var store_1 = require("../store");
 var Login_vue_1 = require("../views/Login.vue");
+var CourseQuestionList_vue_1 = require("../views/CourseQuestionList.vue");
 var Courses_vue_1 = require("../views/Courses.vue");
 var StudentDashboard_vue_1 = require("../views/StudentDashboard.vue");
 var TeacherDashboard_vue_1 = require("../views/TeacherDashboard.vue");
@@ -95,6 +96,14 @@ var routes = [
         path: '/course-panel/:courseId/import',
         name: 'QuestionImport',
         component: QuestionImport_vue_1["default"],
+        meta: {
+            teachersOnly: true
+        }
+    },
+    {
+        path: '/course-panel/:courseId/questions',
+        name: 'CourseQuestionList',
+        component: CourseQuestionList_vue_1["default"],
         meta: {
             teachersOnly: true
         }
