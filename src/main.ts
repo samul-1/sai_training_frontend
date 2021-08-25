@@ -21,20 +21,21 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (
-      error.response.status == 403 ||
-      error.response.status == 401
+      error.response?.status == 403 ||
+      error.response?.status == 401
     ) {
       router.push('/login');
     }
-    console.log(error.response);
+    console.log('ERROR', error);
     store.commit('pushNotification', {
       message:
         'Si è verificato un errore: ' +
-        error.response.status +
+        (error.response?.status ?? error.message) +
         ' ' +
-        (error.response.data.message ??
-          error.response.data.detail ??
-          error.statusText),
+        (error.response?.data.message ??
+          error.response?.data.detail ??
+          error.statusText ??
+          ''),
       autoHide: 5000,
       severity: 2,
     });

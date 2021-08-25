@@ -35,28 +35,37 @@
         v-model="filter.difficulty"
       ></difficulty-input>
     </div>
+  </div>
+  <div class="flex">
     <UIButton
       :disabled="showDraft"
-      @click="showDraft = true"
       class="ml-auto"
+      @click="showDraft = true"
       :variant="'green'"
       >Nuova domanda</UIButton
+    >
+    <router-link :to="`/course-panel/${$route.params.courseId}/import`"
+      ><UIButton :variant="'negative'" class="ml-2">
+        Importa da JSON
+      </UIButton></router-link
     >
   </div>
 
   <Skeleton v-if="firstLoading"></Skeleton>
   <Spinner v-if="loading"></Spinner>
 
-  <QuestionEditor
-    class="my-4"
-    v-if="showDraft"
-    v-model="draftQuestion"
-    :startCollapsed="false"
-    :topicChoices="topics"
-    :showSave="true"
-    @updateTopics="updateTopics()"
-    @save="saveQuestion(draftQuestion)"
-  ></QuestionEditor>
+  <transition name="bounce">
+    <QuestionEditor
+      class="my-4"
+      v-if="showDraft"
+      v-model="draftQuestion"
+      :startCollapsed="false"
+      :topicChoices="topics"
+      :showSave="true"
+      @updateTopics="updateTopics()"
+      @save="saveQuestion(draftQuestion)"
+    ></QuestionEditor
+  ></transition>
 
   <QuestionEditor
     class="my-4"
@@ -66,6 +75,7 @@
     :startCollapsed="true"
     :topicChoices="topics"
     :showSave="true"
+    :ref="'question-editor-' + question.id"
     @updateTopics="updateTopics()"
     @save="saveQuestion(question)"
   ></QuestionEditor>
@@ -177,6 +187,11 @@ export default defineComponent({
         this.questions[
           this.questions.findIndex(q => question.id === q.id)
         ] = response
+
+        // remove the "unsaved changes" warning from editor
+        ;(this.$refs['question-editor-' + question.id] as {
+          dirty: boolean
+        }).dirty = false
       } else {
         const response = await createQuestion(courseId, question)
         this.questions.unshift(response)

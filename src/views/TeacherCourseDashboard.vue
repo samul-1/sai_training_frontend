@@ -2,7 +2,7 @@
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
   <!-- <p v-if="course.description.length" v-html="course.description"></p> -->
   <div class="flex flex-col w-full mx-auto space-y-6 md:w-max">
-    <router-link :to="`/course-panel/${$route.params.courseId}/import`"
+    <router-link :to="`/course-panel/${$route.params.courseId}/questions`"
       ><UIButton :variant="'indigo'" :size="'lg'" class="w-full">
         Domande
       </UIButton></router-link

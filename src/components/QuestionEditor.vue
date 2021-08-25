@@ -72,37 +72,48 @@
           >Nuova</UIButton
         >
       </div>
-      <div
-        v-for="(choice, c_index) in questionData.choices"
-        :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
-        class="flex mt-2"
-      >
-        <textarea
-          rows="2"
-          cols="90"
-          class="p-3 border rounded-lg"
-          v-model="choice.text"
-        ></textarea>
-        <div class="my-auto ml-4">
-          <input type="checkbox" v-model="choice.correct" class="mr-1" /><label
-            >Corretta</label
-          >
+      <transition-group name="bounce">
+        <div
+          v-for="(choice, c_index) in questionData.choices"
+          :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
+          class="flex mt-2"
+        >
+          <textarea
+            rows="2"
+            cols="90"
+            class="p-3 border rounded-lg"
+            v-model="choice.text"
+          ></textarea>
+          <div class="my-auto ml-4">
+            <input
+              type="checkbox"
+              v-model="choice.correct"
+              class="mr-1"
+            /><label>Corretta</label>
+          </div>
         </div>
-      </div>
-      <UIButton
-        :disabled="!valid"
-        @click="$emit('save')"
-        class="mt-8"
-        :variant="'green'"
-        >Salva</UIButton
-      >
+      </transition-group>
     </div>
     <div
       v-else
       v-html="questionData.text"
       class="overflow-x-auto overflow-y-auto break-words max-h-20"
     ></div>
-
+    <div class="flex mt-8 space-x-4">
+      <UIButton
+        :disabled="!valid"
+        @click="$emit('save')"
+        class=""
+        :variant="'green'"
+        >Salva</UIButton
+      >
+      <p
+        v-if="dirty"
+        class="px-2 my-auto text-white bg-gray-900 rounded-md opacity-70"
+      >
+        Modifiche non salvate
+      </p>
+    </div>
     <modal
       v-if="showTopicCreation"
       :title="'Nuovo argomento'"
@@ -181,8 +192,12 @@ export default defineComponent({
     renderTex()
   },
   watch: {
-    questionAsJSON (newVal: string) {
+    questionAsJSON (newVal: string, oldVal : string) {
+      console.log("new", newVal, "old", oldVal)
       this.$emit('update:modelValue', JSON.parse(newVal))
+      if(!this.dirty && newVal != oldVal && oldVal != JSON.stringify({})) {
+        this.dirty = true
+      }
     },
     collapse(newVal:boolean) {
       if(newVal) {
@@ -198,6 +213,7 @@ export default defineComponent({
   },
   data () {
     return {
+      dirty: false,
       questionData: {} as Question,
       collapse: false,
       showTopicCreation: false,

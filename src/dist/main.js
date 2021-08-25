@@ -16,17 +16,17 @@ axios_1["default"].defaults.baseURL = dev
 axios_1["default"].interceptors.response.use(function (response) {
     return response;
 }, function (error) {
-    var _a, _b;
-    if (error.response.status == 403 ||
-        error.response.status == 401) {
+    var _a, _b, _c, _d, _e, _f, _g, _h, _j;
+    if (((_a = error.response) === null || _a === void 0 ? void 0 : _a.status) == 403 ||
+        ((_b = error.response) === null || _b === void 0 ? void 0 : _b.status) == 401) {
         router_1["default"].push('/login');
     }
-    console.log(error.response);
+    console.log('ERROR', error);
     store_1["default"].commit('pushNotification', {
         message: 'Si è verificato un errore: ' +
-            error.response.status +
+            ((_d = (_c = error.response) === null || _c === void 0 ? void 0 : _c.status) !== null && _d !== void 0 ? _d : error.message) +
             ' ' +
-            ((_b = (_a = error.response.data.message) !== null && _a !== void 0 ? _a : error.response.data.detail) !== null && _b !== void 0 ? _b : error.statusText),
+            ((_j = (_h = (_f = (_e = error.response) === null || _e === void 0 ? void 0 : _e.data.message) !== null && _f !== void 0 ? _f : (_g = error.response) === null || _g === void 0 ? void 0 : _g.data.detail) !== null && _h !== void 0 ? _h : error.statusText) !== null && _j !== void 0 ? _j : ''),
         autoHide: 5000,
         severity: 2
     });
