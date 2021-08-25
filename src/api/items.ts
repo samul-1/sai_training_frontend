@@ -17,17 +17,21 @@ export function bulkCreateQuestions(
 
 export function getQuestions(
   courseId: string,
-  topicId: string | null
+  topicId: string | null,
+  difficulty: string | null,
+  page: number
 ): Promise<Question[]> {
   return new Promise((resolve, reject) => {
     axios
       .get(
         `/courses/${courseId}/${
           topicId ? 'topics/' + topicId + '/' : ''
-        }questions`
+        }questions${difficulty ? '?difficulty=' + difficulty : ''}${
+          difficulty ? '&' : '?'
+        }page=${page}`
       )
       .then((response) => {
-        resolve(response.data);
+        resolve(response.data.results);
       })
       .catch((error) => reject(error));
   });
