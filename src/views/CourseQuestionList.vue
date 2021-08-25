@@ -52,6 +52,7 @@
     :startCollapsed="false"
     :topicChoices="topics"
     :showSave="true"
+    @updateTopics="updateTopics()"
     @save="saveQuestion(draftQuestion)"
   ></QuestionEditor>
 
@@ -63,6 +64,7 @@
     :startCollapsed="true"
     :topicChoices="topics"
     :showSave="true"
+    @updateTopics="updateTopics()"
     @save="saveQuestion(question)"
   ></QuestionEditor>
 </template>
@@ -108,6 +110,10 @@ export default defineComponent({
     }
   },
   methods: {
+    async updateTopics () {
+      const courseId = this.$route.params.courseId as string
+      this.topics = await getTopics(courseId)
+    },
     async saveQuestion (question: Question): Promise<void> {
       const courseId = this.$route.params.courseId as string
 

@@ -217,15 +217,20 @@ export default defineComponent({
     async _createTopic (): Promise<void> {
       const courseId = this.$route.params.courseId as string
       const { id, ...rest } = this.draftTopic // throw away the dummy id
-      const response = await createTopic(courseId, rest)
-      this.$emit("updateTopics")
-      this.questionData.topic = response.id as string
-      this.showTopicCreation = false
-      this.draftTopic = {
-        name: "", help_text: ""
+      try {
+        const response = await createTopic(courseId, rest)
+        this.$emit("updateTopics")
+        this.questionData.topic = response.id as string
+        this.draftTopic = {
+          name: "", help_text: ""
+        }
+        this.showTopicCreation = false
+      } catch(exception) {
+        this.cancelTopicCreation()
       }
+
     },
-    cancelTopicCreation() :void {
+    cancelTopicCreation() : void {
       this.questionData.topic = ""
       this.showTopicCreation = false
     }
