@@ -25,3 +25,21 @@ export function updateAllowedTeachers(
       .catch((error) => reject(error));
   });
 }
+
+export function createTicket(
+  message: string,
+  additional_data: {
+    path: string;
+    browser: string;
+  }
+): Promise<AxiosResponse> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post('/tickets/', {
+        message,
+        additional_data,
+      })
+      .then((response) => resolve(response))
+      .catch((error) => reject(error));
+  });
+}

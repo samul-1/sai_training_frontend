@@ -80,7 +80,7 @@
       :yesText="'Invia'"
       :title="'Segnala malfunzionamento'"
       @no="showReportForm = false"
-      @yes="sendReport()"
+      @yes="_createTicket()"
       ><template v-slot:body>
         <p class="mb-2">
           Includi qualsiasi dettaglio rilevante nella tua segnalazione. Se
@@ -101,6 +101,7 @@
 import Notification from '@/components/Notification.vue'
 import UIButton from '@/components/UIButton.vue'
 import { defineComponent } from '@vue/runtime-core'
+import { createTicket } from './api/users'
 import Modal from './components/Modal.vue'
 export default defineComponent({
   name: 'App',
@@ -116,6 +117,45 @@ export default defineComponent({
     return {
       showReportForm: false,
       reportText: ''
+    }
+  },
+  methods: {
+    async _createTicket () {
+      const reportData = {
+        path: this.$route.fullPath,
+        browser: this.getBrowser()
+      }
+      await createTicket(this.reportText, reportData)
+      this.showReportForm = false
+      this.reportText = ''
+      this.$store.commit('pushNotification', {
+        message: 'Grazie per la segnalazione.',
+        autoHide: 1500,
+        severity: 1
+      })
+    },
+    getBrowser (): string {
+      var ua = navigator.userAgent,
+        tem,
+        M =
+          ua.match(
+            /(opera|chrome|safari|firefox|msie|trident(?=\/))\/?\s*(\d+)/i
+          ) || []
+      if (/trident/i.test(M[1])) {
+        tem = /\brv[ :]+(\d+)/g.exec(ua) || []
+        return `IE v. ${tem[1] || ''}`
+      }
+      if (M[1] === 'Chrome') {
+        tem = ua.match(/\bOPR|Edge\/(\d+)/)
+        if (tem != null) {
+          return `Opera v. ${tem[1] || ''}`
+        }
+      }
+      M = M[2] ? [M[1], M[2]] : [navigator.appName, navigator.appVersion, '-?']
+      if ((tem = ua.match(/version\/(\d+)/i)) != null) {
+        M.splice(1, 1, tem[1])
+      }
+      return M[0] + ' v. ' + M[1]
     }
   }
 })
