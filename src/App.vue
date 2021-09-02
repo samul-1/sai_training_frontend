@@ -63,13 +63,45 @@
           >Samuele Bonini</a
         >
       </p>
+      <p class="ml-auto cursor-pointer" @click="showReportForm = true">
+        <i
+          class="text-red-500 opacity-70 mr-0.5 fas fa-exclamation-triangle"
+        ></i>
+        <span class="hidden ml-1 animated-underline md:inline"
+          >Segnala malfunzionamento</span
+        >
+      </p>
     </footer>
+    <modal
+      v-if="showReportForm"
+      :dismissible="true"
+      :disableOk="reportText.length == 0"
+      :noText="'Annulla'"
+      :yesText="'Invia'"
+      :title="'Segnala malfunzionamento'"
+      @no="showReportForm = false"
+      @yes="sendReport()"
+      ><template v-slot:body>
+        <p class="mb-2">
+          Includi qualsiasi dettaglio rilevante nella tua segnalazione. Se
+          necessario, verrai ricontattato attraverso la piattaforma o via email.
+        </p>
+        <textarea
+          rows="10"
+          cols="60"
+          class="w-full p-3 border rounded-lg"
+          v-model="reportText"
+          placeholder="Cosa non va?"
+        ></textarea>
+      </template>
+    </modal>
   </div>
 </template>
 <script lang="ts">
 import Notification from '@/components/Notification.vue'
 import UIButton from '@/components/UIButton.vue'
 import { defineComponent } from '@vue/runtime-core'
+import Modal from './components/Modal.vue'
 export default defineComponent({
   name: 'App',
   beforeCreate (): void {
@@ -77,7 +109,14 @@ export default defineComponent({
   },
   components: {
     Notification,
-    UIButton
+    UIButton,
+    Modal
+  },
+  data () {
+    return {
+      showReportForm: false,
+      reportText: ''
+    }
   }
 })
 </script>
@@ -111,5 +150,17 @@ export default defineComponent({
 .fade-enter-from,
 .fade-leave-to {
   opacity: 0;
+}
+
+.animated-underline {
+  text-underline-offset: 1.5px;
+  text-decoration-color: rgba(239, 68, 68, 0.3) !important;
+  text-decoration: underline;
+  transition: all;
+  transition-duration: 200ms;
+}
+
+.animated-underline:hover {
+  text-decoration-color: rgba(239, 68, 68, 0.7) !important;
 }
 </style>

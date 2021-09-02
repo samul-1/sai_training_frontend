@@ -22,7 +22,9 @@
       ' hover:bg-white hover:text-black border border-white text-white active:bg-gray-200':
         variant == 'transparent',
       ' hover:bg-gray-900 hover:text-white border border-gray-900 text-black active:bg-gray-800':
-        variant == 'negative'
+        variant == 'negative',
+      ' hover:bg-red-900 hover:text-white border border-red-700 text-red-900 active:bg-red-800':
+        variant == 'negative-red'
     }"
   >
     <slot></slot>
