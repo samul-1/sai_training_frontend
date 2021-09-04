@@ -10,8 +10,13 @@
     @setTemplate="templateId = $event"
   ></TrainingTemplateSelector>
   <div v-else>
-    <div class="my-4" v-for="question in questions" :key="'q-' + question.id">
-      <div v-html="question.text"></div>
+    <div
+      class="my-8"
+      v-for="(question, index) in questions"
+      :key="'q-' + question.id"
+    >
+      <h5 class="text-lg font-medium">Domanda {{ index + 1 }}</h5>
+      <div class="mb-4" v-html="question.text"></div>
       <div
         v-for="choice in question.choices"
         :key="'q-' + question.id + '-c-' + choice.id"

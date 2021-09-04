@@ -1,6 +1,7 @@
 <template>
   <div
-    class="fixed z-30 px-20 py-4 transform -translate-x-1/2 rounded-md shadow-xl left-1/2 top-20"
+    style="z-index: 999"
+    class="fixed px-20 py-4 transform -translate-x-1/2 rounded-md shadow-xl left-1/2 top-20"
     :class="{
       'bg-green-300 text-green-900': notification.severity == 1,
       'bg-red-300 text-red-900': notification.severity == 2

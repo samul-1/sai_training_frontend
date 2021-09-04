@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <Skeleton class="ml-60" :singleLine="true"></Skeleton>
+  </div>
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
   <!-- <p v-if="course.description?.length" v-html="course.description"></p> -->
   <div class="flex flex-col mx-auto space-y-6 w-max">
@@ -22,8 +25,11 @@
     @no="$router.push('/courses')"
     :title="'Nuova iscrizione'"
   >
-    Vuoi iscriverti al corso <span class="font-medium">{{ course?.name }}</span
-    >?
+    <template v-slot:body
+      >Vuoi iscriverti al corso
+      <span class="font-medium">{{ course?.name }}</span
+      >?</template
+    >
   </modal>
 </template>
 
@@ -34,9 +40,10 @@ import UIButton from '@/components/UIButton.vue'
 import { Course } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import { enroll } from '@/api/courses'
+import Skeleton from '@/components/Skeleton.vue'
 
 export default defineComponent({
-  components: { UIButton, Modal },
+  components: { UIButton, Modal, Skeleton },
   name: 'StudentCourseDashboard',
   async created () {
     const courseId = this.$route.params.courseId as string
