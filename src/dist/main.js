@@ -8,6 +8,7 @@ var store_1 = require("./store");
 var vue3_google_oauth2_1 = require("vue3-google-oauth2");
 var axios_1 = require("axios");
 var vue_axios_1 = require("vue-axios");
+var vue_code_highlight_1 = require("vue-code-highlight");
 require("./index.css");
 var dev = process.env.NODE_ENV !== 'production';
 axios_1["default"].defaults.baseURL = dev
@@ -43,4 +44,5 @@ vue_1.createApp(App_vue_1["default"])
     .use(vue_axios_1["default"], axios_1["default"])
     .use(store_1["default"])
     .use(router_1["default"])
+    .use(vue_code_highlight_1["default"])
     .mount('#app');

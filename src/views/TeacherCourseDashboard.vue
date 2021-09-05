@@ -1,4 +1,7 @@
 <template>
+  <div v-if="loading">
+    <Skeleton class="ml-60" :singleLine="true"></Skeleton>
+  </div>
   <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
   <!-- <p v-if="course.description.length" v-html="course.description"></p> -->
   <div class="flex flex-col w-full mx-auto space-y-6 md:w-max">
@@ -74,19 +77,23 @@ import { Course } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import SelectableTeacherList from '@/components/SelectableTeacherList.vue'
 import { updateAllowedTeachers } from '@/api/users'
+import Skeleton from '@/components/Skeleton.vue'
 
 export default defineComponent({
   components: {
     UIButton,
     Modal,
     CourseTopicList,
-    SelectableTeacherList
+    SelectableTeacherList,
+    Skeleton
   },
   name: 'TeacherCourseDashboard',
   async created () {
+    this.loading = true
     const courseId = this.$route.params.courseId as string
     try {
       this.course = await getCourse(courseId)
+      this.loading = false
     } catch (error) {
       this.$router.push('/teacher')
     }
@@ -96,9 +103,9 @@ export default defineComponent({
       const newVal = JSON.parse(_newVal)
       const courseId = this.$route.params.courseId as string
 
-      this.loading = true
+      //this.loading = true
       await updateAllowedTeachers(courseId, newVal)
-      this.loading = false
+      //this.loading = false
     }
   },
   data () {

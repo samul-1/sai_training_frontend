@@ -95,9 +95,10 @@
       </transition-group>
     </div>
     <div
+      v-highlight
       v-else
-      v-html="questionData.text"
-      class="overflow-x-auto overflow-y-auto break-words max-h-20"
+      v-html="highlightCode(questionData.text)"
+      class="overflow-x-auto overflow-y-auto break-words max-h-40"
     ></div>
     <div class="flex mt-8 space-x-4">
       <UIButton
@@ -150,6 +151,7 @@ import '@vueup/vue-quill/dist/vue-quill.snow.css'
 import Modal from './Modal.vue'
 import { createTopic } from '@/api/courses'
 import { isValidQuestion } from '@/validation'
+import { highlightCode } from "@/utils"
 
 export default defineComponent({
   name: 'QuestionEditor',
@@ -224,6 +226,7 @@ export default defineComponent({
     }
   },
   methods: {
+    highlightCode,
     pushNewChoice() {
         this.questionData.choices.push({
             text: "",

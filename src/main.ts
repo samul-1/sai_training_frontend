@@ -7,6 +7,7 @@ import store from './store';
 import GAuth from 'vue3-google-oauth2';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
+import VueCodeHighlight from 'vue-code-highlight';
 import './index.css';
 
 const dev = process.env.NODE_ENV !== 'production';
@@ -57,4 +58,5 @@ createApp(App)
   .use(VueAxios, axios)
   .use(store)
   .use(router)
+  .use(VueCodeHighlight)
   .mount('#app');

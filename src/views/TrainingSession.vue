@@ -1,4 +1,5 @@
 <template>
+  <Spinner v-if="loadingResults"></Spinner>
   <h1 v-if="!showTemplateSelection" class="mb-4 text-3xl">Esercitazione</h1>
   <div v-if="loading">
     <Skeleton></Skeleton>
@@ -11,27 +12,34 @@
   ></TrainingTemplateSelector>
   <div v-else>
     <div
-      class="my-8"
+      class="my-10 first:mt-8 last:mb-8"
       v-for="(question, index) in questions"
       :key="'q-' + question.id"
     >
-      <h5 class="text-lg font-medium">Domanda {{ index + 1 }}</h5>
-      <div class="mb-4" v-html="question.text"></div>
-      <div
-        v-for="choice in question.choices"
-        :key="'q-' + question.id + '-c-' + choice.id"
-      >
-        <input
-          type="radio"
-          :value="choice.id"
-          class="mr-2"
-          v-model="answers[question.id]"
-          :id="'q-' + question.id + '-c-' + choice.id"
-        />
-        <label
-          :for="'q-' + question.id + '-c-' + choice.id"
-          v-html="choice.text"
-        ></label>
+      <h5 class="text-xl">Domanda {{ index + 1 }}</h5>
+      <div class="py-2 pl-4 mt-1 border-l-2 border-gray-200">
+        <div
+          class="mb-4"
+          v-highlight
+          v-html="highlightCode(question.text)"
+        ></div>
+        <div
+          v-for="choice in question.choices"
+          :key="'q-' + question.id + '-c-' + choice.id"
+        >
+          <input
+            type="radio"
+            :value="choice.id"
+            class="mr-2"
+            v-model="answers[question.id]"
+            :id="'q-' + question.id + '-c-' + choice.id"
+          />
+          <label
+            v-highlight
+            :for="'q-' + question.id + '-c-' + choice.id"
+            v-html="highlightCode(choice.text)"
+          ></label>
+        </div>
       </div>
     </div>
     <UIButton @click="turnIn()" :variant="'green'">Consegna</UIButton>
@@ -48,17 +56,20 @@ import {
 import TrainingTemplateSelector from '@/components/TrainingTemplateSelector.vue'
 import UIButton from '@/components/UIButton.vue'
 import Skeleton from '@/components/Skeleton.vue'
+import Spinner from '@/components/Spinner.vue'
+import { highlightCode } from '@/utils'
 
 export default defineComponent({
   name: 'TrainingSession',
-  components: { TrainingTemplateSelector, UIButton, Skeleton },
+  components: { TrainingTemplateSelector, UIButton, Skeleton, Spinner },
   data () {
     return {
       session: {} as TrainingSession,
       answers: {} as { [key: string]: string | null },
       templateId: null,
       showTemplateSelection: false,
-      loading: false
+      loading: false,
+      loadingResults: false
     }
   },
   async created () {
@@ -76,6 +87,7 @@ export default defineComponent({
     }
   },
   methods: {
+    highlightCode,
     async getOrCreateSession () {
       const courseId = this.$route.params.courseId as string
       return getCurrentTrainingSession(courseId, this.templateId)
@@ -92,9 +104,11 @@ export default defineComponent({
         })
     },
     async turnIn () {
+      this.loadingResults = true
       const courseId = this.$route.params.courseId as string
       const response = await turnInTrainingSession(courseId, this.answers)
       console.log(response)
+      this.loadingResults = false
       this.$router.push(`/course/${courseId}/sessions/${response.id}`)
     }
   },

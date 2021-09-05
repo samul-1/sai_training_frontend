@@ -98,6 +98,7 @@
   </div>
 </template>
 <script lang="ts">
+import 'vue-code-highlight/themes/duotone-sea.css'
 import Notification from '@/components/Notification.vue'
 import UIButton from '@/components/UIButton.vue'
 import { defineComponent } from '@vue/runtime-core'
@@ -202,5 +203,10 @@ export default defineComponent({
 
 .animated-underline:hover {
   text-decoration-color: rgba(239, 68, 68, 0.7) !important;
+}
+
+.token.property,
+.token.function {
+  color: #a0b4ff !important;
 }
 </style>

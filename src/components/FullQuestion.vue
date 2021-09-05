@@ -11,25 +11,25 @@
           question.choices.find(c => c.correct)?.id != question.selected_choice
       }"
     ></i>
-    <div v-html="question.text"></div>
+    <div v-highlight v-html="highlightCode(question.text)"></div>
     <ul>
       <li
         v-for="choice in question.choices"
         :key="'q-' + question.id + '-c-' + choice.id"
-        class="transition-colors duration-200"
+        class="px-1 py-0.5 my-1.5 transition-colors duration-700 rounded-lg"
         :class="{
-          'text-green-700': choice.correct && showCorrect,
-          'text-red-800': !choice.correct && showCorrect
+          'bg-green-100': choice.correct && showCorrect,
+          'bg-red-100': !choice.correct && showCorrect
         }"
       >
         <input
           type="radio"
           class="mr-2 text-red-900 pointer-events-none"
           :checked="choice.id == question.selected_choice"
-        /><span v-html="choice.text"></span>
+        /><span v-highlight v-html="highlightCode(choice.text)"></span>
       </li>
     </ul>
-    <div class="mt-4">
+    <div class="mt-4" v-if="question.solution.length > 0">
       <UIButton
         :variant="'dark'"
         :size="'xs'"
@@ -45,6 +45,7 @@
 import { Question } from '@/interfaces'
 import { defineComponent, PropType } from '@vue/runtime-core'
 import UIButton from './UIButton.vue'
+import { highlightCode } from '@/utils'
 
 export default defineComponent({
   components: { UIButton },
@@ -63,6 +64,9 @@ export default defineComponent({
     return {
       showSolution: false
     }
+  },
+  methods: {
+    highlightCode
   }
 })
 </script>
