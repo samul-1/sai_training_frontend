@@ -35,6 +35,7 @@
       v-model="questions[index]"
       :topicChoices="topics"
       @updateTopics="updateTopics()"
+      :showSave="false"
       :startCollapsed="true"
       :questionTempKey="index"
     ></question-editor>

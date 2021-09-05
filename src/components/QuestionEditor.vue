@@ -100,7 +100,7 @@
       v-html="highlightCode(questionData.text)"
       class="overflow-x-auto overflow-y-auto break-words max-h-40"
     ></div>
-    <div class="flex mt-8 space-x-4">
+    <div class="flex mt-8 space-x-4" v-if="showSave">
       <UIButton
         :disabled="!valid"
         @click="$emit('save')"
@@ -183,7 +183,7 @@ export default defineComponent({
     },
     showSave: {
       type: Boolean,
-      default: false,
+      default: true,
     }
   },
   created () {

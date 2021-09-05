@@ -3,8 +3,13 @@
   <div class="flex my-12">
     <p class="my-auto mr-8 font-medium">Filtra per</p>
     <div class="flex my-auto mr-8 space-x-2">
-      <input class="my-auto" type="checkbox" v-model="filter.byTopic" />
-      <p>Argomento</p>
+      <input
+        class="my-auto"
+        type="checkbox"
+        v-model="filter.byTopic"
+        id="filter-by-topic"
+      />
+      <label for="filter-by-topic">Argomento</label>
       <p>
         <select
           v-model="filter.topic"
@@ -27,9 +32,10 @@
       <input
         class="my-auto mr-2"
         type="checkbox"
+        id="filter-by-difficulty"
         v-model="filter.byDifficulty"
       />
-      <p class="mr-8">Difficoltà</p>
+      <label for="filter-by-difficulty" class="mr-8">Difficoltà</label>
       <difficulty-input
         class="w-80"
         v-model="filter.difficulty"
