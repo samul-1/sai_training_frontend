@@ -12,7 +12,7 @@
       }"
     ></i>
     <div v-highlight v-html="highlightCode(question.text)"></div>
-    <ul>
+    <ul class="mt-4">
       <li
         v-for="choice in question.choices"
         :key="'q-' + question.id + '-c-' + choice.id"

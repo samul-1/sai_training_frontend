@@ -1,4 +1,12 @@
 <template>
+  <teleport to="#nav-buttons">
+    <router-link :to="`/course/${$route.params.courseId}`">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al
+        corso</UIButton
+      ></router-link
+    >
+  </teleport>
   <div class="my-6">
     <h1 class="mb-4 text-2xl">Risultati esercitazione</h1>
     <div class="flex flex-col md:flex-row md:space-x-3">

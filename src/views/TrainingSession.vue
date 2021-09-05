@@ -1,4 +1,12 @@
 <template>
+  <teleport to="#nav-buttons">
+    <router-link :to="`/course/${$route.params.courseId}`">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al
+        corso</UIButton
+      ></router-link
+    >
+  </teleport>
   <Spinner v-if="loadingResults"></Spinner>
   <h1 v-if="!showTemplateSelection" class="mb-4 text-3xl">Esercitazione</h1>
   <div v-if="loading">

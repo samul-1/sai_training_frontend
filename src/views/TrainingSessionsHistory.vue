@@ -1,4 +1,12 @@
 <template>
+  <teleport to="#nav-buttons">
+    <router-link :to="`/course/${$route.params.courseId}`">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al
+        corso</UIButton
+      ></router-link
+    >
+  </teleport>
   <h1 class="mb-4 text-3xl">Le tue esercitazioni</h1>
   <Skeleton v-if="loading"></Skeleton>
   <p v-if="!loading && sessions.length == 0">
@@ -25,12 +33,14 @@ import TrainingSessionResultsPreview from '@/components/TrainingSessionResultsPr
 import { TrainingSessionResults } from '@/interfaces'
 import { getTrainingSessions } from '@/api/trainingSessions'
 import Skeleton from '@/components/Skeleton.vue'
+import UIButton from '@/components/UIButton.vue'
 
 export default defineComponent({
   name: 'TrainingSessionsHistory',
   components: {
     TrainingSessionResultsPreview,
-    Skeleton
+    Skeleton,
+    UIButton
   },
   async created () {
     const courseId = this.$route.params.courseId as string

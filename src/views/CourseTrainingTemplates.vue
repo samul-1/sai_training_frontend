@@ -1,5 +1,12 @@
 <template>
-  <!--<div class="relative h-full p-12 pb-20 mx-6 border shadow-xl rounded-xl">-->
+  <teleport to="#nav-buttons">
+    <router-link :to="`/course-panel/${$route.params.courseId}`">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al pannello del
+        corso</UIButton
+      ></router-link
+    >
+  </teleport>
   <div class="my-6">
     <h1 class="mb-4 text-3xl">Modelli di esercitazione</h1>
     <!-- <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p> -->
@@ -65,7 +72,7 @@ import {
 import { TrainingTemplate } from '@/interfaces'
 import TrainingTemplateItem from '@/components/TrainingTemplateItem.vue'
 import { defineComponent, Ref } from '@vue/runtime-core'
-//import UIButton from '@/components/UIButton.vue'
+import UIButton from '@/components/UIButton.vue'
 import TrainingTemplateEditor from '@/components/TrainingTemplateEditor.vue'
 import Modal from '@/components/Modal.vue'
 
@@ -73,7 +80,7 @@ export default defineComponent({
   name: 'CouseTrainingTemplates',
   components: {
     TrainingTemplateItem,
-    // UIButton,
+    UIButton,
     TrainingTemplateEditor,
     Modal
   },

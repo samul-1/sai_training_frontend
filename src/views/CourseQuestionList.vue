@@ -1,4 +1,12 @@
 <template>
+  <teleport to="#nav-buttons">
+    <router-link :to="`/course-panel/${$route.params.courseId}`">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al pannello del
+        corso</UIButton
+      ></router-link
+    >
+  </teleport>
   <h1 class="mb-8 text-4xl text-center">Domande</h1>
   <div class="flex my-12">
     <p class="my-auto mr-8 font-medium">Filtra per</p>

@@ -1,4 +1,12 @@
 <template>
+  <teleport to="#nav-buttons">
+    <router-link to="/teacher/">
+      <UIButton :variant="'transparent'" :size="'xs'"
+        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna alla lista dei
+        corsi</UIButton
+      ></router-link
+    >
+  </teleport>
   <div v-if="loading">
     <Skeleton class="ml-60" :singleLine="true"></Skeleton>
   </div>
