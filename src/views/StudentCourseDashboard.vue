@@ -10,22 +10,26 @@
   <div v-if="loading">
     <Skeleton class="ml-60" :singleLine="true"></Skeleton>
   </div>
-  <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
-  <!-- <p v-if="course.description?.length" v-html="course.description"></p> -->
-  <div class="flex flex-col mx-auto space-y-6 w-max">
-    <router-link :to="`/course/${$route.params.courseId}/train/`"
-      ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-        >{{
-          course.in_progress_session ? 'Continua' : 'Inizia'
-        }}
-        esercitazione</UIButton
-      ></router-link
+  <div class="h-full">
+    <h1 class="-mb-2 text-3xl text-center md:text-4xl">{{ course.name }}</h1>
+    <!-- <p v-if="course.description?.length" v-html="course.description"></p> -->
+    <div
+      class="relative flex flex-col w-full mx-auto space-y-6 transform -translate-y-1/2 top-1/2 md:w-max"
     >
-    <router-link :to="`/course/${$route.params.courseId}/sessions/`">
-      <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-        >Cronologia eserciazioni</UIButton
-      ></router-link
-    >
+      <router-link :to="`/course/${$route.params.courseId}/train/`"
+        ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
+          >{{
+            course.in_progress_session ? 'Continua' : 'Inizia'
+          }}
+          esercitazione</UIButton
+        ></router-link
+      >
+      <router-link :to="`/course/${$route.params.courseId}/sessions/`">
+        <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
+          >Cronologia eserciazioni</UIButton
+        ></router-link
+      >
+    </div>
   </div>
   <modal
     v-if="!loading && !course?.enrolled"

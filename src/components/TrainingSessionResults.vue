@@ -7,8 +7,8 @@
       ></router-link
     >
   </teleport>
-  <div class="my-6">
-    <h1 class="mb-4 text-2xl">Risultati esercitazione</h1>
+  <div class="">
+    <h1 class="mb-8 text-4xl">Risultati esercitazione</h1>
     <div class="flex flex-col md:flex-row md:space-x-3">
       <p class="my-auto mb-2 md:mb-0">
         <span class="font-medium">Risposte corrette:</span>

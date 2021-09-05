@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="relative transform -translate-y-1/2 top-1/2">
     <h1 class="mx-auto mb-10 text-4xl text-center">
       Esercitazioni Unipi
     </h1>

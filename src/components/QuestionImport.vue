@@ -30,8 +30,6 @@
       @change="processFile"
       class="mt-4 mb-10"
     />
-    <!-- get rid of this -->
-    <div v-if="!questions.length" class="w-20 h-80"></div>
   </div>
   <div
     class="grid grid-cols-10 gap-20 my-4 mr-10"

@@ -7,7 +7,7 @@
       ></router-link
     >
   </teleport>
-  <h1 class="mb-4 text-3xl">Le tue esercitazioni</h1>
+  <h1 class="mb-8 text-4xl">Le tue esercitazioni</h1>
   <Skeleton v-if="loading"></Skeleton>
   <p v-if="!loading && sessions.length == 0">
     Non hai ancora effettuato esercitazioni.

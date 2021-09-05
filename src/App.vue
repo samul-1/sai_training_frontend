@@ -8,8 +8,8 @@
     />
     <nav class="flex w-full px-6 py-2 text-white bg-gray-900">
       <img class="w-28 md:w-32" src="./assets/unipi-logo.svg" />
-      <div class="my-auto ml-auto flex">
-        <div class="flex hidden md:block mr-5" id="nav-buttons">
+      <div class="flex my-auto ml-auto">
+        <div class="hidden mr-5 md:flex" id="nav-buttons">
           <UIButton
             v-if="false && $route.path != '/student' && $route.path != '/login'"
             @click="$router.go(-1)"
@@ -37,18 +37,12 @@
       ></Notification
     ></transition>
 
-    <main class="my-auto">
-      <div
-        v-if="$store.state.msg"
-        class="py-12 mx-auto text-white bg-gray-900 rounded-lg shadow-md px-36 w-max"
-      >
-        <h1 class="text-xl text-center" v-html="$store.state.msg"></h1>
-      </div>
-      <div class="mx-5 my-6 md:mx-10" v-else>
-        <router-view />
-      </div>
+    <main class="flex-grow mx-5 my-6 main-view md:mx-10">
+      <router-view />
     </main>
-    <footer class="flex w-full px-6 py-3 text-sm text-white bg-gray-900">
+    <footer
+      class="flex w-full px-6 py-3 mt-auto text-sm text-white bg-gray-900"
+    >
       <p>
         Crafted with
         <img
@@ -165,6 +159,10 @@ export default defineComponent({
 </script>
 
 <style>
+.main-view {
+  height: auto !important;
+}
+
 .bounce-enter-active {
   animation: bounce-in 0.3s;
 }

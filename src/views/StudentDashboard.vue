@@ -1,12 +1,20 @@
 <template>
-  <h1 class="mb-10 text-3xl text-center">Pannello studente</h1>
-  <div class="mx-auto space-x-6 text-center">
-    <router-link to="courses"
-      ><UIButton :variant="'indigo'" :size="'xl'"
-        >Trova corsi</UIButton
-      ></router-link
+  <div class="w-full h-full">
+    <h1 class="text-4xl text-center">Pannello studente</h1>
+    <div
+      class="relative flex flex-col mx-auto space-y-6 transform -translate-y-1/2 top-1/2 w-max"
     >
-    <UIButton :variant="'indigo'" :size="'xl'">I miei corsi</UIButton>
+      <router-link to="courses"
+        ><UIButton :variant="'indigo'" :size="'xl'"
+          >Trova corsi</UIButton
+        ></router-link
+      >
+      <router-link to="courses">
+        <UIButton :variant="'indigo'" :size="'xl'"
+          >I miei corsi</UIButton
+        ></router-link
+      >
+    </div>
   </div>
 </template>
 

@@ -10,35 +10,39 @@
   <div v-if="loading">
     <Skeleton class="ml-60" :singleLine="true"></Skeleton>
   </div>
-  <h1 class="mb-8 text-4xl text-center">{{ course.name }}</h1>
-  <!-- <p v-if="course.description.length" v-html="course.description"></p> -->
-  <div class="flex flex-col w-full mx-auto space-y-6 md:w-max">
-    <router-link :to="`/course-panel/${$route.params.courseId}/questions`"
-      ><UIButton :variant="'indigo'" :size="'lg'" class="w-full">
-        Domande
-      </UIButton></router-link
+  <div class="h-full">
+    <h1 class="-mb-2 text-4xl text-center">{{ course.name }}</h1>
+
+    <!-- <p v-if="course.description.length" v-html="course.description"></p> -->
+    <div
+      class="relative flex flex-col w-full mx-auto space-y-6 transform -translate-y-1/2 top-1/2 md:w-max"
     >
-    <UIButton
-      :variant="'indigo'"
-      :size="'lg'"
-      class="w-full"
-      @click="showTopics = true"
-      >Argomenti
-    </UIButton>
-    <UIButton
-      :variant="'indigo'"
-      :size="'lg'"
-      class="w-full"
-      @click="showAllowedTeachers = true"
-      >Gestisci insegnanti
-    </UIButton>
-    <router-link :to="`/course-panel/${$route.params.courseId}/templates`">
-      <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
-        >Modelli esercitazioni
-      </UIButton></router-link
-    >
+      <router-link :to="`/course-panel/${$route.params.courseId}/questions`"
+        ><UIButton :variant="'indigo'" :size="'lg'" class="w-full">
+          Domande
+        </UIButton></router-link
+      >
+      <UIButton
+        :variant="'indigo'"
+        :size="'lg'"
+        class="w-full"
+        @click="showTopics = true"
+        >Argomenti
+      </UIButton>
+      <UIButton
+        :variant="'indigo'"
+        :size="'lg'"
+        class="w-full"
+        @click="showAllowedTeachers = true"
+        >Gestisci insegnanti
+      </UIButton>
+      <router-link :to="`/course-panel/${$route.params.courseId}/templates`">
+        <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
+          >Modelli esercitazioni
+        </UIButton></router-link
+      >
+    </div>
   </div>
-  <router-view></router-view>
   <modal
     :large="true"
     v-if="showTopics"

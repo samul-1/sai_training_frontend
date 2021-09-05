@@ -1,7 +1,7 @@
 <template>
   <!--<div class="relative h-full p-12 pb-20 mx-6 border shadow-xl rounded-xl">-->
   <div class="my-6">
-    <h1 class="mb-4 text-3xl">Nuova esercitazione</h1>
+    <h1 class="mb-8 text-4xl">Nuova esercitazione</h1>
     <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <TrainingTemplateItem

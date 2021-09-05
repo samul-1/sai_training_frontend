@@ -1,19 +1,25 @@
 <template>
-  <h1 class="mb-8 text-4xl text-center">I tuoi corsi</h1>
-  <p class="mb-4" v-if="!loading && courses.length == 0">
-    Non ci sono corsi. Creane uno!
-  </p>
-  <Skeleton v-if="loading"></Skeleton>
-  <CourseListItem
-    v-for="course in courses"
-    :key="'course-' + course.id"
-    :course="course"
-  ></CourseListItem>
+  <div class="flex flex-col h-full">
+    <h1 class="mb-6 text-4xl text-center">I tuoi corsi</h1>
+    <p class="mt-20" v-if="!loading && courses.length == 0">
+      Non ci sono corsi. Creane uno!
+    </p>
+    <Skeleton v-if="loading"></Skeleton>
+    <div>
+      <CourseListItem
+        v-for="course in courses"
+        :key="'course-' + course.id"
+        :course="course"
+      ></CourseListItem>
+    </div>
 
-  <UIButton :variant="'green'" @click="showCourseCreation = true"
-    >Crea nuovo corso</UIButton
-  >
-
+    <UIButton
+      class="mt-auto w-max"
+      :variant="'green'"
+      @click="showCourseCreation = true"
+      >Crea nuovo corso</UIButton
+    >
+  </div>
   <modal
     :large="true"
     v-if="showCourseCreation"

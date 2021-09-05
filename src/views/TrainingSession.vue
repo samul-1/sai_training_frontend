@@ -8,7 +8,7 @@
     >
   </teleport>
   <Spinner v-if="loadingResults"></Spinner>
-  <h1 v-if="!showTemplateSelection" class="mb-4 text-3xl">Esercitazione</h1>
+  <h1 v-if="!showTemplateSelection" class="mb-4 text-4xl">Esercitazione</h1>
   <div v-if="loading">
     <Skeleton></Skeleton>
     <Skeleton class="my-2"></Skeleton>
@@ -25,7 +25,7 @@
       :key="'q-' + question.id"
     >
       <h5 class="text-xl">Domanda {{ index + 1 }}</h5>
-      <div class="py-2 pl-4 mt-1 border-l-2 border-gray-200">
+      <div class="py-2 pl-2 mt-1 border-l-2 border-gray-200 md:pl-4">
         <div
           class="mb-4"
           v-highlight
@@ -50,7 +50,9 @@
         </div>
       </div>
     </div>
-    <UIButton @click="turnIn()" :variant="'green'">Consegna</UIButton>
+    <UIButton @click="turnIn()" :variant="'green'" :disabled="loadingResults"
+      >Consegna</UIButton
+    >
   </div>
 </template>
 

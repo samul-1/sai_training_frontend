@@ -57,6 +57,7 @@
         class="p-3 border rounded-lg"
         v-model="questionData.text"
       ></textarea>
+      <RichEditor v-model="questionData.text"></RichEditor>
       <h1 class="mt-4 mb-2 font-medium">
         Soluzione (opzionale, mostrata a fine esercitazione)
       </h1>
@@ -145,6 +146,7 @@
 import { Choice, Question, Topic } from '@/interfaces'
 import { defineComponent, PropType } from '@vue/runtime-core'
 import DifficultyInput from './DifficultyInput.vue'
+import RichEditor from './RichEditor.vue'
 import UIButton from './UIButton.vue'
 import { renderTex } from '@/utils'
 import '@vueup/vue-quill/dist/vue-quill.snow.css'
@@ -158,7 +160,8 @@ export default defineComponent({
   components: {
     DifficultyInput,
     UIButton,
-    Modal
+    Modal,
+    RichEditor
   },
   props: {
     modelValue: {
@@ -195,7 +198,7 @@ export default defineComponent({
   },
   watch: {
     questionAsJSON (newVal: string, oldVal : string) {
-      console.log("new", newVal, "old", oldVal)
+      // console.log("new", newVal, "old", oldVal)
       this.$emit('update:modelValue', JSON.parse(newVal))
       if(!this.dirty && newVal != oldVal && oldVal != JSON.stringify({})) {
         this.dirty = true
