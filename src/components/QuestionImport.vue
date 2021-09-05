@@ -1,11 +1,21 @@
 <template>
   <h1 class="mb-8 text-4xl text-center">Importa domande</h1>
   <div>
-    <p>
-      Seleziona un file in formato <strong>JSON</strong> contenente una lista di
-      domande. Per ogni domanda, seleziona un argomento in cui includerla e un
-      livello di difficoltà.
-    </p>
+    <div class="ml-4">
+      <ol class="list-decimal">
+        <li :class="{ 'text-green-800': questions.length }">
+          Seleziona un file in formato <strong>JSON</strong> contenente una
+          lista di domande.
+          <i class="ml-2 fas fa-check" v-if="questions.length"></i>
+        </li>
+        <li :class="{ 'text-green-800': questions.length && valid }">
+          Per ogni domanda, seleziona un argomento in cui includerla e un
+          livello di difficoltà.
+          <i class="ml-2 fas fa-check" v-if="questions.length && valid"></i>
+        </li>
+        <li>Clicca su <strong>Importa</strong>.</li>
+      </ol>
+    </div>
     <input
       v-if="!questions.length"
       type="file"

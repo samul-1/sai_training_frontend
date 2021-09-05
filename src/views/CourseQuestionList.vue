@@ -68,7 +68,7 @@
   ></transition>
 
   <QuestionEditor
-    class="my-4"
+    class="my-4 even:bg-gray-50"
     v-for="(question, index) in questions"
     :key="'q-' + question.id"
     v-model="questions[index]"

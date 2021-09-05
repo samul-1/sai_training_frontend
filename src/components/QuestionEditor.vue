@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-12 py-10 transition-shadow duration-100 border rounded-lg hover:shadow-md"
+    class="relative px-12 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg hover:shadow-lg"
   >
     <div class="absolute top-0 right-0 mt-4 mr-4">
       <UIButton
@@ -110,7 +110,7 @@
       >
       <p
         v-if="dirty"
-        class="px-2 my-auto text-white bg-gray-900 rounded-md opacity-70"
+        class="px-2 my-auto text-white bg-gray-600 rounded-md animate-pulse"
       >
         Modifiche non salvate
       </p>
