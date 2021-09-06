@@ -1,5 +1,7 @@
 <template>
-  <VueEditor v-model="content" :editorToolbar="customToolbar"></VueEditor>
+  <div class="tex2jax_ignore">
+    <VueEditor v-model="content" :editorToolbar="customToolbar"></VueEditor>
+  </div>
 </template>
 
 <script lang="ts">
@@ -47,4 +49,72 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.ql-toolbar.ql-snow {
+  border: 1px solid rgb(229, 231, 235) !important;
+  border-bottom: 0 !important;
+  box-sizing: border-box;
+  font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
+  padding: 2px;
+}
+.ql-container.ql-snow {
+  border: 1px solid rgb(229, 231, 235) !important;
+}
+.quillWrapper .ql-snow.ql-toolbar .ql-formats {
+  margin-bottom: 2px;
+}
+.ql-snow.ql-toolbar button,
+.ql-snow .ql-toolbar button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  display: inline-block;
+  float: left;
+  height: 24px;
+  padding: 3px 5px;
+  width: 28px;
+  margin-left: 1px;
+  margin-right: 1px;
+}
+.quillWrapper .ql-snow.ql-toolbar {
+  padding-top: 4px;
+  padding-bottom: 2px;
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+.ql-container {
+  box-sizing: border-box;
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: 13px;
+  height: 100%;
+  margin: 0px;
+  width: 100%;
+  position: relative;
+  border-radius: 0 0 0.5rem 0.5rem;
+}
+.ql-container:active,
+.ql-container:hover {
+  box-shadow: 1px 1px 5px rgba(126, 126, 126, 0.15) inset;
+}
+.ql-snow .ql-toolbar button svg,
+.quillWrapper .ql-snow.ql-toolbar button svg {
+  width: 18px;
+  height: 18px;
+}
+.ql-editor {
+  box-sizing: border-box;
+  line-height: 1.42;
+  height: 100%;
+  outline: none;
+  overflow-y: auto;
+  padding: 12px 15px;
+  -o-tab-size: 4;
+  tab-size: 4;
+  -moz-tab-size: 4;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  min-height: 20px;
+  max-height: 350px;
+  font-size: 16px;
+}
+</style>

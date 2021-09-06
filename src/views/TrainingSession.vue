@@ -34,11 +34,12 @@
         <div
           v-for="choice in question.choices"
           :key="'q-' + question.id + '-c-' + choice.id"
+          class="flex"
         >
           <input
             type="radio"
             :value="choice.id"
-            class="mr-2"
+            class="my-auto mr-2"
             v-model="answers[question.id]"
             :id="'q-' + question.id + '-c-' + choice.id"
           />

@@ -3,6 +3,7 @@
     class="relative px-8 py-6 my-6 transition-shadow duration-300 border rounded-xl group hover:shadow-md"
   >
     <i
+      v-if="showIcon"
       class="absolute top-0 right-0 mt-4 mr-4 text-lg transition-opacity duration-300 md:text-2xl fas opacity-40 group-hover:opacity-70 group-hover:shadow-lg"
       :class="{
         'fa-check-circle text-green-600':
@@ -22,11 +23,13 @@
           'bg-red-100': !choice.correct && showCorrect
         }"
       >
-        <input
-          type="radio"
-          class="mr-2 text-red-900 pointer-events-none"
-          :checked="choice.id == question.selected_choice"
-        /><span v-highlight v-html="highlightCode(choice.text)"></span>
+        <div class="flex">
+          <input
+            type="radio"
+            class="my-auto mr-2 text-red-900 pointer-events-none"
+            :checked="choice.id == question.selected_choice"
+          /><span v-highlight v-html="highlightCode(choice.text)"></span>
+        </div>
       </li>
     </ul>
     <div class="mt-4" v-if="question.solution.length > 0">
@@ -58,6 +61,10 @@ export default defineComponent({
     showCorrect: {
       type: Boolean,
       default: false
+    },
+    showIcon: {
+      type: Boolean,
+      default: true
     }
   },
   data () {

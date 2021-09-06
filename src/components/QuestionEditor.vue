@@ -51,22 +51,24 @@
     </div>
     <div v-if="!collapse">
       <h1 class="mb-2 font-medium">Testo</h1>
-      <textarea
+      <!-- <textarea
         rows="5"
         cols="100"
         class="p-3 border rounded-lg"
         v-model="questionData.text"
-      ></textarea>
+      ></textarea> -->
       <RichEditor v-model="questionData.text"></RichEditor>
       <h1 class="mt-4 mb-2 font-medium">
         Soluzione (opzionale, mostrata a fine esercitazione)
       </h1>
-      <textarea
+      <!-- <textarea
         rows="5"
         cols="100"
         class="p-3 border rounded-lg"
         v-model="questionData.solution"
-      ></textarea>
+      ></textarea> -->
+      <RichEditor v-model="questionData.solution"></RichEditor>
+
       <div class="flex mt-4 mb-2 space-x-2 ">
         <h1 class="font-medium">Risposte</h1>
         <UIButton :variant="'green'" :size="'2xs'" @click="pushNewChoice()"
@@ -79,12 +81,13 @@
           :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
           class="flex mt-2"
         >
-          <textarea
+          <!-- <textarea
             rows="2"
             cols="90"
             class="p-3 border rounded-lg"
             v-model="choice.text"
-          ></textarea>
+          ></textarea> -->
+          <RichEditor class="w-11/12" v-model="choice.text"></RichEditor>
           <div class="my-auto ml-4">
             <input
               type="checkbox"
@@ -99,15 +102,18 @@
       v-highlight
       v-else
       v-html="highlightCode(questionData.text)"
-      class="overflow-x-auto overflow-y-auto break-words max-h-40"
+      class="overflow-x-auto overflow-y-auto break-words max-h-32"
     ></div>
-    <div class="flex mt-8 space-x-4" v-if="showSave">
+    <div class="flex mt-8 space-x-2" v-if="showSave">
       <UIButton
         :disabled="!valid"
         @click="$emit('save')"
         class=""
         :variant="'green'"
         >Salva</UIButton
+      >
+      <UIButton @click="showPreview = true" class="" :variant="'negative'"
+        >Anteprima</UIButton
       >
       <p
         v-if="dirty"
@@ -139,6 +145,18 @@
           placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
         ></textarea></template
     ></modal>
+    <modal
+      :title="'Anteprima domanda'"
+      :large="true"
+      v-if="showPreview"
+      @yes="showPreview = false"
+      :dismissible="true"
+      :confirmOnly="true"
+    >
+      <template v-slot:body>
+        <FullQuestion :showIcon="false" :question="questionData"></FullQuestion
+      ></template>
+    </modal>
   </div>
 </template>
 
@@ -154,6 +172,7 @@ import Modal from './Modal.vue'
 import { createTopic } from '@/api/courses'
 import { isValidQuestion } from '@/validation'
 import { highlightCode } from "@/utils"
+import FullQuestion from './FullQuestion.vue'
 
 export default defineComponent({
   name: 'QuestionEditor',
@@ -161,7 +180,8 @@ export default defineComponent({
     DifficultyInput,
     UIButton,
     Modal,
-    RichEditor
+    RichEditor,
+    FullQuestion
   },
   props: {
     modelValue: {
@@ -209,6 +229,11 @@ export default defineComponent({
         renderTex()
       }
     },
+    showPreview(newVal:boolean) {
+      if(newVal) {
+        setTimeout(() => renderTex(), 1000)
+      }
+    },
     questionTopic(newVal: string) {
       if(newVal == '_') {
         this.showTopicCreation = true
@@ -219,6 +244,7 @@ export default defineComponent({
   data () {
     return {
       dirty: false,
+      showPreview: false,
       questionData: {} as Question,
       collapse: false,
       showTopicCreation: false,
