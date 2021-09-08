@@ -34,18 +34,19 @@
         <div
           v-for="choice in question.choices"
           :key="'q-' + question.id + '-c-' + choice.id"
-          class="flex"
+          class="flex transition-colors duration-200 rounded-lg hover:bg-gray-50"
         >
           <input
             type="radio"
             :value="choice.id"
-            class="my-auto mr-2"
+            class="mt-1.5 mb-auto mr-2"
             v-model="answers[question.id]"
             :id="'q-' + question.id + '-c-' + choice.id"
           />
           <label
             v-highlight
             :for="'q-' + question.id + '-c-' + choice.id"
+            class="cursor-pointer"
             v-html="highlightCode(choice.text)"
           ></label>
         </div>
@@ -86,14 +87,15 @@ export default defineComponent({
   async created () {
     this.loading = true
     await this.getOrCreateSession()
-    console.log('false')
     this.loading = false
   },
   watch: {
     async templateId (newVal) {
       if (newVal) {
+        this.loading = true
         this.showTemplateSelection = false
         await this.getOrCreateSession()
+        this.loading = false
       }
     }
   },

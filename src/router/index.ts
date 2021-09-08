@@ -34,15 +34,15 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Login',
     component: Login,
   },
-  {
-    path: '/student',
-    name: 'StudentDashboard',
-    component: StudentDashboard,
-    meta: {
-      studentsOnly: true,
-      studentHomepage: true,
-    },
-  },
+  // {
+  //   path: '/student',
+  //   name: 'StudentDashboard',
+  //   component: StudentDashboard,
+  //   meta: {
+  //     studentsOnly: true,
+  //     studentHomepage: true,
+  //   },
+  // },
   {
     path: '/teacher',
     name: 'TeacherDashboard',
@@ -58,6 +58,7 @@ const routes: Array<RouteRecordRaw> = [
     component: Courses,
     meta: {
       studentsOnly: true,
+      studentHomepage: true,
     },
   },
   {

@@ -106,7 +106,7 @@
     ></div>
     <div class="flex mt-8 space-x-2" v-if="showSave">
       <UIButton
-        :disabled="!valid"
+        :disabled="!valid || !dirty"
         @click="$emit('save')"
         class=""
         :variant="'green'"

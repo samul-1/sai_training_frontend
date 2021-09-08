@@ -7,7 +7,6 @@ var store_1 = require("../store");
 var Login_vue_1 = require("../views/Login.vue");
 var CourseQuestionList_vue_1 = require("../views/CourseQuestionList.vue");
 var Courses_vue_1 = require("../views/Courses.vue");
-var StudentDashboard_vue_1 = require("../views/StudentDashboard.vue");
 var TeacherDashboard_vue_1 = require("../views/TeacherDashboard.vue");
 var StudentCourseDashboard_vue_1 = require("../views/StudentCourseDashboard.vue");
 var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue");
@@ -26,15 +25,15 @@ var routes = [
         name: 'Login',
         component: Login_vue_1["default"]
     },
-    {
-        path: '/student',
-        name: 'StudentDashboard',
-        component: StudentDashboard_vue_1["default"],
-        meta: {
-            studentsOnly: true,
-            studentHomepage: true
-        }
-    },
+    // {
+    //   path: '/student',
+    //   name: 'StudentDashboard',
+    //   component: StudentDashboard,
+    //   meta: {
+    //     studentsOnly: true,
+    //     studentHomepage: true,
+    //   },
+    // },
     {
         path: '/teacher',
         name: 'TeacherDashboard',
@@ -49,7 +48,8 @@ var routes = [
         name: 'Courses',
         component: Courses_vue_1["default"],
         meta: {
-            studentsOnly: true
+            studentsOnly: true,
+            studentHomepage: true
         }
     },
     {

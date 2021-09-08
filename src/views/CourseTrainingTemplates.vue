@@ -21,10 +21,11 @@
       </TrainingTemplateItem>
       <div
         @click="showTemplateEditor = true"
-        class="px-10 py-6 text-gray-400 border cursor-pointer rounded-xl h-44 bg-gradient-to-b from-gray-50 to-gray-100"
+        style="min-height: 200px !important"
+        class="flex flex-col h-auto px-10 py-6 text-gray-400 border cursor-pointer rounded-xl bg-gradient-to-b from-gray-50 to-gray-100"
       >
-        <h1 class="mb-4 text-xl">Nuovo modello personalizzato</h1>
-        <div class="flex text-6xl">
+        <h1 class="-mb-2 text-xl">Nuovo modello personalizzato</h1>
+        <div class="flex my-auto text-6xl">
           <i class="mx-auto my-auto fas fa-plus-circle"></i>
         </div>
       </div>

@@ -26,7 +26,7 @@
         <div class="flex">
           <input
             type="radio"
-            class="my-auto mr-2 text-red-900 pointer-events-none"
+            class="mb-auto mt-1.5 mr-2 text-red-900 pointer-events-none"
             :checked="choice.id == question.selected_choice"
           /><span v-highlight v-html="highlightCode(choice.text)"></span>
         </div>

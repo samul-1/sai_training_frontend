@@ -119,11 +119,23 @@ export default defineComponent({
   components: { Skeleton, QuestionEditor, DifficultyInput, UIButton, Spinner },
   name: 'CourseQuestionList',
   async created () {
+    window.addEventListener('beforeunload', this.beforeWindowUnload)
+
     const courseId = this.$route.params.courseId as string
     this.firstLoading = true
     this.questions = await getQuestions(courseId, null, null, 1)
     this.topics = await getTopics(courseId)
     this.firstLoading = false
+  },
+  beforeUnmount () {
+    window.removeEventListener('beforeunload', this.beforeWindowUnload)
+  },
+  beforeRouteLeave (_to, _from, next) {
+    if (this.confirmStayInDirtyForm()) {
+      next(false)
+    } else {
+      next()
+    }
   },
   watch: {
     filterAsJSON: {
@@ -170,6 +182,25 @@ export default defineComponent({
     }
   },
   methods: {
+    confirmLeave () {
+      return window.confirm(
+        'Hai effettuato delle modifiche che non hai salvato. Sei sicuro di voler uscire dalla pagina?'
+      )
+    },
+    confirmStayInDirtyForm () {
+      return this.dirty && !this.confirmLeave()
+    },
+    beforeWindowUnload (e: {
+      preventDefault: () => void
+      returnValue: string
+    }) {
+      if (this.confirmStayInDirtyForm()) {
+        // Cancel the event
+        e.preventDefault()
+        // Chrome requires returnValue to be set
+        e.returnValue = ''
+      }
+    },
     async updateTopics () {
       const courseId = this.$route.params.courseId as string
       this.topics = await getTopics(courseId)
@@ -229,6 +260,15 @@ export default defineComponent({
   computed: {
     filterAsJSON (): string {
       return JSON.stringify(this.filter)
+    },
+    dirty (): boolean {
+      // returns true if any of the question editors are dirty
+      return this.questions
+        .map(q => {
+          return (this.$refs['question-editor-' + q.id] as { dirty: boolean })
+            .dirty
+        })
+        .reduce((a, b) => a || b, false)
     }
   }
 })
