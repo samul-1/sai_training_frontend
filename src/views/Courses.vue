@@ -1,12 +1,25 @@
 <template>
   <h1 class="mb-8 text-4xl text-center">Corsi</h1>
-  <Skeleton v-if="loading"></Skeleton>
+  <!-- <Skeleton v-if="loading"></Skeleton> -->
   <course-list-item
     v-for="course in courses"
     :key="'course-' + course.id"
     :course="course"
   >
   </course-list-item>
+  <p class="mt-4" v-if="!loading && !courses.length">
+    Al momento non ci sono corsi disponibili. Attendi che i tuoi docenti li
+    creino.
+  </p>
+  <div v-if="loading">
+    <div
+      v-for="i in [1, 2]"
+      :key="'skeleton-' + i"
+      class="p-4 my-4 border rounded-2xl hover:shadow-inner"
+    >
+      <Skeleton :short="true"></Skeleton>
+    </div>
+  </div>
 </template>
 
 <script lang="ts">

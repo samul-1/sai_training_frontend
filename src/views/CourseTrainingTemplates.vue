@@ -20,6 +20,13 @@
       >
       </TrainingTemplateItem>
       <div
+        v-if="loading"
+        style="min-height: 200px !important"
+        class="h-auto px-10 py-6 border  rounded-xl"
+      >
+        <skeleton></skeleton>
+      </div>
+      <div
         @click="showTemplateEditor = true"
         style="min-height: 200px !important"
         class="flex flex-col h-auto px-10 py-6 text-gray-400 border cursor-pointer rounded-xl bg-gradient-to-b from-gray-50 to-gray-100"
@@ -76,14 +83,15 @@ import { defineComponent, Ref } from '@vue/runtime-core'
 import UIButton from '@/components/UIButton.vue'
 import TrainingTemplateEditor from '@/components/TrainingTemplateEditor.vue'
 import Modal from '@/components/Modal.vue'
-
+import Skeleton from '@/components/Skeleton.vue'
 export default defineComponent({
   name: 'CouseTrainingTemplates',
   components: {
     TrainingTemplateItem,
     UIButton,
     TrainingTemplateEditor,
-    Modal
+    Modal,
+    Skeleton
   },
   watch: {
     editing (newVal) {

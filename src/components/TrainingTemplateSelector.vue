@@ -2,7 +2,7 @@
   <div class="flex flex-col h-full">
     <h1 class="mb-8 text-4xl">Nuova esercitazione</h1>
     <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
-    <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
+    <div class="grid grid-cols-1 gap-6 mb-4 md:grid-cols-2">
       <TrainingTemplateItem
         v-for="template in templates"
         :key="'template-' + template.id"
@@ -15,6 +15,13 @@
         @click="selected = template.id"
       >
       </TrainingTemplateItem>
+      <div
+        v-if="loading"
+        style="min-height: 200px !important"
+        class="h-auto px-10 py-6 border rounded-xl"
+      >
+        <skeleton></skeleton>
+      </div>
       <div
         @click="showTemplateEditor = true"
         style="min-height: 200px !important"
@@ -71,14 +78,15 @@ import { defineComponent } from '@vue/runtime-core'
 import UIButton from '@/components/UIButton.vue'
 import TrainingTemplateEditor from '@/components/TrainingTemplateEditor.vue'
 import Modal from './Modal.vue'
-
+import Skeleton from '@/components/Skeleton.vue'
 export default defineComponent({
   name: 'TrainingTemplateSelector',
   components: {
     TrainingTemplateItem,
     UIButton,
     TrainingTemplateEditor,
-    Modal
+    Modal,
+    Skeleton
   },
   props: {
     courseId: {
