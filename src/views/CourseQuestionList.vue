@@ -226,34 +226,47 @@ export default defineComponent({
     },
     async saveQuestion (question: Question): Promise<void> {
       const courseId = this.$route.params.courseId as string
+      this.loading = true
 
-      if (question.id != '_') {
-        const response = await updateQuestion(courseId, question)
-        this.questions[
-          this.questions.findIndex(q => question.id === q.id)
-        ] = response
+      try {
+        if (question.id != '_') {
+          const response = await updateQuestion(courseId, question)
+          this.questions[
+            this.questions.findIndex(q => question.id === q.id)
+          ] = response
 
-        // remove the "unsaved changes" warning from editor
-        ;(this.$refs['question-editor-' + question.id] as {
-          dirty: boolean
-        }).dirty = false
-      } else {
-        const response = await createQuestion(courseId, question)
-        this.questions.unshift(response)
-        this.draftQuestion = {
-          id: '_',
-          text: '',
-          topic: '',
-          solution: '',
-          difficulty: '2',
-          choices: [] as Choice[]
-        } as Question
-        this.$store.commit('pushNotification', {
-          message: 'Domanda creata con successo',
-          autoHide: 1500,
-          severity: 1
-        })
-        this.showDraft = false
+          // remove the "unsaved changes" warning from editor and collapse it
+          ;(this.$refs['question-editor-' + question.id] as {
+            dirty: boolean
+          }).dirty = false
+          ;(this.$refs['question-editor-' + question.id] as {
+            collapse: boolean
+          }).collapse = true
+          this.$store.commit('pushNotification', {
+            message: 'Domanda aggiornata con successo',
+            autoHide: 1500,
+            severity: 1
+          })
+        } else {
+          const response = await createQuestion(courseId, question)
+          this.questions.unshift(response)
+          this.draftQuestion = {
+            id: '_',
+            text: '',
+            topic: '',
+            solution: '',
+            difficulty: '2',
+            choices: [] as Choice[]
+          } as Question
+          this.$store.commit('pushNotification', {
+            message: 'Domanda creata con successo',
+            autoHide: 1500,
+            severity: 1
+          })
+          this.showDraft = false
+        }
+      } finally {
+        this.loading = false
       }
     }
   },

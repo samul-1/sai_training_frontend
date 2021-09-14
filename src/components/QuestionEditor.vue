@@ -81,13 +81,7 @@
           :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
           class="flex mt-2"
         >
-          <!-- <textarea
-            rows="2"
-            cols="90"
-            class="p-3 border rounded-lg"
-            v-model="choice.text"
-          ></textarea> -->
-          <RichEditor class="w-11/12" v-model="choice.text"></RichEditor>
+          <RichEditor class="w-10/12" v-model="choice.text"></RichEditor>
           <div class="my-auto ml-4">
             <input
               type="checkbox"
@@ -95,6 +89,13 @@
               class="mr-1"
             /><label>Corretta</label>
           </div>
+          <UIButton
+            @click="questionData.choices.splice(c_index, 1)"
+            class="my-auto ml-4"
+            :variant="'negative-red'"
+            :size="'xs'"
+            ><i class="fas fa-trash"></i
+          ></UIButton>
         </div>
       </transition-group>
     </div>
