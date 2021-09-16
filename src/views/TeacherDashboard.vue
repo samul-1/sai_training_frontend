@@ -4,7 +4,15 @@
     <p class="mt-20" v-if="!loading && courses.length == 0">
       Non ci sono corsi. Creane uno!
     </p>
-    <Skeleton v-if="loading"></Skeleton>
+    <div v-if="loading">
+      <div
+        v-for="i in [1, 2]"
+        :key="'skeleton-' + i"
+        class="p-4 my-4 border rounded-2xl hover:shadow-inner"
+      >
+        <Skeleton :short="true"></Skeleton>
+      </div>
+    </div>
     <div>
       <CourseListItem
         v-for="course in courses"
