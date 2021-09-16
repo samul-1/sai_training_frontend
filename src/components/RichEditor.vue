@@ -55,13 +55,13 @@ export default defineComponent({
   border-bottom: 0 !important;
   box-sizing: border-box;
   font-family: 'Helvetica Neue', 'Helvetica', 'Arial', sans-serif;
-  padding: 2px;
+  padding: 2px !important;
 }
 .ql-container.ql-snow {
   border: 1px solid rgb(229, 231, 235) !important;
 }
 .quillWrapper .ql-snow.ql-toolbar .ql-formats {
-  margin-bottom: 2px;
+  margin-bottom: 2px !important;
 }
 .ql-snow.ql-toolbar button,
 .ql-snow .ql-toolbar button {
@@ -70,43 +70,43 @@ export default defineComponent({
   cursor: pointer;
   display: inline-block;
   float: left;
-  height: 24px;
-  padding: 3px 5px;
-  width: 28px;
-  margin-left: 1px;
-  margin-right: 1px;
+  height: 24px !important;
+  padding: 3px 5px !important;
+  width: 28px !important;
+  margin-left: 1px !important;
+  margin-right: 1px !important;
 }
 .quillWrapper .ql-snow.ql-toolbar {
-  padding-top: 4px;
-  padding-bottom: 2px;
-  border-radius: 0.5rem 0.5rem 0 0;
+  padding-top: 4px !important;
+  padding-bottom: 2px !important;
+  border-radius: 0.5rem 0.5rem 0 0 !important;
 }
 .ql-container {
   box-sizing: border-box;
   font-family: Helvetica, Arial, sans-serif;
-  font-size: 13px;
+  font-size: 13px !important;
   height: 100%;
   margin: 0px;
   width: 100%;
   position: relative;
-  border-radius: 0 0 0.5rem 0.5rem;
+  border-radius: 0 0 0.5rem 0.5rem !important;
 }
 .ql-container:active,
 .ql-container:hover {
-  box-shadow: 1px 1px 5px rgba(126, 126, 126, 0.15) inset;
+  box-shadow: 1px 1px 5px rgba(126, 126, 126, 0.15) inset !important;
 }
 .ql-snow .ql-toolbar button svg,
 .quillWrapper .ql-snow.ql-toolbar button svg {
-  width: 18px;
-  height: 18px;
+  width: 18px !important;
+  height: 18px !important;
 }
 .ql-editor {
   box-sizing: border-box;
   line-height: 1.42;
   height: 100%;
   outline: none;
-  overflow-y: auto;
-  padding: 12px 15px;
+  overflow-y: auto !important;
+  padding: 12px 15px !important;
   -o-tab-size: 4;
   tab-size: 4;
   -moz-tab-size: 4;
@@ -115,6 +115,6 @@ export default defineComponent({
   word-wrap: break-word;
   min-height: 20px !important;
   max-height: 350px !important;
-  font-size: 16px;
+  font-size: 16px !important;
 }
 </style>
