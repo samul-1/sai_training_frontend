@@ -101,7 +101,7 @@ export default createStore({
 
       return new Promise((resolve, reject) => {
         axios
-          .get('/users/me')
+          .get('/users/me/')
           .then((response) => {
             commit('setUser', response.data);
             resolve(response);

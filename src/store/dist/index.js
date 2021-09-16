@@ -93,7 +93,7 @@ exports["default"] = vuex_1.createStore({
             console.log("axios.defaults.headers.common['Authorization']", axios_1["default"].defaults.headers.common['Authorization']);
             return new Promise(function (resolve, reject) {
                 axios_1["default"]
-                    .get('/users/me')
+                    .get('/users/me/')
                     .then(function (response) {
                     commit('setUser', response.data);
                     resolve(response);
