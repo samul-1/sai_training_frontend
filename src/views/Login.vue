@@ -74,8 +74,14 @@ export default {
         this.user = googleUser.getBasicProfile().getEmail()
         const token = googleUser.getAuthResponse().access_token
         console.log('token', token)
+
+        console.log('calling converToken')
         await this.$store.dispatch('convertToken', token)
+
+        console.log('calling getUserData')
         await this.$store.dispatch('getUserData')
+
+        console.log('pushing to main view')
         this.$router.push(getMainView())
       } catch (error) {
         //on fail do something

@@ -35,6 +35,10 @@ export default createStore({
       localStorage.setItem('token', token);
       axios.defaults.headers.common['Authorization'] =
         'Bearer ' + token;
+      console.log(
+        "in setToken: axios.defaults.headers.common['Authorization']",
+        axios.defaults.headers.common['Authorization']
+      );
     },
     resetToken: (state) => {
       state.token = '';
@@ -74,8 +78,13 @@ export default createStore({
             backend: 'google-oauth2',
           })
           .then((response) => {
+            console.log('committing setToken');
             commit('setToken', response.data.access_token);
+
+            console.log('committing setRefreshToken');
             commit('setRefreshToken', response.data.refresh_token);
+
+            console.log('resolving');
             resolve(response);
           })
           .catch((error) => {
@@ -85,6 +94,11 @@ export default createStore({
     },
     getUserData: ({ commit }) => {
       console.log('getting user...');
+      console.log(
+        "axios.defaults.headers.common['Authorization']",
+        axios.defaults.headers.common['Authorization']
+      );
+
       return new Promise((resolve, reject) => {
         axios
           .get('/users/me')
