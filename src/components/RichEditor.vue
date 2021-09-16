@@ -113,8 +113,8 @@ export default defineComponent({
   text-align: left;
   white-space: pre-wrap;
   word-wrap: break-word;
-  min-height: 20px;
-  max-height: 350px;
+  min-height: 20px !important;
+  max-height: 350px !important;
   font-size: 16px;
 }
 </style>
