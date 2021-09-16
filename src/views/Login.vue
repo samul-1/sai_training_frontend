@@ -3,6 +3,8 @@
     <h1 class="mx-auto mb-10 text-4xl text-center">
       Esercitazioni Unipi
     </h1>
+    <button @click="printDebug()">debug</button>
+    <button @click="testGetUser()">test get user</button>
     <div
       class="w-full px-12 py-12 mx-2 my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
     >
@@ -110,6 +112,20 @@ export default {
     },
     handleClickDisconnect () {
       window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`
+    },
+    printDebug () {
+      console.log('DEBUG INFO')
+      console.log(
+        "axios.defaults.headers.common['Authorization']",
+        axios.defaults.headers.common['Authorization']
+      )
+    },
+    async testGetUser () {
+      console.log('calling getUserData')
+      await this.$store.dispatch('getUserData')
+
+      console.log('pushing to main view')
+      this.$router.push(getMainView())
     }
   },
   setup (props) {
