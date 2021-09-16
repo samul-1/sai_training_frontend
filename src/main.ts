@@ -44,12 +44,6 @@ axios.interceptors.response.use(
   }
 );
 
-axios.interceptors.request.use(function (config) {
-  const token = localStorage.getItem('token');
-  config.headers.Authorization = token ? `Bearer ${token}` : '';
-  return config;
-});
-
 const gAuthOptions = {
   clientId:
     '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',

@@ -33,11 +33,6 @@ axios_1["default"].interceptors.response.use(function (response) {
     });
     throw error;
 });
-axios_1["default"].interceptors.request.use(function (config) {
-    var token = localStorage.getItem('token');
-    config.headers.Authorization = token ? "Bearer " + token : '';
-    return config;
-});
 var gAuthOptions = {
     clientId: '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',
     scope: 'email',
