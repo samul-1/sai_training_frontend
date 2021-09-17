@@ -120,11 +120,12 @@ export default {
       window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`
     },
     printDebug () {
-      console.log('DEBUG INFO')
-      console.log(
-        "axios.defaults.headers.common['Authorization']",
-        axios.defaults.headers.common['Authorization']
-      )
+      // console.log('DEBUG INFO')
+      // console.log(
+      //   "axios.defaults.headers.common['Authorization']",
+      //   axios.defaults.headers.common['Authorization']
+      // )
+      throw new Error('abc')
     },
     async testGetUser () {
       console.log('calling getUserData')

@@ -9,6 +9,8 @@ import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueCodeHighlight from 'vue-code-highlight';
 import './index.css';
+import * as Sentry from '@sentry/vue';
+import { Integrations } from '@sentry/tracing';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -44,19 +46,6 @@ axios.interceptors.response.use(
   }
 );
 
-// axios.interceptors.request.use(function (config) {
-//   const token = localStorage.getItem('token') ?? store.state.token;
-//   console.log('interceptor, token is ', token);
-//   config.headers.Authorization = token ? `Bearer ${token}` : '';
-//   console.log(
-//     'config is',
-//     config,
-//     'config.headers.Authorization is',
-//     config.headers.Authorization
-//   );
-//   return config;
-// });
-
 const gAuthOptions = {
   clientId:
     '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',
@@ -66,10 +55,27 @@ const gAuthOptions = {
   //hosted_domain: ["studenti.unipi.it"]
 };
 
-createApp(App)
+const app = createApp(App);
+
+app
   .use(GAuth, gAuthOptions)
   .use(VueAxios, axios)
   .use(store)
   .use(router)
   .use(VueCodeHighlight)
   .mount('#app');
+
+Sentry.init({
+  app,
+  dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
+  integrations: [
+    new Integrations.BrowserTracing({
+      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
+      tracingOrigins: ['localhost', 'sai.di.unipi.it:9090', /^\//],
+    }),
+  ],
+  // Set tracesSampleRate to 1.0 to capture 100%
+  // of transactions for performance monitoring.
+  // We recommend adjusting this value in production
+  tracesSampleRate: 1.0,
+});

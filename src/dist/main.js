@@ -10,6 +10,8 @@ var axios_1 = require("axios");
 var vue_axios_1 = require("vue-axios");
 var vue_code_highlight_1 = require("vue-code-highlight");
 require("./index.css");
+var Sentry = require("@sentry/vue");
+var tracing_1 = require("@sentry/tracing");
 var dev = process.env.NODE_ENV !== 'production';
 axios_1["default"].defaults.baseURL = dev
     ? 'http://127.0.0.1:8000'
@@ -33,28 +35,31 @@ axios_1["default"].interceptors.response.use(function (response) {
     });
     throw error;
 });
-// axios.interceptors.request.use(function (config) {
-//   const token = localStorage.getItem('token') ?? store.state.token;
-//   console.log('interceptor, token is ', token);
-//   config.headers.Authorization = token ? `Bearer ${token}` : '';
-//   console.log(
-//     'config is',
-//     config,
-//     'config.headers.Authorization is',
-//     config.headers.Authorization
-//   );
-//   return config;
-// });
 var gAuthOptions = {
     clientId: '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',
     scope: 'email',
     prompt: 'consent',
     fetch_basic_profile: false
 };
-vue_1.createApp(App_vue_1["default"])
+var app = vue_1.createApp(App_vue_1["default"]);
+app
     .use(vue3_google_oauth2_1["default"], gAuthOptions)
     .use(vue_axios_1["default"], axios_1["default"])
     .use(store_1["default"])
     .use(router_1["default"])
     .use(vue_code_highlight_1["default"])
     .mount('#app');
+Sentry.init({
+    app: app,
+    dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
+    integrations: [
+        new tracing_1.Integrations.BrowserTracing({
+            routingInstrumentation: Sentry.vueRouterInstrumentation(router_1["default"]),
+            tracingOrigins: ['localhost', 'sai.di.unipi.it:9090', /^\//]
+        }),
+    ],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 1.0
+});
