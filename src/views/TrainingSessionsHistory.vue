@@ -8,7 +8,6 @@
     >
   </teleport>
   <h1 class="mb-8 text-4xl">Le tue esercitazioni</h1>
-  <Skeleton v-if="loading"></Skeleton>
   <p v-if="!loading && sessions.length == 0">
     Non hai ancora effettuato esercitazioni.
     <router-link
@@ -17,6 +16,15 @@
       >Inizia ora a esercitarti!</router-link
     >
   </p>
+  <div class="grid grid-cols-1 gap-6 md:grid-cols-3" v-if="loading">
+    <div
+      v-for="i in [1, 2, 3]"
+      :key="'skeleton-' + i"
+      class="px-10 py-6 transition-shadow duration-150 border rounded-xl hover:shadow-md"
+    >
+      <Skeleton :short="true"></Skeleton>
+    </div>
+  </div>
 
   <div class="grid grid-cols-1 gap-6 md:grid-cols-3">
     <TrainingSessionResultsPreview

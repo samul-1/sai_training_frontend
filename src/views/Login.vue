@@ -6,7 +6,7 @@
     <!-- <button @click="printDebug()">debug</button>
     <button @click="testGetUser()">test get user</button> -->
     <div
-      class="w-full px-12 py-12 mx-2 my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
+      class="w-full px-12 py-12 mx-auto my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
     >
       <h1 class="mx-auto mb-4 text-2xl text-center">
         Login {{ $route.params.role == 'teacher' ? 'docente' : 'studente' }}
@@ -40,8 +40,8 @@
         <UIButton
           @click="handleClickSignIn"
           :variant="'green'"
-          :disabled="false"
           :size="'lg'"
+          class="md:w-max"
         >
           <i class="mr-1 fas fa-lock"></i> Entra
         </UIButton>
@@ -72,18 +72,18 @@ export default {
         if (!googleUser) {
           return null
         }
-        console.log('googleUser', googleUser)
+        // console.log('googleUser', googleUser)
         this.user = googleUser.getBasicProfile().getEmail()
         const token = googleUser.getAuthResponse().access_token
-        console.log('token', token)
+        // console.log('token', token)
 
-        console.log('calling converToken')
+        // console.log('calling converToken')
         await this.$store.dispatch('convertToken', token)
 
-        console.log('calling getUserData')
+        // console.log('calling getUserData')
         await this.$store.dispatch('getUserData')
 
-        console.log('pushing to main view')
+        // console.log('pushing to main view')
         this.$router.push(getMainView())
       } catch (error) {
         //on fail do something
@@ -93,52 +93,52 @@ export default {
           message:
             'Pare che tu sia in modalità in incognito o abbia disattivato i cookie. Se non è così e non riesci ad accedere, inviaci una segnalazione.'
         })
-        console.error(error)
+        // console.error(error)
         throw error
       }
     },
     async handleClickGetAuthCode () {
       try {
         const authCode = await this.$gAuth.getAuthCode()
-        console.log('authCode', authCode)
+        // console.log('authCode', authCode)
       } catch (error) {
         //on fail do something
-        console.error(error)
+        // console.error(error)
         return null
       }
     },
     async handleClickSignOut () {
       try {
         await this.$gAuth.signOut()
-        console.log('isAuthorized', this.Vue3GoogleOauth.isAuthorized)
+        // console.log('isAuthorized', this.Vue3GoogleOauth.isAuthorized)
         this.user = ''
       } catch (error) {
-        console.error(error)
+        // console.error(error)
       }
     },
     handleClickDisconnect () {
       window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`
     },
     printDebug () {
-      // console.log('DEBUG INFO')
-      // console.log(
+      // // console.log('DEBUG INFO')
+      // // console.log(
       //   "axios.defaults.headers.common['Authorization']",
       //   axios.defaults.headers.common['Authorization']
       // )
       throw new Error('abc')
     },
     async testGetUser () {
-      console.log('calling getUserData')
+      // console.log('calling getUserData')
       await this.$store.dispatch('getUserData')
 
-      console.log('pushing to main view')
+      // console.log('pushing to main view')
       this.$router.push(getMainView())
     }
   },
   setup (props) {
     const { isSignIn } = toRefs(props)
     const Vue3GoogleOauth = inject('Vue3GoogleOauth')
-    console.log('google', Vue3GoogleOauth)
+    // console.log('google', Vue3GoogleOauth)
     const handleClickLogin = () => {}
     return {
       Vue3GoogleOauth,
@@ -148,7 +148,7 @@ export default {
   },
   created () {
     this.$store.commit('resetToken')
-    console.log('options', this.$gAuth)
+    // console.log('options', this.$gAuth)
   }
 }
 </script>

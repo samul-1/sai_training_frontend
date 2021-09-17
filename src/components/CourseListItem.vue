@@ -24,7 +24,7 @@
         </p>
       </div>
     </div>
-    <div class="my-auto ml-auto text-center">
+    <div class="mt-4 mb-auto ml-auto text-center md:mt-auto">
       <router-link
         v-if="!$store.state.user.is_teacher"
         :to="'/course/' + course.id"

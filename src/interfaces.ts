@@ -47,6 +47,7 @@ export interface TrainingSession {
 export interface TrainingSessionResults {
   id: string;
   begin_timestamp: string;
+  score: number;
   end_timestamp: string;
   questions: Question[];
   help_texts?: Record<string, string>;

@@ -7,7 +7,7 @@
       'py-1 px-2 text-sm rounded-lg': size == 'xs',
       'py-1.5 px-4 rounded-lg': size == 'sm',
       'py-1.5 px-6 rounded-lg': size == 'md',
-      'py-3 px-24 text-lg rounded-xl': size == 'lg',
+      'py-3 px-12 md:px-24 w-full text-lg rounded-xl': size == 'lg',
       'py-6 px-20 md:px-32 text-xl rounded-2xl': size == 'xl',
       'bg-green-600 hover:bg-green-700 active:bg-green-800 text-white':
         variant == 'green',

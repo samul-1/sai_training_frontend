@@ -22,10 +22,7 @@
         >Mostra {{ wrongOnly ? 'tutte' : 'solo sbagliate' }}</UIButton
       >
     </div>
-    <div
-      v-if="Object.keys(results.help_texts).length > 0"
-      class="p-8 pb-5 my-4 border rounded-xl"
-    >
+    <div v-if="areThereHelpTexts" class="p-8 pb-5 my-4 border rounded-xl">
       <p class="mb-2">
         <i
           class="mr-1 text-lg text-red-500 opacity-80 fas fa-exclamation-triangle"
@@ -73,7 +70,11 @@ export default defineComponent({
   },
   data () {
     return {
-      results: { questions: [] as Question[] } as TrainingSessionResults,
+      results: {
+        score: 0,
+        questions: [] as Question[],
+        help_texts: {} as Record<string, string>
+      } as TrainingSessionResults,
       showCorrectAnswers: false,
       wrongOnly: false
     }
@@ -100,6 +101,12 @@ export default defineComponent({
         this.results.questions.filter(
           q => q.selected_choice !== q.choices.find(c => c.correct)?.id
         ).length > 0
+      )
+    },
+    areThereHelpTexts (): boolean {
+      return (
+        Object.keys(this.results.help_texts as Record<string, string>).length >
+        0
       )
     }
   }
