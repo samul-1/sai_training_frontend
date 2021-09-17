@@ -15,6 +15,7 @@ var TrainingSessionResults_vue_1 = require("../components/TrainingSessionResults
 var QuestionImport_vue_1 = require("../components/QuestionImport.vue");
 var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vue");
 var CourseTrainingTemplates_vue_1 = require("../views/CourseTrainingTemplates.vue");
+var PageNotFound_vue_1 = require("../views/PageNotFound.vue");
 var routes = [
     {
         path: '/',
@@ -115,6 +116,10 @@ var routes = [
         meta: {
             teachersOnly: true
         }
+    },
+    {
+        path: '/:catchAll(.*)',
+        component: PageNotFound_vue_1["default"]
     },
 ];
 function teachersOnly(route) {

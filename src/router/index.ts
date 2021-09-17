@@ -22,6 +22,7 @@ import CourseTopicList from '../components/CourseTopicList.vue';
 import QuestionImport from '../components/QuestionImport.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 import CourseTrainingTemplates from '../views/CourseTrainingTemplates.vue';
+import PageNotFound from '../views/PageNotFound.vue';
 import { User } from '@/interfaces';
 
 const routes: Array<RouteRecordRaw> = [
@@ -124,6 +125,10 @@ const routes: Array<RouteRecordRaw> = [
     meta: {
       teachersOnly: true,
     },
+  },
+  {
+    path: '/:catchAll(.*)',
+    component: PageNotFound,
   },
 ];
 
