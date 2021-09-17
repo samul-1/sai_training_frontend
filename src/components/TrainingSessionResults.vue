@@ -73,7 +73,7 @@ export default defineComponent({
   },
   data () {
     return {
-      results: {} as TrainingSessionResults,
+      results: { questions: [] as Question[] } as TrainingSessionResults,
       showCorrectAnswers: false,
       wrongOnly: false
     }

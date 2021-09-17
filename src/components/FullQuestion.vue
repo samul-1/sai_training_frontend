@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-8 py-6 my-6 transition-shadow duration-300 border rounded-xl group hover:shadow-md"
+    class="relative px-4 py-6 my-6 transition-shadow duration-300 border md:px-8 rounded-xl group hover:shadow-md"
   >
     <i
       v-if="showIcon"
