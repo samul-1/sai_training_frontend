@@ -83,7 +83,7 @@
           necessario, verrai ricontattato attraverso la piattaforma o via email.
         </p>
         <textarea
-          cols="60"
+          rows="10"
           class="w-full p-3 border rounded-lg"
           v-model="reportText"
           placeholder="Cosa non va?"

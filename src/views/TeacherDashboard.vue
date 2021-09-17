@@ -1,6 +1,6 @@
 <template>
   <div class="flex flex-col h-full">
-    <h1 class="mb-6 text-4xl text-center">I tuoi corsi</h1>
+    <h1 class="mb-2 text-4xl text-center">I tuoi corsi</h1>
     <p class="mt-20" v-if="!loading && courses.length == 0">
       Non ci sono corsi. Creane uno!
     </p>
@@ -13,7 +13,7 @@
         <Skeleton :short="true"></Skeleton>
       </div>
     </div>
-    <div>
+    <div class="mb-2">
       <CourseListItem
         v-for="course in courses"
         :key="'course-' + course.id"
