@@ -3,7 +3,7 @@ import axios, { AxiosResponse } from 'axios';
 export function getCourses(): Promise<Array<Course>> {
   return new Promise((resolve, reject) => {
     axios
-      .get('/courses')
+      .get('/courses/')
       .then((response) => {
         resolve(response.data);
       })
@@ -14,7 +14,7 @@ export function getCourses(): Promise<Array<Course>> {
 export function getCourse(courseId: string): Promise<Course> {
   return new Promise((resolve, reject) => {
     axios
-      .get(`/courses/${courseId}`)
+      .get(`/courses/${courseId}/`)
       .then((response) => {
         resolve(response.data);
       })
@@ -40,7 +40,7 @@ export function getTrainingTemplates(
 ): Promise<TrainingTemplate[]> {
   return new Promise((resolve, reject) => {
     axios
-      .get(`/courses/${courseId}/templates`)
+      .get(`/courses/${courseId}/templates/`)
       .then((response) => {
         resolve(response.data);
       })
@@ -84,7 +84,7 @@ export function updateTrainingTemplate(
 export function getTopics(courseId: string): Promise<Topic[]> {
   return new Promise((resolve, reject) => {
     axios
-      .get(`/courses/${courseId}/topics`)
+      .get(`/courses/${courseId}/topics/`)
       .then((response) => {
         resolve(response.data);
       })

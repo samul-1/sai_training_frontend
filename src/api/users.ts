@@ -4,7 +4,7 @@ import axios, { AxiosResponse } from 'axios';
 export function getTeachers(): Promise<User[]> {
   return new Promise((resolve, reject) => {
     axios
-      .get(`/users/teachers`)
+      .get(`/users/teachers/`)
       .then((response) => {
         resolve(response.data);
       })

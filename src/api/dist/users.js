@@ -5,7 +5,7 @@ var axios_1 = require("axios");
 function getTeachers() {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("/users/teachers")
+            .get("/users/teachers/")
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) { return reject(error); });

@@ -16,7 +16,7 @@ var axios_1 = require("axios");
 function getCourses() {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get('/courses')
+            .get('/courses/')
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) { return reject(error); });
@@ -26,7 +26,7 @@ exports.getCourses = getCourses;
 function getCourse(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("/courses/" + courseId)
+            .get("/courses/" + courseId + "/")
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) { return reject(error); });
@@ -46,7 +46,7 @@ exports.createCourse = createCourse;
 function getTrainingTemplates(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("/courses/" + courseId + "/templates")
+            .get("/courses/" + courseId + "/templates/")
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) { return reject(error); });
@@ -76,7 +76,7 @@ exports.updateTrainingTemplate = updateTrainingTemplate;
 function getTopics(courseId) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("/courses/" + courseId + "/topics")
+            .get("/courses/" + courseId + "/topics/")
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) { return reject(error); });

@@ -28,7 +28,7 @@ export function getQuestions(
           topicId ? 'topics/' + topicId + '/' : ''
         }questions${difficulty ? '?difficulty=' + difficulty : ''}${
           difficulty ? '&' : '?'
-        }page=${page}`
+        }page=${page}/`
       )
       .then((response) => {
         resolve(response.data.results);
