@@ -94,7 +94,7 @@ export default {
             'Pare che tu sia in modalità in incognito o abbia disattivato i cookie. Se non è così e non riesci ad accedere, inviaci una segnalazione.'
         })
         console.error(error)
-        return null
+        throw error
       }
     },
     async handleClickGetAuthCode () {
