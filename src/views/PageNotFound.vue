@@ -30,6 +30,15 @@ export default defineComponent({
       }, 1000)
     }, 300)
 
+    // let Sentry catch this
+    throw new Error(
+      `404 on ${this.$route.fullPath} by ${
+        this.$store.getters.isAuthenticated
+          ? this.$store.state.user.email
+          : 'Anonymous'
+      }`
+    )
+
     // axios
     //   .post('/frontend_errors/', {
     //     additional_info: `404 on ${window.location}`
