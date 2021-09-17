@@ -87,6 +87,12 @@ export default {
         this.$router.push(getMainView())
       } catch (error) {
         //on fail do something
+        this.$store.commit('pushNotification', {
+          severity: 2,
+          autoHide: 9000,
+          message:
+            'Pare che tu sia in modalità in incognito o abbia disattivato i cookie. Se non è così e non riesci ad accedere, inviaci una segnalazione.'
+        })
         console.error(error)
         return null
       }

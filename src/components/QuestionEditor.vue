@@ -19,7 +19,7 @@
         <h1 class="font-medium">Argomento</h1>
         <select
           v-model="questionData.topic"
-          class="col-span-4 p-0.5 bg-white border rounded-md"
+          class="col-span-5 md:col-span-4 p-0.5 bg-white border rounded-md"
           :class="{
             'bg-red-100 text-red-900 border border-red-200': !questionData.topic
           }"
@@ -44,7 +44,7 @@
       <div class="grid grid-cols-5 md:gap-24 lg:gap-32">
         <h1 class="font-medium">Difficoltà</h1>
         <difficulty-input
-          class="col-span-4"
+          class="col-span-5 md:col-span-4"
           v-model="questionData.difficulty"
         ></difficulty-input>
       </div>
@@ -109,11 +109,14 @@
       <UIButton
         :disabled="!valid || !dirty"
         @click="$emit('save')"
-        class=""
+        class="my-auto"
         :variant="'green'"
         >Salva</UIButton
       >
-      <UIButton @click="showPreview = true" class="" :variant="'negative'"
+      <UIButton
+        class="my-auto"
+        @click="showPreview = true"
+        :variant="'negative'"
         >Anteprima</UIButton
       >
       <p

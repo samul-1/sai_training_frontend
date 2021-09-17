@@ -96,6 +96,12 @@ export default defineComponent({
 </script>
 
 <style>
+@media only screen and (min-device-width: 320px) and (max-device-width: 480px) and (-webkit-min-device-pixel-ratio: 2) {
+  .small-caps,
+  .vue-slider-mark-label {
+    font-size: 12px !important;
+  }
+}
 .small-caps,
 .vue-slider-mark-label {
   font-variant-caps: all-small-caps;

@@ -7,9 +7,17 @@
       ></router-link
     >
   </teleport>
-  <div class="my-6">
+  <div class="">
     <h1 class="mb-4 text-4xl">Modelli di esercitazione</h1>
-    <!-- <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p> -->
+    <p class="mb-4">
+      I modelli sono utilizzati dagli studenti quando iniziano una nuova
+      esercitazione. Ogni modello definisce, per ogni argomento del corso,
+      quante domande vengono scelte e con quale distribuzione di difficoltà
+      quando lo studente inizia un'esercitazione. Puoi utilizzare questa
+      funzionalità per creare template di esercitazioni incentrate solo su
+      alcuni argomenti, oppure per simulare le prove d'esame o le verifiche
+      intermedie.
+    </p>
     <div class="grid grid-cols-1 gap-6 md:grid-cols-2">
       <TrainingTemplateItem
         v-for="template in templates"
@@ -22,7 +30,7 @@
       <div
         v-if="loading"
         style="min-height: 200px !important"
-        class="h-auto px-10 py-6 border  rounded-xl"
+        class="h-auto px-10 py-6 border rounded-xl"
       >
         <skeleton></skeleton>
       </div>
@@ -31,7 +39,7 @@
         style="min-height: 200px !important"
         class="flex flex-col h-auto px-10 py-6 text-gray-400 border cursor-pointer rounded-xl bg-gradient-to-b from-gray-50 to-gray-100"
       >
-        <h1 class="-mb-2 text-xl">Nuovo modello personalizzato</h1>
+        <h1 class="-mb-2 text-xl">Nuovo modello</h1>
         <div class="flex my-auto text-6xl">
           <i class="mx-auto my-auto fas fa-plus-circle"></i>
         </div>
