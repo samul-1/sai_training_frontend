@@ -33,14 +33,18 @@ axios_1["default"].interceptors.response.use(function (response) {
     });
     throw error;
 });
-axios_1["default"].interceptors.request.use(function (config) {
-    var _a;
-    var token = (_a = localStorage.getItem('token')) !== null && _a !== void 0 ? _a : store_1["default"].state.token;
-    console.log('interceptor, token is ', token);
-    config.headers.Authorization = token ? "Bearer " + token : '';
-    console.log('config is', config, 'config.headers.Authorization is', config.headers.Authorization);
-    return config;
-});
+// axios.interceptors.request.use(function (config) {
+//   const token = localStorage.getItem('token') ?? store.state.token;
+//   console.log('interceptor, token is ', token);
+//   config.headers.Authorization = token ? `Bearer ${token}` : '';
+//   console.log(
+//     'config is',
+//     config,
+//     'config.headers.Authorization is',
+//     config.headers.Authorization
+//   );
+//   return config;
+// });
 var gAuthOptions = {
     clientId: '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',
     scope: 'email',

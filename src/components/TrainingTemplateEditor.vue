@@ -3,7 +3,7 @@
     <div v-if="showFullForm">
       <h1 class="mb-2 text-lg font-medium ">Nome modello</h1>
       <textarea
-        class="p-3 border rounded-lg"
+        class="w-full p-3 border rounded-lg"
         v-model="templateData.name"
         rows="1"
         cols="90"
@@ -12,7 +12,7 @@
       <textarea
         rows="2"
         cols="90"
-        class="p-3 border rounded-lg"
+        class="w-full p-3 border rounded-lg"
         v-model="templateData.description"
       ></textarea>
     </div>

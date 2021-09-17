@@ -26,9 +26,9 @@ export function getQuestions(
       .get(
         `/courses/${courseId}/${
           topicId ? 'topics/' + topicId + '/' : ''
-        }questions${difficulty ? '?difficulty=' + difficulty : ''}${
+        }questions/${difficulty ? '?difficulty=' + difficulty : ''}${
           difficulty ? '&' : '?'
-        }page=${page}/`
+        }page=${page}`
       )
       .then((response) => {
         resolve(response.data.results);

@@ -83,7 +83,6 @@
           necessario, verrai ricontattato attraverso la piattaforma o via email.
         </p>
         <textarea
-          rows="10"
           cols="60"
           class="w-full p-3 border rounded-lg"
           v-model="reportText"
