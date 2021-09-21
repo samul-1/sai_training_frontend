@@ -1,7 +1,8 @@
 <template>
   <div
-    class="fixed z-50 spinner"
+    class="z-50 spinner"
     :class="{
+      fixed: fixed,
       'bg-gray-400  bg-opacity-90 shadow-xl rounded-lg px-6 py-10 flex text-gray-100': loadingMessage
     }"
     style="top:50%; left:50%; transform: translate(-50%,-50%); filter: drop-shadow(1px 2px 4px rgba(0,0,0,0.3));"
@@ -37,6 +38,10 @@ export default {
     loadingMessage: {
       type: String,
       default: ''
+    },
+    fixed: {
+      type: Boolean,
+      default: true
     }
   }
 }

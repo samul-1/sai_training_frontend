@@ -41,8 +41,15 @@
           @click="handleClickSignIn"
           :variant="'green'"
           :size="'lg'"
-          class="md:w-max"
+          class="relative md:w-max"
+          :disabled="loadingLogin"
         >
+          <div
+            class="absolute ml-2.5 mt-0.5 left-1/2 top-1/2"
+            v-if="loadingLogin"
+          >
+            <spinner :fixed="false"></spinner>
+          </div>
           <i class="mr-1 fas fa-lock"></i> Entra
         </UIButton>
       </div>
@@ -55,14 +62,17 @@
 import UIButton from '@/components/UIButton.vue'
 import { inject, toRefs } from 'vue'
 import { getMainView } from '@/router'
+import Spinner from '@/components/Spinner.vue'
 export default {
   name: 'Login',
   components: {
-    UIButton
+    UIButton,
+    Spinner
   },
   data () {
     return {
-      user: ''
+      user: '',
+      loadingLogin: true
     }
   },
   methods: {
@@ -148,6 +158,7 @@ export default {
   },
   created () {
     this.$store.commit('resetToken')
+    setTimeout(() => (this.loadingLogin = false), 1500)
     // console.log('options', this.$gAuth)
   }
 }
