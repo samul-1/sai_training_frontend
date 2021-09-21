@@ -26,7 +26,7 @@
       >
       <router-link :to="`/course/${$route.params.courseId}/sessions/`">
         <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-          >Cronologia eserciazioni</UIButton
+          >Cronologia esercitazioni</UIButton
         ></router-link
       >
     </div>
