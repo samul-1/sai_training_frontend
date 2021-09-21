@@ -37,7 +37,7 @@
       ></Notification
     ></transition>
 
-    <main class="flex-grow mx-3 my-6 main-view md:mx-10">
+    <main class="flex-grow mx-4 my-6 main-view md:mx-10">
       <router-view />
     </main>
     <footer
