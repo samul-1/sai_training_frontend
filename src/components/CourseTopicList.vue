@@ -7,7 +7,9 @@
       :key="'topic-' + topic.id"
       class="flex my-3 space-x-2"
     >
-      <p v-if="editing != topic.id" class="mb-auto">{{ topic.name }}</p>
+      <p v-if="editing != topic.id" class="mb-auto">
+        {{ topic.name }}
+      </p>
       <div class="flex flex-col" v-else>
         <input
           :class="{
@@ -27,15 +29,20 @@
           placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
         ></textarea>
       </div>
-      <UIButton
-        v-if="editing != topic.id"
-        :variant="'light'"
-        :size="'xs'"
-        @click="editTopic(topic)"
-        :disabled="editing && editing != topic.id"
-        class="mb-auto"
-        ><i class="text-xs fas fa-edit"></i
-      ></UIButton>
+      <div v-if="editing != topic.id">
+        <UIButton
+          :variant="'light'"
+          :size="'xs'"
+          @click="editTopic(topic)"
+          :disabled="editing && editing != topic.id"
+          class="mb-auto"
+          ><i class="text-xs fas fa-edit"></i
+        ></UIButton>
+        <i
+          :class="{ 'opacity-100': success == topic.id }"
+          class="ml-2 text-green-600 transition-opacity duration-200 opacity-0 fas fa-check"
+        ></i>
+      </div>
       <div class="flex mb-auto space-x-2" v-else>
         <UIButton
           @click="topic.id == '_' ? _createTopic(topic) : _updateTopic(topic)"
@@ -87,6 +94,7 @@ export default defineComponent({
     return {
       topics: [] as Topic[],
       editing: null as string | null,
+      success: null as string | null,
       editedBeforeState: {} as Topic,
       loading: false
     }
@@ -116,6 +124,10 @@ export default defineComponent({
         topic
       )
       topic = { ...response }
+      this.success = topic.id as string
+      setTimeout(() => {
+        this.success = null
+      }, 2000)
       this.editing = null
     },
     async _createTopic (topic: Topic): Promise<void> {

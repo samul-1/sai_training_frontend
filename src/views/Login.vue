@@ -6,7 +6,7 @@
     <!-- <button @click="printDebug()">debug</button>
     <button @click="testGetUser()">test get user</button> -->
     <div
-      class="w-full px-12 py-12 mx-auto my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
+      class="w-full px-6 py-12 mx-auto my-auto text-center border shadow-xl rounded-xl md:px-20 md:mx-auto md:w-2/3 border-gray-150"
     >
       <h1 class="mx-auto mb-4 text-2xl text-center">
         Login {{ $route.params.role == 'teacher' ? 'docente' : 'studente' }}
