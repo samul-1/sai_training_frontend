@@ -36,7 +36,10 @@ exports["default"] = vuex_1.createStore({
             localStorage.setItem('token', token);
             axios_1["default"].defaults.headers.common['Authorization'] =
                 'Bearer ' + token;
-            console.log("in setToken: axios.defaults.headers.common['Authorization']", axios_1["default"].defaults.headers.common['Authorization']);
+            // console.log(
+            //   "in setToken: axios.defaults.headers.common['Authorization']",
+            //   axios.defaults.headers.common['Authorization']
+            // );
         },
         resetToken: function (state) {
             state.token = '';
@@ -65,7 +68,7 @@ exports["default"] = vuex_1.createStore({
         // converts a token issued by Google to a token usable to authenticate requests to the backend
         convertToken: function (_a, token) {
             var commit = _a.commit;
-            console.log('converting token...');
+            // console.log('converting token...');
             return new Promise(function (resolve, reject) {
                 axios_1["default"]
                     .post('/auth/convert-token', {
@@ -76,11 +79,11 @@ exports["default"] = vuex_1.createStore({
                     backend: 'google-oauth2'
                 })
                     .then(function (response) {
-                    console.log('committing setToken');
+                    // console.log('committing setToken');
                     commit('setToken', response.data.access_token);
-                    console.log('committing setRefreshToken');
+                    // console.log('committing setRefreshToken');
                     commit('setRefreshToken', response.data.refresh_token);
-                    console.log('resolving');
+                    // console.log('resolving');
                     resolve(response);
                 })["catch"](function (error) {
                     reject(error);
@@ -88,9 +91,12 @@ exports["default"] = vuex_1.createStore({
             });
         },
         getUserData: function (_a) {
+            // console.log('getting user...');
+            // console.log(
+            //   "axios.defaults.headers.common['Authorization']",
+            //   axios.defaults.headers.common['Authorization']
+            // );
             var commit = _a.commit;
-            console.log('getting user...');
-            console.log("axios.defaults.headers.common['Authorization']", axios_1["default"].defaults.headers.common['Authorization']);
             return new Promise(function (resolve, reject) {
                 axios_1["default"]
                     .get('/users/me/')

@@ -72,12 +72,12 @@ export default {
         if (!googleUser) {
           return null
         }
-        // console.log('googleUser', googleUser)
+        console.log('googleUser', googleUser)
         this.user = googleUser.getBasicProfile().getEmail()
         const token = googleUser.getAuthResponse().access_token
-        // console.log('token', token)
+        console.log('token', token)
 
-        // console.log('calling converToken')
+        console.log('calling converToken')
         await this.$store.dispatch('convertToken', token)
 
         // console.log('calling getUserData')

@@ -121,14 +121,17 @@ export default defineComponent({
         path: this.$route.fullPath,
         browser: this.getBrowser()
       }
-      await createTicket(this.reportText, reportData)
-      this.showReportForm = false
-      this.reportText = ''
-      this.$store.commit('pushNotification', {
-        message: 'Grazie per la segnalazione.',
-        autoHide: 1500,
-        severity: 1
-      })
+      try {
+        await createTicket(this.reportText, reportData)
+        this.$store.commit('pushNotification', {
+          message: 'Grazie per la segnalazione.',
+          autoHide: 1500,
+          severity: 1
+        })
+        this.reportText = ''
+      } finally {
+        this.showReportForm = false
+      }
     },
     getBrowser (): string {
       var ua = navigator.userAgent,
