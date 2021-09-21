@@ -1,4 +1,5 @@
 <template>
+  <spinner v-if="loading"></spinner>
   <div class="relative transform -translate-y-1/2 top-1/2">
     <h1 class="mx-auto mb-10 text-4xl text-center">
       Esercitazioni Unipi
@@ -42,7 +43,7 @@
           :variant="'green'"
           :size="'lg'"
           class="relative md:w-max"
-          :disabled="loadingLogin"
+          :disabled="loadingLogin || loading"
         >
           <div
             class="absolute ml-2.5 mt-0.5 left-1/2 top-1/2"
@@ -72,12 +73,14 @@ export default {
   data () {
     return {
       user: '',
-      loadingLogin: true
+      loadingLogin: true,
+      loading: false
     }
   },
   methods: {
     async handleClickSignIn () {
       try {
+        this.loading = true
         const googleUser = await this.$gAuth.signIn()
         if (!googleUser) {
           return null
@@ -105,6 +108,8 @@ export default {
         })
         // console.error(error)
         throw error
+      } finally {
+        this.loading = false
       }
     },
     async handleClickGetAuthCode () {
