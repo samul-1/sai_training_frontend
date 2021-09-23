@@ -20,6 +20,7 @@ import TrainingSession from '../views/TrainingSession.vue';
 import TrainingSessionResults from '../components/TrainingSessionResults.vue';
 import CourseTopicList from '../components/CourseTopicList.vue';
 import QuestionImport from '../components/QuestionImport.vue';
+import TexToJson from '../views/TexToJson.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 import CourseTrainingTemplates from '../views/CourseTrainingTemplates.vue';
 import PageNotFound from '../views/PageNotFound.vue';
@@ -122,6 +123,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course-panel/:courseId/templates',
     name: 'CourseTrainingTemplates',
     component: CourseTrainingTemplates,
+    meta: {
+      teachersOnly: true,
+    },
+  },
+  {
+    path: '/tex-2-json',
+    name: 'TexToJson',
+    component: TexToJson,
     meta: {
       teachersOnly: true,
     },

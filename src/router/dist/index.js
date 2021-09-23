@@ -13,6 +13,7 @@ var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue"
 var TrainingSession_vue_1 = require("../views/TrainingSession.vue");
 var TrainingSessionResults_vue_1 = require("../components/TrainingSessionResults.vue");
 var QuestionImport_vue_1 = require("../components/QuestionImport.vue");
+var TexToJson_vue_1 = require("../views/TexToJson.vue");
 var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vue");
 var CourseTrainingTemplates_vue_1 = require("../views/CourseTrainingTemplates.vue");
 var PageNotFound_vue_1 = require("../views/PageNotFound.vue");
@@ -113,6 +114,14 @@ var routes = [
         path: '/course-panel/:courseId/templates',
         name: 'CourseTrainingTemplates',
         component: CourseTrainingTemplates_vue_1["default"],
+        meta: {
+            teachersOnly: true
+        }
+    },
+    {
+        path: '/tex-2-json',
+        name: 'TexToJson',
+        component: TexToJson_vue_1["default"],
         meta: {
             teachersOnly: true
         }
