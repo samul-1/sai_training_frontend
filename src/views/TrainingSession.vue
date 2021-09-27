@@ -85,9 +85,23 @@ export default defineComponent({
     }
   },
   async created () {
+    const courseId = this.$route.params.courseId as string
+
     this.loading = true
     await this.getOrCreateSession()
     this.loading = false
+
+    // restore previously given answers if session was interrupted
+    if (localStorage.getItem(`answers_${courseId}`)) {
+      if (localStorage.getItem(`sessionId_${courseId}`) == this.session.id) {
+        this.answers = JSON.parse(
+          localStorage.getItem(`answers_${courseId}`) as string
+        )
+      } else {
+        localStorage.removeItem(`answers_${courseId}`)
+      }
+    }
+    localStorage.setItem(`sessionId_${courseId}`, this.session.id)
   },
   watch: {
     async templateId (newVal) {
@@ -97,6 +111,10 @@ export default defineComponent({
         await this.getOrCreateSession()
         this.loading = false
       }
+    },
+    answersAsJson (newVal) {
+      const courseId = this.$route.params.courseId as string
+      localStorage.setItem(`answers_${courseId}`, newVal)
     }
   },
   methods: {
@@ -120,14 +138,19 @@ export default defineComponent({
       this.loadingResults = true
       const courseId = this.$route.params.courseId as string
       const response = await turnInTrainingSession(courseId, this.answers)
-      console.log(response)
       this.loadingResults = false
+
+      localStorage.removeItem(`answers${courseId}`)
+      localStorage.removeItem(`sessionId_${courseId}`)
       this.$router.push(`/course/${courseId}/sessions/${response.id}`)
     }
   },
   computed: {
     questions (): Question[] {
       return this.session.questions
+    },
+    answersAsJson (): string {
+      return JSON.stringify(this.answers)
     }
   }
 })

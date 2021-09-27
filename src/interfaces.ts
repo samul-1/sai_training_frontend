@@ -40,6 +40,7 @@ export interface Question {
   difficulty?: string;
 }
 export interface TrainingSession {
+  id: string;
   questions: Question[];
   begin_timestamp: string;
 }
