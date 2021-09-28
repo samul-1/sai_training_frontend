@@ -150,6 +150,9 @@ function isStudent() {
 }
 function getMainView() {
     var _a, _b;
+    if (router.currentRoute.value.query.redirect) {
+        return router.currentRoute.value.query.redirect;
+    }
     return isTeacher()
         ? (_a = routes.find(function (route) { var _a; return (_a = route.meta) === null || _a === void 0 ? void 0 : _a.teacherHomepage; })) === null || _a === void 0 ? void 0 : _a.path
         : (_b = routes.find(function (route) { var _a; return (_a = route.meta) === null || _a === void 0 ? void 0 : _a.studentHomepage; })) === null || _b === void 0 ? void 0 : _b.path;
@@ -162,11 +165,14 @@ var router = vue_router_1.createRouter({
 router.beforeEach(function (to, _from, next) {
     if (studentsOnly(to) && !isStudent()) {
         //store.commit('setRedirectToAfterLogin', to);
-        next('/login');
+        next({ path: '/login', query: { redirect: to.fullPath } });
     }
     else if (teachersOnly(to) && !isTeacher()) {
         //store.commit('setRedirectToAfterLogin', to);
-        next('/login/teacher');
+        next({
+            path: '/login/teacher',
+            query: { redirect: to.fullPath }
+        });
     }
     else {
         next();

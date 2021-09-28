@@ -30,12 +30,12 @@
         :to="'/course/' + course.id"
       >
         <UIButton :variant="course.enrolled ? 'indigo' : 'green'">
-          <i
+          <!-- <i
             :class="{
               'fas fa-plus-circle mr-1': !course.enrolled,
               'fas fa-arrow-right mr-1': course.enrolled
             }"
-          ></i>
+          ></i> -->
           {{ course.enrolled ? 'Vai al corso' : 'Iscriviti' }}
         </UIButton></router-link
       >

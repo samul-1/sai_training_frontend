@@ -162,6 +162,9 @@ function isStudent() {
 }
 
 export function getMainView(): string | undefined {
+  if (router.currentRoute.value.query.redirect) {
+    return router.currentRoute.value.query.redirect as string;
+  }
   return isTeacher()
     ? (routes.find(
         (route) => (route.meta as RouteMeta)?.teacherHomepage
@@ -179,10 +182,13 @@ const router = createRouter({
 router.beforeEach((to, _from, next) => {
   if (studentsOnly(to) && !isStudent()) {
     //store.commit('setRedirectToAfterLogin', to);
-    next('/login');
+    next({ path: '/login', query: { redirect: to.fullPath } });
   } else if (teachersOnly(to) && !isTeacher()) {
     //store.commit('setRedirectToAfterLogin', to);
-    next('/login/teacher');
+    next({
+      path: '/login/teacher',
+      query: { redirect: to.fullPath },
+    });
   } else {
     next();
   }
