@@ -1,4 +1,4 @@
-import { Question } from './interfaces';
+import { Question, ProgrammingExercise } from './interfaces';
 
 export function isValidQuestion(question: Question): boolean {
   return !(
@@ -13,4 +13,11 @@ export function isValidQuestion(question: Question): boolean {
     question.choices.some((choice) => choice.text.length == 0) ||
     question.choices.filter((choice) => choice.correct).length == 0
   );
+}
+
+export function isValidProgrammingExercise(
+  exercise: ProgrammingExercise
+): boolean {
+  console.log(exercise);
+  return true;
 }

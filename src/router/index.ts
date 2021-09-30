@@ -11,6 +11,7 @@ import {
 import store from '../store';
 import Login from '../views/Login.vue';
 import CourseQuestionList from '../views/CourseQuestionList.vue';
+import CourseProgrammingExercisesList from '../views/CourseProgrammingExercisesList.vue';
 import Courses from '../views/Courses.vue';
 import StudentDashboard from '../views/StudentDashboard.vue';
 import TeacherDashboard from '../views/TeacherDashboard.vue';
@@ -24,6 +25,7 @@ import TexToJson from '../views/TexToJson.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 import CourseTrainingTemplates from '../views/CourseTrainingTemplates.vue';
 import PageNotFound from '../views/PageNotFound.vue';
+import StudentProgrammingExercisesDashboard from '../views/StudentProgrammingExercisesDashboard.vue';
 import { User } from '@/interfaces';
 
 const routes: Array<RouteRecordRaw> = [
@@ -88,6 +90,14 @@ const routes: Array<RouteRecordRaw> = [
     },
   },
   {
+    path: '/course/:courseId/exercises',
+    name: 'StudentProgrammingExercisesDashboard',
+    component: StudentProgrammingExercisesDashboard,
+    meta: {
+      studentsOnly: true,
+    },
+  },
+  {
     path: '/course/:courseId/sessions/:sessionId',
     name: 'TrainingSessionResults',
     component: TrainingSessionResults,
@@ -115,6 +125,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course-panel/:courseId/questions',
     name: 'CourseQuestionList',
     component: CourseQuestionList,
+    meta: {
+      teachersOnly: true,
+    },
+  },
+  {
+    path: '/course-panel/:courseId/programming_exercises',
+    name: 'CourseProgrammingExercisesList',
+    component: CourseProgrammingExercisesList,
     meta: {
       teachersOnly: true,
     },

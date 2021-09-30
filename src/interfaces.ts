@@ -39,6 +39,18 @@ export interface Question {
   selected_choice?: string;
   difficulty?: string;
 }
+
+export interface TestCase {
+  text: string;
+}
+export interface ProgrammingExercise {
+  id: string;
+  text: string;
+  topic: string;
+  testcases: TestCase[];
+  difficulty?: string;
+}
+
 export interface TrainingSession {
   id: string;
   questions: Question[];

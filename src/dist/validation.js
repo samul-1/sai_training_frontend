@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.isValidQuestion = void 0;
+exports.isValidProgrammingExercise = exports.isValidQuestion = void 0;
 function isValidQuestion(question) {
     var _a, _b;
     return !(!question.text ||
@@ -15,3 +15,8 @@ function isValidQuestion(question) {
         question.choices.filter(function (choice) { return choice.correct; }).length == 0);
 }
 exports.isValidQuestion = isValidQuestion;
+function isValidProgrammingExercise(exercise) {
+    console.log(exercise);
+    return true;
+}
+exports.isValidProgrammingExercise = isValidProgrammingExercise;

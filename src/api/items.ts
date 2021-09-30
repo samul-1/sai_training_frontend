@@ -1,4 +1,4 @@
-import { Question } from '@/interfaces';
+import { ProgrammingExercise, Question } from '@/interfaces';
 import axios from 'axios';
 
 export function bulkCreateQuestions(
@@ -37,6 +37,28 @@ export function getQuestions(
   });
 }
 
+export function getProgrammingExercises(
+  courseId: string,
+  topicId: string | null,
+  difficulty: string | null,
+  page: number
+): Promise<ProgrammingExercise[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `/courses/${courseId}/${
+          topicId ? 'topics/' + topicId + '/' : ''
+        }programming_exercises/${
+          difficulty ? '?difficulty=' + difficulty : ''
+        }${difficulty ? '&' : '?'}page=${page}`
+      )
+      .then((response) => {
+        resolve(response.data.results);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function updateQuestion(
   courseId: string,
   question: Question
@@ -51,6 +73,23 @@ export function updateQuestion(
   });
 }
 
+export function updateProgrammingExercise(
+  courseId: string,
+  exercise: ProgrammingExercise
+): Promise<ProgrammingExercise> {
+  return new Promise((resolve, reject) => {
+    axios
+      .put(
+        `/courses/${courseId}/programming_exercises/${exercise.id}/`,
+        exercise
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function createQuestion(
   courseId: string,
   question: Question
@@ -58,6 +97,20 @@ export function createQuestion(
   return new Promise((resolve, reject) => {
     axios
       .post(`/courses/${courseId}/questions/`, question)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export function createProgrammingExercise(
+  courseId: string,
+  exercise: ProgrammingExercise
+): Promise<ProgrammingExercise> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`/courses/${courseId}/programming_exercises/`, exercise)
       .then((response) => {
         resolve(response.data);
       })
