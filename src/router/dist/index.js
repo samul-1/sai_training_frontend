@@ -19,6 +19,7 @@ var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vu
 var CourseTrainingTemplates_vue_1 = require("../views/CourseTrainingTemplates.vue");
 var PageNotFound_vue_1 = require("../views/PageNotFound.vue");
 var StudentProgrammingExercisesDashboard_vue_1 = require("../views/StudentProgrammingExercisesDashboard.vue");
+var StudentProgrammingExerciseSession_vue_1 = require("../views/StudentProgrammingExerciseSession.vue");
 var routes = [
     {
         path: '/',
@@ -84,6 +85,14 @@ var routes = [
         path: '/course/:courseId/exercises',
         name: 'StudentProgrammingExercisesDashboard',
         component: StudentProgrammingExercisesDashboard_vue_1["default"],
+        meta: {
+            studentsOnly: true
+        }
+    },
+    {
+        path: '/course/:courseId/exercises/train',
+        name: 'StudentProgrammingExerciseSession',
+        component: StudentProgrammingExerciseSession_vue_1["default"],
         meta: {
             studentsOnly: true
         }

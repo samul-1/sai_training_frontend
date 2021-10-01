@@ -26,6 +26,7 @@ import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
 import CourseTrainingTemplates from '../views/CourseTrainingTemplates.vue';
 import PageNotFound from '../views/PageNotFound.vue';
 import StudentProgrammingExercisesDashboard from '../views/StudentProgrammingExercisesDashboard.vue';
+import StudentProgrammingExerciseSession from '../views/StudentProgrammingExerciseSession.vue';
 import { User } from '@/interfaces';
 
 const routes: Array<RouteRecordRaw> = [
@@ -93,6 +94,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course/:courseId/exercises',
     name: 'StudentProgrammingExercisesDashboard',
     component: StudentProgrammingExercisesDashboard,
+    meta: {
+      studentsOnly: true,
+    },
+  },
+  {
+    path: '/course/:courseId/exercises/train',
+    name: 'StudentProgrammingExerciseSession',
+    component: StudentProgrammingExerciseSession,
     meta: {
       studentsOnly: true,
     },
