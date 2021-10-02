@@ -16,7 +16,7 @@ export function highlightCode(text: string): string {
     ?.replace(/```([^`]*)```/g, function (match, code) {
       return (
         `
-        <div class="p-2 my-1 text-xs text-white break-all bg-gray-800 rounded-md shadow-sm -mono"><pre class=" language-javascript"><code class=" language-javascript">` +
+        <div class="p-2 my-1 text-xs text-white break-all bg-gray-800 rounded-md shadow-sm -mono"><pre style="padding: 0.25rem" class=" language-javascript"><code class=" language-javascript">` +
         code.replace(/<p>/g, '').replace(/(?!^)<\/p>/g, '\n') +
         `</code></pre>
         </div>

@@ -32,14 +32,21 @@
           Testo
         </button>
         <button
-          class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
+          class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
           @click="pane = 1"
           :class="{ 'bg-gray-300': pane == 1 }"
         >
           Editor
         </button>
         <button
-          class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-t cursor-pointer hover:bg-green-800 active:bg-green-900"
+          class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
+          @click="pane = 2"
+          :class="{ 'bg-gray-300': pane == 1 }"
+        >
+          Sottomissioni
+        </button>
+        <button
+          class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer hover:bg-green-800 active:bg-green-900"
           @click="submitCode()"
           :class="{ 'bg-gray-300': pane == 1 }"
         >
@@ -47,8 +54,9 @@
         </button>
       </div>
       <div class="h-full" id="editor-pane">
-        <skeleton v-if="loading"></skeleton>
         <div class="p-4" v-show="pane == 0">
+          <skeleton v-if="loading"></skeleton>
+
           <div v-html="currentExercise.text"></div>
 
           <h2 v-if="!loading" class="mt-4 mb-2 text-lg font-medium">
@@ -70,6 +78,14 @@
             :options="aceEditorOptions"
           />
         </div>
+        <div class="h-full p-4 overflow-y-auto" v-show="pane == 2">
+          <ProgrammingExerciseSubmission
+            v-for="(submission, index) in currentExercise.submissions"
+            :key="'e-' + currentExercise.id + 's-' + submission.id"
+            :submission="submission"
+            :index="index"
+          ></ProgrammingExerciseSubmission>
+        </div>
       </div>
     </div>
   </div>
@@ -85,6 +101,7 @@ import { VAceEditor } from 'vue3-ace-editor'
 import Skeleton from '@/components/Skeleton.vue'
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-monokai'
+import ProgrammingExerciseSubmission from '@/components/ProgrammingExerciseSubmission.vue'
 
 export default defineComponent({
   name: 'StudentProgrammingExerciseSession',
@@ -100,7 +117,8 @@ export default defineComponent({
   components: {
     UIButton,
     VAceEditor,
-    Skeleton
+    Skeleton,
+    ProgrammingExerciseSubmission
   },
   data () {
     return {

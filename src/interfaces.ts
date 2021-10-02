@@ -52,6 +52,17 @@ export interface ProgrammingExercise {
   draftCode?: string;
 }
 
+export interface ExerciseSubmission {
+  id: string;
+  code: string;
+  passing: boolean;
+  outcomes: {
+    code: string;
+    passed: boolean;
+    details?: string;
+  }[];
+}
+
 export interface TrainingSession {
   id: string;
   questions: Question[];
