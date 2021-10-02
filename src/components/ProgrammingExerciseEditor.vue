@@ -81,7 +81,7 @@
           :key="'q-' + exerciseData.id ?? exerciseTempKey + '-c-' + c_index"
           class="flex mt-2"
         >
-          <RichEditor class="w-10/12" v-model="testcase.text"></RichEditor>
+          <RichEditor class="w-10/12" v-model="testcase.code"></RichEditor>
           <!-- <div class="my-auto ml-4">
             <input
               type="checkbox"
@@ -254,7 +254,7 @@ export default defineComponent({
     highlightCode,
     pushNewTestCase() {
         this.exerciseData.testcases.push({
-            text: "",
+            code: "",
         } as TestCase)
     },
     async _createTopic (): Promise<void> {

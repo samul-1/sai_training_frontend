@@ -34,3 +34,14 @@ export function highlightCode(text: string): string {
   `
     );
 }
+
+// wraps passed string into divs with code highlight classes
+export function codify(text: string): string {
+  return `
+  <div
+  class="inline-block px-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm"
+  >
+    <pre style="line-height: 0.1; overflow-y: hidden; padding: 0.25rem" class=" language-javascript"><code style="line-height: 0.5" class=" language-javascript">${text}</code></pre>
+  </div>
+`;
+}

@@ -41,7 +41,7 @@ export interface Question {
 }
 
 export interface TestCase {
-  text: string;
+  code: string;
 }
 export interface ProgrammingExercise {
   id: string;
@@ -49,6 +49,7 @@ export interface ProgrammingExercise {
   topic: string;
   testcases: TestCase[];
   difficulty?: string;
+  draftCode?: string;
 }
 
 export interface TrainingSession {

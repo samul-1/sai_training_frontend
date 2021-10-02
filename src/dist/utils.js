@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.highlightCode = exports.renderTex = void 0;
+exports.codify = exports.highlightCode = exports.renderTex = void 0;
 function renderTex() {
     setTimeout(function () {
         return window.MathJax.Hub.Queue([
@@ -21,3 +21,8 @@ function highlightCode(text) {
     })) === null || _a === void 0 ? void 0 : _a.replace(/`([^`]*)`/g, "\n    <div\n    class=\"inline-block p-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm\"\n    >\n      <pre style=\"line-height: 0.95; overflow-y: hidden\" class=\" language-javascript\"><code style=\"line-height: 0.5\" class=\" language-javascript\">$1</code></pre>\n    </div>\n  ");
 }
 exports.highlightCode = highlightCode;
+// wraps passed string into divs with code highlight classes
+function codify(text) {
+    return "\n  <div\n  class=\"inline-block px-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm\"\n  >\n    <pre style=\"line-height: 0.1; overflow-y: hidden; padding: 0.25rem\" class=\" language-javascript\"><code style=\"line-height: 0.5\" class=\" language-javascript\">" + text + "</code></pre>\n  </div>\n";
+}
+exports.codify = codify;

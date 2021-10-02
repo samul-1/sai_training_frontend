@@ -20,6 +20,7 @@
     "vue-code-highlight": "^0.7.8",
     "vue-router": "^4.0.0-0",
     "vue-slider-component": "^4.0.0-beta.4",
+    "vue3-ace-editor": "^2.2.1",
     "vue3-editor": "0.1.0-alpha.3",
     "vue3-google-oauth2": "^1.0.4",
     "vuex": "^4.0.0-0"
