@@ -27,28 +27,27 @@
         <button
           class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-tr cursor-pointer hover:bg-gray-300 active:bg-gray-200"
           @click="pane = 0"
-          :class="{ 'bg-gray-300': pane == 0 }"
+          :class="{ 'bg-gray-300 font-medium': pane == 0 }"
         >
           Testo
         </button>
         <button
           class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
           @click="pane = 1"
-          :class="{ 'bg-gray-300': pane == 1 }"
+          :class="{ 'bg-gray-300 font-medium': pane == 1 }"
         >
           Editor
         </button>
         <button
           class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
           @click="pane = 2"
-          :class="{ 'bg-gray-300': pane == 1 }"
+          :class="{ 'bg-gray-300 font-medium': pane == 2 }"
         >
           Sottomissioni
         </button>
         <button
           class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer hover:bg-green-800 active:bg-green-900"
           @click="submitCode()"
-          :class="{ 'bg-gray-300': pane == 1 }"
         >
           Esegui codice
         </button>
@@ -83,9 +82,18 @@
             v-for="(submission, index) in reversedCurrentExerciseSubmissions"
             :key="'e-' + currentExercise.id + 's-' + submission.id"
             :submission="submission"
-            :index="currentExercise.submissions.length - index - 1"
+            :index="
+              currentExercise
+                ? currentExercise.submissions.length - index - 1
+                : 0
+            "
           ></ProgrammingExerciseSubmission>
-          <p v-if="currentExercise.submissions.length == 0">
+          <p
+            v-if="
+              currentExercise.submissions &&
+                currentExercise.submissions.length == 0
+            "
+          >
             Non ci sono sottomissioni.
           </p>
         </div>
@@ -162,7 +170,8 @@ export default defineComponent({
         : ''
     },
     reversedCurrentExerciseSubmissions (): ExerciseSubmission[] {
-      return (this.currentExercise.submissions as ExerciseSubmission[]).reduce(
+      return ((this.currentExercise?.submissions ??
+        []) as ExerciseSubmission[]).reduce(
         (r: ExerciseSubmission[], e: ExerciseSubmission) => [e, ...r],
         []
       )

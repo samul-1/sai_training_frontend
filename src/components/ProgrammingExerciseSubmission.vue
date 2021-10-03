@@ -21,21 +21,31 @@
       ></UIButton>
     </div>
     <div v-show="expanded" class="mt-8">
-      <p class="mb-1 font-medium">Codice</p>
+      <div class="mb-7">
+        <div class="flex mb-2 space-x-2">
+          <p class="my-auto font-medium">Codice</p>
+          <UIButton
+            @click="showCode = !showCode"
+            :variant="'negative'"
+            :size="'2xs'"
+            >{{ showCode ? 'Nascondi' : 'Mostra' }}</UIButton
+          >
+        </div>
+        <div
+          v-show="showCode"
+          v-highlight
+          v-html="highlightCode(wrapInBackTicks(submission.code))"
+        ></div>
+      </div>
       <div
-        class="pb-4 border-b"
-        v-highlight
-        v-html="highlightCode(wrapInBackTicks(submission.code))"
-      ></div>
-      <div
-        class="py-4 my-4 border-b"
+        class="border-t pt-7 mb-7"
         v-for="(outcome, index) in submission.outcomes"
         :key="'s-' + submission.id + '-o-' + index"
       >
         <div class="flex mb-1 space-x-2">
           <p class="font-medium">Test case {{ index + 1 }}</p>
           <p
-            class="font-medium"
+            class="my-auto text-sm"
             :class="{
               'text-red-800': !outcome.passed,
               'text-green-800': outcome.passed
@@ -90,7 +100,8 @@ export default defineComponent({
   },
   data () {
     return {
-      expanded: false
+      expanded: false,
+      showCode: false
     }
   },
   methods: {
