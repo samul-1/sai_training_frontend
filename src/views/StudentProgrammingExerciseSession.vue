@@ -26,22 +26,22 @@
       <div class="flex w-full h-8 bg-gray-900 rounded-tr-lg">
         <button
           class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-tr cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="pane = 0"
-          :class="{ 'bg-gray-300 font-medium': pane == 0 }"
+          @click="currentPane = 0"
+          :class="{ 'bg-gray-300 font-medium': currentPane == 0 }"
         >
           Testo
         </button>
         <button
           class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="pane = 1"
-          :class="{ 'bg-gray-300 font-medium': pane == 1 }"
+          @click="currentPane = 1"
+          :class="{ 'bg-gray-300 font-medium': currentPane == 1 }"
         >
           Editor
         </button>
         <button
           class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="pane = 2"
-          :class="{ 'bg-gray-300 font-medium': pane == 2 }"
+          @click="currentPane = 2"
+          :class="{ 'bg-gray-300 font-medium': currentPane == 2 }"
         >
           Sottomissioni
         </button>
@@ -53,7 +53,7 @@
         </button>
       </div>
       <div class="h-full" id="editor-pane">
-        <div class="p-4" v-show="pane == 0">
+        <div class="p-4" v-show="currentPane == 0">
           <skeleton v-if="loading"></skeleton>
 
           <div v-html="currentExercise.text"></div>
@@ -68,7 +68,7 @@
             v-html="codify(testcase.code)"
           ></div>
         </div>
-        <div class="h-full bg-gray-900 rounded-br-lg" v-show="pane == 1">
+        <div class="h-full bg-gray-900 rounded-br-lg" v-show="currentPane == 1">
           <VAceEditor
             v-model:value="currentExercise.draftCode"
             lang="javascript"
@@ -77,7 +77,7 @@
             :options="aceEditorOptions"
           />
         </div>
-        <div class="h-full p-4 overflow-y-auto" v-show="pane == 2">
+        <div class="h-full p-4 overflow-y-auto" v-show="currentPane == 2">
           <ProgrammingExerciseSubmission
             v-for="(submission, index) in reversedCurrentExerciseSubmissions"
             :key="'e-' + currentExercise.id + 's-' + submission.id"
@@ -148,7 +148,8 @@ export default defineComponent({
       currentExerciseId: '_',
       pane: 0,
       codes: [] as { id: string; code: string }[],
-      loading: false
+      loading: false,
+      panes: new Map() as Map<string, number>
     }
   },
   methods: {
@@ -161,9 +162,17 @@ export default defineComponent({
         ({} as ProgrammingExercise)
       )
     },
+    currentPane: {
+      get (): number {
+        return this.panes.get(this.currentExerciseId) ?? 0
+      },
+      set (newVal: number): void {
+        this.panes.set(this.currentExerciseId, newVal)
+      }
+    },
     editorStyle (): string {
       console.log(document.getElementById('editor-pane')?.offsetHeight)
-      return this.pane == 1
+      return this.currentPane == 1
         ? 'height: ' +
             document.getElementById('editor-pane')?.offsetHeight +
             'px;'
