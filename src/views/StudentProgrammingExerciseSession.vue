@@ -80,11 +80,14 @@
         </div>
         <div class="h-full p-4 overflow-y-auto" v-show="pane == 2">
           <ProgrammingExerciseSubmission
-            v-for="(submission, index) in currentExercise.submissions"
+            v-for="(submission, index) in reversedCurrentExerciseSubmissions"
             :key="'e-' + currentExercise.id + 's-' + submission.id"
             :submission="submission"
-            :index="index"
+            :index="currentExercise.submissions.length - index - 1"
           ></ProgrammingExerciseSubmission>
+          <p v-if="currentExercise.submissions.length == 0">
+            Non ci sono sottomissioni.
+          </p>
         </div>
       </div>
     </div>
@@ -93,7 +96,7 @@
 
 <script lang="ts">
 import { getProgrammingExercises } from '@/api/items'
-import { ProgrammingExercise } from '@/interfaces'
+import { ExerciseSubmission, ProgrammingExercise } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import UIButton from '@/components/UIButton.vue'
 import { codify } from '@/utils'
@@ -157,6 +160,12 @@ export default defineComponent({
             document.getElementById('editor-pane')?.offsetHeight +
             'px;'
         : ''
+    },
+    reversedCurrentExerciseSubmissions (): ExerciseSubmission[] {
+      return (this.currentExercise.submissions as ExerciseSubmission[]).reduce(
+        (r: ExerciseSubmission[], e: ExerciseSubmission) => [e, ...r],
+        []
+      )
     }
   }
 })

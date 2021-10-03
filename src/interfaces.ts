@@ -50,6 +50,7 @@ export interface ProgrammingExercise {
   testcases: TestCase[];
   difficulty?: string;
   draftCode?: string;
+  submissions?: ExerciseSubmission[];
 }
 
 export interface ExerciseSubmission {

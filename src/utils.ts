@@ -45,3 +45,7 @@ export function codify(text: string): string {
   </div>
 `;
 }
+
+export function wrapInBackTicks(text: string): string {
+  return '```' + text + '```';
+}

@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.codify = exports.highlightCode = exports.renderTex = void 0;
+exports.wrapInBackTicks = exports.codify = exports.highlightCode = exports.renderTex = void 0;
 function renderTex() {
     setTimeout(function () {
         return window.MathJax.Hub.Queue([
@@ -26,3 +26,7 @@ function codify(text) {
     return "\n  <div\n  class=\"inline-block px-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm\"\n  >\n    <pre style=\"line-height: 0.1; overflow-y: hidden; padding: 0.25rem\" class=\" language-javascript\"><code style=\"line-height: 0.5\" class=\" language-javascript\">" + text + "</code></pre>\n  </div>\n";
 }
 exports.codify = codify;
+function wrapInBackTicks(text) {
+    return '```' + text + '```';
+}
+exports.wrapInBackTicks = wrapInBackTicks;
