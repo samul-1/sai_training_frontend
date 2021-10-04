@@ -153,6 +153,7 @@
 <script lang="ts">
 import {
   getProgrammingExercisesById,
+  getProgrammingExercisesHistory,
   getRandomProgrammingExercises,
   postExerciseSubmission
 } from '@/api/items'
@@ -190,33 +191,43 @@ export default defineComponent({
     difficultyProfile: {
       type: String as PropType<DifficultyProfile>
       // required: true
+    },
+    history: {
+      type: Boolean,
+      default: false
     }
   },
   async created () {
     const courseId = this.$route.params.courseId as string
 
     this.loading = true
-    const recentExercises = localStorage.getItem(`recent_exercises_${courseId}`)
-    if (!this.topicId || !this.difficultyProfile || !this.amount) {
-      if (recentExercises) {
-        this.exercises = await getProgrammingExercisesById(
-          courseId,
-          JSON.parse(recentExercises as string)
-        )
+    if (!this.history) {
+      const recentExercises = localStorage.getItem(
+        `recent_exercises_${courseId}`
+      )
+      if (!this.topicId || !this.difficultyProfile || !this.amount) {
+        if (recentExercises) {
+          this.exercises = await getProgrammingExercisesById(
+            courseId,
+            JSON.parse(recentExercises as string)
+          )
+        } else {
+          this.$router.push(`/course/${courseId}/exercises`)
+        }
       } else {
-        this.$router.push(`/course/${courseId}/exercises`)
+        this.exercises = await getRandomProgrammingExercises(
+          courseId,
+          this.topicId,
+          this.difficultyProfile,
+          this.amount
+        )
+        localStorage.setItem(
+          `recent_exercises_${courseId}`,
+          JSON.stringify(this.exercises.map(e => e.id))
+        )
       }
     } else {
-      this.exercises = await getRandomProgrammingExercises(
-        courseId,
-        this.topicId,
-        this.difficultyProfile,
-        this.amount
-      )
-      localStorage.setItem(
-        `recent_exercises_${courseId}`,
-        JSON.stringify(this.exercises.map(e => e.id))
-      )
+      this.exercises = await getProgrammingExercisesHistory(courseId)
     }
     this.exercises.forEach(e => (e.draftCode = ''))
     this.currentExerciseId = this.exercises[0].id

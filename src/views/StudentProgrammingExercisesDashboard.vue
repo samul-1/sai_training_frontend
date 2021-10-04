@@ -14,8 +14,10 @@
       personale. Se non li completi, puoi recuperarli dalla cronologia in un
       secondo momento.
     </p>
-    <UIButton :variant="'indigo'" class="my-4 md:my-auto md:ml-auto"
-      >Visualizza cronologia</UIButton
+    <router-link :to="`/course/${$route.params.courseId}/exercises/history`">
+      <UIButton :variant="'indigo'" class="my-4 md:my-auto md:ml-auto"
+        >Visualizza cronologia</UIButton
+      ></router-link
     >
   </div>
   <div v-if="loading">

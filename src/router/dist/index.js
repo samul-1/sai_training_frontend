@@ -99,6 +99,17 @@ var routes = [
         }
     },
     {
+        path: '/course/:courseId/exercises/history',
+        name: 'StudentProgrammingExerciseHistory',
+        component: StudentProgrammingExerciseSession_vue_1["default"],
+        props: {
+            history: true
+        },
+        meta: {
+            studentsOnly: true
+        }
+    },
+    {
         path: '/course/:courseId/sessions/:sessionId',
         name: 'TrainingSessionResults',
         component: TrainingSessionResults_vue_1["default"],

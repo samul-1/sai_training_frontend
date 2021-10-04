@@ -184,3 +184,18 @@ export function getRandomProgrammingExercises(
       });
   });
 }
+
+export function getProgrammingExercisesHistory(
+  courseId: string
+): Promise<ProgrammingExercise[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`courses/${courseId}/programming_exercises/history/`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
