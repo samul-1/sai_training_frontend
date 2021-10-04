@@ -129,7 +129,7 @@ export function getProgrammingExercisesById(
   return new Promise((resolve, reject) => {
     axios
       .get(
-        `courses/${courseId}/topics/programming_exercises/bulk_get/?ids=${idList.join(
+        `courses/${courseId}/programming_exercises/bulk_get/?ids=${idList.join(
           ','
         )}`
       )

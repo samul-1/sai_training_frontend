@@ -1,101 +1,106 @@
 <template>
-  <teleport to="#nav-buttons">
-    <router-link :to="`/course/${$route.params.courseId}`">
-      <UIButton :variant="'transparent'" :size="'xs'"
-        ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al
-        corso</UIButton
-      >
-    </router-link>
-  </teleport>
-  <div class="flex w-full h-full border rounded-lg shadow-lg">
-    <div class="w-1/5 h-full border-r rounded-tl-lg rounded-bl-lg bg-gray-50">
-      <div
-        class="flex px-4 transition-colors duration-100 border-b cursor-pointer h-14 hover:bg-gray-100 active:bg-gray-200"
-        :class="{
-          'bg-gray-200 hover:bg-gray-200': currentExerciseId === exercise.id,
-          'rounded-tl-lg': index === 0
-        }"
-        v-for="(exercise, index) in exercises"
-        :key="'e-' + exercise.id"
-        @click="currentExerciseId = exercise.id"
-      >
-        <p class="my-auto">Esercizio {{ index + 1 }}</p>
-      </div>
-    </div>
-    <div class="flex flex-col w-4/5 h-full">
-      <div class="flex w-full h-8 bg-gray-900 rounded-tr-lg">
-        <button
-          class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-tr cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="currentPane = 0"
-          :class="{ 'bg-gray-300 font-medium': currentPane == 0 }"
+  <div class="h-full">
+    <teleport to="#nav-buttons">
+      <router-link :to="`/course/${$route.params.courseId}`">
+        <UIButton :variant="'transparent'" :size="'xs'"
+          ><i class="mr-1 text-xs fas fa-chevron-left"></i>Torna al
+          corso</UIButton
         >
-          Testo
-        </button>
-        <button
-          class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="currentPane = 1"
-          :class="{ 'bg-gray-300 font-medium': currentPane == 1 }"
+      </router-link>
+    </teleport>
+    <div class="flex w-full h-full border rounded-lg shadow-lg">
+      <div class="w-1/5 h-full border-r rounded-tl-lg rounded-bl-lg bg-gray-50">
+        <div
+          class="flex px-4 transition-colors duration-100 border-b cursor-pointer h-14 hover:bg-gray-100 active:bg-gray-200"
+          :class="{
+            'bg-gray-200 hover:bg-gray-200': currentExerciseId === exercise.id,
+            'rounded-tl-lg': index === 0
+          }"
+          v-for="(exercise, index) in exercises"
+          :key="'e-' + exercise.id"
+          @click="currentExerciseId = exercise.id"
         >
-          Editor
-        </button>
-        <button
-          class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
-          @click="currentPane = 2"
-          :class="{ 'bg-gray-300 font-medium': currentPane == 2 }"
-        >
-          Sottomissioni
-        </button>
-        <button
-          class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer hover:bg-green-800 active:bg-green-900"
-          @click="submitCode()"
-        >
-          Esegui codice
-        </button>
-      </div>
-      <div class="h-full" id="editor-pane">
-        <div class="p-4" v-show="currentPane == 0">
-          <skeleton v-if="loading"></skeleton>
-
-          <div v-html="currentExercise.text"></div>
-
-          <h2 v-if="!loading" class="mt-4 mb-2 text-lg font-medium">
-            Test case
-          </h2>
-          <div
-            v-for="(testcase, index) in currentExercise.testcases"
-            :key="'current-e-' + index"
-            v-highlight
-            v-html="codify(testcase.code)"
-          ></div>
+          <p class="my-auto">Esercizio {{ index + 1 }}</p>
         </div>
-        <div class="h-full bg-gray-900 rounded-br-lg" v-show="currentPane == 1">
-          <VAceEditor
-            v-model:value="currentExercise.draftCode"
-            lang="javascript"
-            theme="monokai"
-            :style="editorStyle"
-            :options="aceEditorOptions"
-          />
-        </div>
-        <div class="h-full p-4 overflow-y-auto" v-show="currentPane == 2">
-          <ProgrammingExerciseSubmission
-            v-for="(submission, index) in reversedCurrentExerciseSubmissions"
-            :key="'e-' + currentExercise.id + 's-' + submission.id"
-            :submission="submission"
-            :index="
-              currentExercise
-                ? currentExercise.submissions.length - index - 1
-                : 0
-            "
-          ></ProgrammingExerciseSubmission>
-          <p
-            v-if="
-              currentExercise.submissions &&
-                currentExercise.submissions.length == 0
-            "
+      </div>
+      <div class="flex flex-col w-4/5 h-full">
+        <div class="flex w-full h-8 bg-gray-900 rounded-tr-lg">
+          <button
+            class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-tr cursor-pointer hover:bg-gray-300 active:bg-gray-200"
+            @click="currentPane = 0"
+            :class="{ 'bg-gray-300 font-medium': currentPane == 0 }"
           >
-            Non ci sono sottomissioni.
-          </p>
+            Testo
+          </button>
+          <button
+            class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
+            @click="currentPane = 1"
+            :class="{ 'bg-gray-300 font-medium': currentPane == 1 }"
+          >
+            Editor
+          </button>
+          <button
+            class="px-4 py-1 mt-auto text-gray-900 transition-colors duration-100 bg-gray-200 rounded-t cursor-pointer hover:bg-gray-300 active:bg-gray-200"
+            @click="currentPane = 2"
+            :class="{ 'bg-gray-300 font-medium': currentPane == 2 }"
+          >
+            Sottomissioni
+          </button>
+          <button
+            class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer hover:bg-green-800 active:bg-green-900"
+            @click="submitCode()"
+          >
+            Esegui codice
+          </button>
+        </div>
+        <div class="h-full" id="editor-pane">
+          <div class="p-4" v-show="currentPane == 0">
+            <skeleton v-if="loading"></skeleton>
+
+            <div v-html="currentExercise.text"></div>
+
+            <h2 v-if="!loading" class="mt-4 mb-2 text-lg font-medium">
+              Test case
+            </h2>
+            <div
+              v-for="(testcase, index) in currentExercise.testcases"
+              :key="'current-e-' + index"
+              v-highlight
+              v-html="codify(testcase.code)"
+            ></div>
+          </div>
+          <div
+            class="h-full bg-gray-900 rounded-br-lg"
+            v-show="currentPane == 1"
+          >
+            <VAceEditor
+              v-model:value="currentExercise.draftCode"
+              lang="javascript"
+              theme="monokai"
+              :style="editorStyle"
+              :options="aceEditorOptions"
+            />
+          </div>
+          <div class="h-full p-4 overflow-y-auto" v-show="currentPane == 2">
+            <ProgrammingExerciseSubmission
+              v-for="(submission, index) in reversedCurrentExerciseSubmissions"
+              :key="'e-' + currentExercise.id + 's-' + submission.id"
+              :submission="submission"
+              :index="
+                currentExercise
+                  ? currentExercise.submissions.length - index - 1
+                  : 0
+              "
+            ></ProgrammingExerciseSubmission>
+            <p
+              v-if="
+                currentExercise.submissions &&
+                  currentExercise.submissions.length == 0
+              "
+            >
+              Non ci sono sottomissioni.
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -168,9 +173,9 @@ export default defineComponent({
         `recent_exercises_${courseId}`,
         JSON.stringify(this.exercises.map(e => e.id))
       )
-      this.exercises.forEach(e => (e.draftCode = ''))
-      this.currentExerciseId = this.exercises[0].id
     }
+    this.exercises.forEach(e => (e.draftCode = ''))
+    this.currentExerciseId = this.exercises[0].id
     this.loading = false
   },
   data () {

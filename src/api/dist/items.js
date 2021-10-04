@@ -75,7 +75,7 @@ exports.createProgrammingExercise = createProgrammingExercise;
 function getProgrammingExercisesById(courseId, idList) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("courses/" + courseId + "/topics/programming_exercises/bulk_get/?ids=" + idList.join(','))
+            .get("courses/" + courseId + "/programming_exercises/bulk_get/?ids=" + idList.join(','))
             .then(function (response) {
             resolve(response.data);
         })["catch"](function (error) {
