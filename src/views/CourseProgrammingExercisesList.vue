@@ -7,7 +7,7 @@
       ></router-link
     >
   </teleport>
-  <h1 class="mb-8 text-4xl text-center">Domande</h1>
+  <h1 class="mb-8 text-4xl text-center">Esercizi JS</h1>
   <div class="flex my-12">
     <p class="my-auto mr-8 font-medium">Filtra per</p>
     <div class="flex my-auto mr-8 space-x-2">
@@ -56,13 +56,13 @@
       class="ml-auto"
       @click="showDraft = true"
       :variant="'green'"
-      >Nuova domanda</UIButton
+      >Nuovo esercizio</UIButton
     >
-    <router-link :to="`/course-panel/${$route.params.courseId}/import`"
+    <!-- <router-link :to="`/course-panel/${$route.params.courseId}/import`"
       ><UIButton :variant="'negative'" class="ml-2">
         Importa da JSON
       </UIButton></router-link
-    >
+    > -->
   </div>
 
   <Skeleton v-if="firstLoading"></Skeleton>

@@ -113,12 +113,12 @@
         :variant="'green'"
         >Salva</UIButton
       >
-      <UIButton
+      <!-- <UIButton
         class="my-auto"
         @click="showPreview = true"
         :variant="'negative'"
         >Anteprima</UIButton
-      >
+      > -->
       <p
         v-if="dirty"
         class="px-2 my-auto text-white bg-gray-600 rounded-md animate-pulse"

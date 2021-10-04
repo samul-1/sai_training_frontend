@@ -17,9 +17,16 @@
     <div
       class="relative flex flex-col w-full mx-auto space-y-6 transform -translate-y-1/2 top-1/2 md:w-max"
     >
-      <router-link :to="`/course-panel/${$route.params.courseId}/questions`"
+      <router-link
+        :to="
+          `/course-panel/${$route.params.courseId}/${
+            course.uses_programming_exercises
+              ? 'programming_exercises'
+              : 'questions'
+          }`
+        "
         ><UIButton :variant="'indigo'" :size="'lg'" class="w-full">
-          Domande
+          {{ course.uses_programming_exercises ? 'Esercizi JS' : 'Domande' }}
         </UIButton></router-link
       >
       <UIButton

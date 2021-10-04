@@ -16,7 +16,12 @@
     <div
       class="relative flex flex-col w-full mx-auto space-y-6 transform -translate-y-1/2 top-1/2 md:w-max"
     >
-      <router-link :to="`/course/${$route.params.courseId}/train/`"
+      <router-link
+        :to="
+          `/course/${$route.params.courseId}/${
+            course.uses_programming_exercises ? 'exercises' : 'train'
+          }/`
+        "
         ><UIButton :variant="'indigo'" :size="'xl'" class="w-full"
           >{{
             course.in_progress_session ? 'Continua' : 'Inizia'
@@ -24,9 +29,17 @@
           esercitazione</UIButton
         ></router-link
       >
-      <router-link :to="`/course/${$route.params.courseId}/sessions/`">
+      <router-link
+        :to="
+          `/course/${$route.params.courseId}/${
+            course.uses_programming_exercises ? 'exercises/history' : 'sessions'
+          }/`
+        "
+      >
         <UIButton :variant="'indigo'" :size="'xl'" class="w-full"
-          >Cronologia esercitazioni</UIButton
+          >Cronologia eserci{{
+            course.uses_programming_exercises ? 'zi' : 'tazioni'
+          }}</UIButton
         ></router-link
       >
     </div>

@@ -90,7 +90,9 @@
           </button>
           <button
             class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer disabled:opacity-60 w-36 hover:bg-green-800 active:bg-green-900"
-            :disabled="submissionCoolDown > 0"
+            :disabled="
+              submissionCoolDown > 0 || currentExercise.draftCode.length == 0
+            "
             @click="submitCode()"
           >
             {{ submissionCoolDown > 0 ? submissionCoolDown : 'Esegui codice' }}
