@@ -122,6 +122,26 @@ export function createProgrammingExercise(
   });
 }
 
+export function getProgrammingExercisesById(
+  courseId: string,
+  idList: string[]
+): Promise<ProgrammingExercise[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `courses/${courseId}/topics/programming_exercises/bulk_get/?ids=${idList.join(
+          ','
+        )}`
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
 export function getRandomProgrammingExercises(
   courseId: string,
   topicId: string,

@@ -103,7 +103,10 @@
 </template>
 
 <script lang="ts">
-import { getRandomProgrammingExercises } from '@/api/items'
+import {
+  getProgrammingExercisesById,
+  getRandomProgrammingExercises
+} from '@/api/items'
 import {
   DifficultyProfile,
   ExerciseSubmission,
@@ -128,30 +131,46 @@ export default defineComponent({
   },
   props: {
     topicId: {
-      type: String,
-      required: true
+      type: String
+      // required: true
     },
     amount: {
-      type: Number,
-      required: true
+      type: Number
+      // required: true
     },
     difficultyProfile: {
-      type: String as PropType<DifficultyProfile>,
-      required: true
+      type: String as PropType<DifficultyProfile>
+      // required: true
     }
   },
   async created () {
     const courseId = this.$route.params.courseId as string
 
     this.loading = true
-    this.exercises = await getRandomProgrammingExercises(
-      courseId,
-      this.topicId,
-      this.difficultyProfile,
-      this.amount
-    )
-    this.exercises.forEach(e => (e.draftCode = ''))
-    this.currentExerciseId = this.exercises[0].id
+    const recentExercises = localStorage.getItem(`recent_exercises_${courseId}`)
+    if (!this.topicId || !this.difficultyProfile || !this.amount) {
+      if (recentExercises) {
+        this.exercises = await getProgrammingExercisesById(
+          courseId,
+          JSON.parse(recentExercises as string)
+        )
+      } else {
+        this.$router.push(`/course/${courseId}/exercises`)
+      }
+    } else {
+      this.exercises = await getRandomProgrammingExercises(
+        courseId,
+        this.topicId,
+        this.difficultyProfile,
+        this.amount
+      )
+      localStorage.setItem(
+        `recent_exercises_${courseId}`,
+        JSON.stringify(this.exercises.map(e => e.id))
+      )
+      this.exercises.forEach(e => (e.draftCode = ''))
+      this.currentExerciseId = this.exercises[0].id
+    }
     this.loading = false
   },
   data () {

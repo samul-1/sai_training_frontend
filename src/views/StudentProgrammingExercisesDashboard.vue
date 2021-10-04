@@ -101,15 +101,20 @@ export default defineComponent({
   },
   methods: {
     startSession () {
-      //const courseId = this.$route.params.courseId as string
+      const courseId = this.$route.params.courseId as string
+      const params = {
+        topicId: this.selectedTopic as string,
+        difficultyProfile: this.difficultyProfile,
+        amount: this.amount
+      }
+      localStorage.setItem(
+        `exercise_session_${courseId}`,
+        JSON.stringify(params)
+      )
       this.$router.push({
         path: 'exercises/train',
         name: 'StudentProgrammingExerciseSession',
-        params: {
-          topicId: this.selectedTopic as string,
-          difficultyProfile: this.difficultyProfile,
-          amount: this.amount
-        }
+        params
       })
     },
     cancelSession () {
