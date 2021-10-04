@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.createProgrammingExercise = exports.createQuestion = exports.updateProgrammingExercise = exports.updateQuestion = exports.getProgrammingExercises = exports.getQuestions = exports.bulkCreateQuestions = void 0;
+exports.getRandomProgrammingExercises = exports.createProgrammingExercise = exports.createQuestion = exports.updateProgrammingExercise = exports.updateQuestion = exports.getProgrammingExercises = exports.getQuestions = exports.bulkCreateQuestions = void 0;
 var axios_1 = require("axios");
 function bulkCreateQuestions(courseId, questions) {
     return new Promise(function (resolve, reject) {
@@ -72,3 +72,15 @@ function createProgrammingExercise(courseId, exercise) {
     });
 }
 exports.createProgrammingExercise = createProgrammingExercise;
+function getRandomProgrammingExercises(courseId, topicId, difficulty_profile, amount) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .get("courses/" + courseId + "/topics/" + topicId + "/programming_exercises/get_matching_items/?amount=" + amount + "&difficulty_profile=" + difficulty_profile)
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) {
+            reject(error);
+        });
+    });
+}
+exports.getRandomProgrammingExercises = getRandomProgrammingExercises;

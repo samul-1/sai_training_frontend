@@ -1,4 +1,8 @@
-import { ProgrammingExercise, Question } from '@/interfaces';
+import {
+  DifficultyProfile,
+  ProgrammingExercise,
+  Question,
+} from '@/interfaces';
 import axios from 'axios';
 
 export function bulkCreateQuestions(
@@ -115,5 +119,25 @@ export function createProgrammingExercise(
         resolve(response.data);
       })
       .catch((error) => reject(error));
+  });
+}
+
+export function getRandomProgrammingExercises(
+  courseId: string,
+  topicId: string,
+  difficulty_profile: DifficultyProfile,
+  amount: number
+): Promise<ProgrammingExercise[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(
+        `courses/${courseId}/topics/${topicId}/programming_exercises/get_matching_items/?amount=${amount}&difficulty_profile=${difficulty_profile}`
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
   });
 }

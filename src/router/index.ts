@@ -102,6 +102,7 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course/:courseId/exercises/train',
     name: 'StudentProgrammingExerciseSession',
     component: StudentProgrammingExerciseSession,
+    props: true,
     meta: {
       studentsOnly: true,
     },

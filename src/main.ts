@@ -71,7 +71,7 @@ Sentry.init({
   integrations: [
     new Integrations.BrowserTracing({
       routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['localhost', 'sai.di.unipi.it:9090', /^\//],
+      tracingOrigins: ['sai.di.unipi.it:9090', /^\//],
     }),
   ],
   // Set tracesSampleRate to 1.0 to capture 100%

@@ -93,6 +93,7 @@ var routes = [
         path: '/course/:courseId/exercises/train',
         name: 'StudentProgrammingExerciseSession',
         component: StudentProgrammingExerciseSession_vue_1["default"],
+        props: true,
         meta: {
             studentsOnly: true
         }

@@ -90,3 +90,10 @@ export interface User {
   full_name: string;
   is_teacher: boolean;
 }
+
+export type DifficultyProfile =
+  | 'easy_only'
+  | 'mostly_easy'
+  | 'balanced'
+  | 'mostly_hard'
+  | 'hard_only';

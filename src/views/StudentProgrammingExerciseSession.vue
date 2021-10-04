@@ -103,9 +103,13 @@
 </template>
 
 <script lang="ts">
-import { getProgrammingExercises } from '@/api/items'
-import { ExerciseSubmission, ProgrammingExercise } from '@/interfaces'
-import { defineComponent } from '@vue/runtime-core'
+import { getRandomProgrammingExercises } from '@/api/items'
+import {
+  DifficultyProfile,
+  ExerciseSubmission,
+  ProgrammingExercise
+} from '@/interfaces'
+import { defineComponent, PropType } from '@vue/runtime-core'
 import UIButton from '@/components/UIButton.vue'
 import { codify } from '@/utils'
 import { VAceEditor } from 'vue3-ace-editor'
@@ -116,20 +120,39 @@ import ProgrammingExerciseSubmission from '@/components/ProgrammingExerciseSubmi
 
 export default defineComponent({
   name: 'StudentProgrammingExerciseSession',
-  async created () {
-    const courseId = this.$route.params.courseId as string
-
-    this.loading = true
-    this.exercises = await getProgrammingExercises(courseId, null, null, 1)
-    this.exercises.forEach(e => (e.draftCode = ''))
-    this.currentExerciseId = this.exercises[0].id
-    this.loading = false
-  },
   components: {
     UIButton,
     VAceEditor,
     Skeleton,
     ProgrammingExerciseSubmission
+  },
+  props: {
+    topicId: {
+      type: String,
+      required: true
+    },
+    amount: {
+      type: Number,
+      required: true
+    },
+    difficultyProfile: {
+      type: String as PropType<DifficultyProfile>,
+      required: true
+    }
+  },
+  async created () {
+    const courseId = this.$route.params.courseId as string
+
+    this.loading = true
+    this.exercises = await getRandomProgrammingExercises(
+      courseId,
+      this.topicId,
+      this.difficultyProfile,
+      this.amount
+    )
+    this.exercises.forEach(e => (e.draftCode = ''))
+    this.currentExerciseId = this.exercises[0].id
+    this.loading = false
   },
   data () {
     return {
