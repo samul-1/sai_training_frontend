@@ -23,7 +23,49 @@
           <p class="my-auto">Esercizio {{ index + 1 }}</p>
         </div>
       </div>
-      <div class="flex flex-col w-4/5 h-full">
+      <div class="relative flex flex-col w-4/5 h-full">
+        <transition name="fade">
+          <div
+            class="absolute bottom-0 right-0 z-10 w-3/5 mr-4 transition-opacity duration-200"
+          >
+            <div
+              v-if="processingSubmission"
+              class="flex p-4 my-4 transition-shadow duration-150 bg-gray-100 border rounded-lg hover:shadow-md first:mt-0"
+            >
+              <h1 class="my-auto mr-16 text-lg md:mr-0">
+                Sottomissione {{ currentExercise.submissions.length }}
+              </h1>
+              <div class="my-auto ml-auto">
+                <svg
+                  class="w-5 h-5 mr-3 -ml-1 text-gray-900 animate-spin"
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                >
+                  <circle
+                    class="opacity-25"
+                    cx="12"
+                    cy="12"
+                    r="10"
+                    stroke="currentColor"
+                    stroke-width="4"
+                  ></circle>
+                  <path
+                    class="opacity-75"
+                    fill="currentColor"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+            <ProgrammingExerciseSubmission
+              @hide="highlightedSubmission = null"
+              v-if="highlightedSubmission"
+              :index="currentExercise.submissions.length - 1"
+              :preview="true"
+              :submission="highlightedSubmission"
+            ></ProgrammingExerciseSubmission></div
+        ></transition>
         <div class="flex w-full h-8 bg-gray-900 rounded-tr-lg">
           <button
             class="px-4 py-1 mt-auto mr-1 text-gray-900 transition-colors duration-100 bg-gray-200 rounded-tr cursor-pointer hover:bg-gray-300 active:bg-gray-200"
@@ -47,10 +89,11 @@
             Sottomissioni
           </button>
           <button
-            class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer hover:bg-green-800 active:bg-green-900"
+            class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer disabled:opacity-60 w-36 hover:bg-green-800 active:bg-green-900"
+            :disabled="submissionCoolDown > 0"
             @click="submitCode()"
           >
-            Esegui codice
+            {{ submissionCoolDown > 0 ? submissionCoolDown : 'Esegui codice' }}
           </button>
         </div>
         <div class="h-full" id="editor-pane">
@@ -81,7 +124,7 @@
               :options="aceEditorOptions"
             />
           </div>
-          <div class="h-full p-4 overflow-y-auto" v-show="currentPane == 2">
+          <div class="p-4 overflow-y-auto" v-show="currentPane == 2">
             <ProgrammingExerciseSubmission
               v-for="(submission, index) in reversedCurrentExerciseSubmissions"
               :key="'e-' + currentExercise.id + 's-' + submission.id"
@@ -110,7 +153,8 @@
 <script lang="ts">
 import {
   getProgrammingExercisesById,
-  getRandomProgrammingExercises
+  getRandomProgrammingExercises,
+  postExerciseSubmission
 } from '@/api/items'
 import {
   DifficultyProfile,
@@ -192,15 +236,41 @@ export default defineComponent({
         showPrintMargin: false,
         showGutter: true
       },
+      processingSubmission: false,
       currentExerciseId: '_',
-      pane: 0,
-      codes: [] as { id: string; code: string }[],
       loading: false,
-      panes: new Map() as Map<string, number>
+      panes: new Map() as Map<string, number>,
+      highlightedSubmission: null as ExerciseSubmission | null,
+      submissionCoolDown: 0,
+      coolDownHandle: null as null | number
     }
   },
   methods: {
-    codify
+    codify,
+    async submitCode () {
+      const courseId = this.$route.params.courseId as string
+
+      this.processingSubmission = true
+      const submission = await postExerciseSubmission(
+        courseId,
+        this.currentExerciseId,
+        this.currentExercise.draftCode as string
+      )
+      ;(this.currentExercise.submissions as ExerciseSubmission[]).push(
+        submission
+      )
+      this.highlightedSubmission = submission
+      this.processingSubmission = false
+
+      this.submissionCoolDown = 10
+      this.coolDownHandle = setInterval(() => {
+        this.submissionCoolDown--
+        if (this.submissionCoolDown <= 0) {
+          clearInterval(this.coolDownHandle as number)
+          this.coolDownHandle = null
+        }
+      }, 1000)
+    }
   },
   computed: {
     currentExercise (): ProgrammingExercise {

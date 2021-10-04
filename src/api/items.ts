@@ -1,5 +1,6 @@
 import {
   DifficultyProfile,
+  ExerciseSubmission,
   ProgrammingExercise,
   Question,
 } from '@/interfaces';
@@ -132,6 +133,28 @@ export function getProgrammingExercisesById(
         `courses/${courseId}/programming_exercises/bulk_get/?ids=${idList.join(
           ','
         )}`
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => {
+        reject(error);
+      });
+  });
+}
+
+export function postExerciseSubmission(
+  courseId: string,
+  exerciseId: string,
+  code: string
+): Promise<ExerciseSubmission> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(
+        `courses/${courseId}/programming_exercises/${exerciseId}/submit/`,
+        {
+          code,
+        }
       )
       .then((response) => {
         resolve(response.data);

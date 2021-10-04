@@ -1,16 +1,33 @@
 <template>
   <div
-    class="p-4 my-4 transition-shadow duration-150 border rounded-lg hover:shadow-lg first:mt-0"
+    :class="{
+      'bg-white': !preview,
+      'shadow-lg max-h-96 overflow-y-auto': preview,
+      'bg-red-200 border-red-200':
+        preview &&
+        (passedTestCases < submission.outcomes.length ||
+          submission.error.length > 0),
+      'bg-green-100 border-green-100':
+        preview &&
+        passedTestCases == submission.outcomes.length &&
+        submission.error.length == 0
+    }"
+    class="p-4 my-4 transition-shadow duration-150 border rounded-lg hover:shadow-md first:mt-0"
   >
     <div class="flex">
-      <h1 class="my-auto text-lg">Sottomissione {{ index + 1 }}</h1>
+      <h1 class="my-auto mr-16 text-lg md:mr-0">
+        Sottomissione {{ index + 1 }}
+      </h1>
+      <p class="my-auto ml-auto">
+        {{ passedTestCases }}/{{ submission.outcomes.length }}
+      </p>
       <progress-bar
-        class="my-auto ml-auto"
+        class="my-auto ml-2"
         :max="submission.outcomes.length"
         :value="passedTestCases"
       ></progress-bar>
       <UIButton
-        class="ml-4"
+        class="my-auto ml-4"
         :variant="'negative'"
         :size="'2xs'"
         @click="expanded = !expanded"
@@ -18,6 +35,14 @@
           class="text-xs fas"
           :class="{ 'fa-chevron-down': !expanded, 'fa-chevron-up': expanded }"
         ></i
+      ></UIButton>
+      <UIButton
+        v-if="preview"
+        class="my-auto ml-1"
+        :variant="'negative'"
+        :size="'2xs'"
+        @click="$emit('hide')"
+        ><i class="px-0.5 text-xs fas fa-times"></i
       ></UIButton>
     </div>
     <div v-show="expanded" class="mt-8">
@@ -31,11 +56,7 @@
             >{{ showCode ? 'Nascondi' : 'Mostra' }}</UIButton
           >
         </div>
-        <div
-          v-show="showCode"
-          v-highlight
-          v-html="highlightCode(wrapInBackTicks(submission.code))"
-        ></div>
+        <div v-show="showCode" v-highlight v-html="highlightedCode"></div>
       </div>
       <div
         class="border-t pt-7 mb-7"
@@ -96,6 +117,10 @@ export default defineComponent({
     },
     index: {
       type: Number
+    },
+    preview: {
+      type: Boolean,
+      default: false
     }
   },
   data () {
@@ -110,6 +135,9 @@ export default defineComponent({
     wrapInBackTicks
   },
   computed: {
+    highlightedCode (): string {
+      return this.highlightCode(this.wrapInBackTicks(this.submission.code))
+    },
     passedTestCases (): number {
       return this.submission.outcomes.filter(o => o.passed).length
     }
