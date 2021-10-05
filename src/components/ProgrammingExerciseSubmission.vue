@@ -18,7 +18,10 @@
       <h1 class="my-auto mr-16 text-lg md:mr-0">
         Sottomissione {{ index + 1 }}
       </h1>
-      <p class="my-auto ml-auto">
+      <p class="my-auto ml-auto text-sm text-gray-800" v-if="!preview">
+        {{ humanizedTimstamp }}
+      </p>
+      <p class="my-auto" :class="{ 'ml-auto': preview, 'ml-8': !preview }">
         {{ passedTestCases }}/{{ submission.outcomes.length }}
       </p>
       <progress-bar
@@ -103,6 +106,8 @@ import { defineComponent, PropType } from '@vue/runtime-core'
 import { highlightCode, codify, wrapInBackTicks } from '@/utils'
 import UIButton from '@/components/UIButton.vue'
 import ProgressBar from '@/components/ProgressBar.vue'
+import moment from 'moment'
+import 'moment/locale/it'
 
 export default defineComponent({
   name: 'ProgrammingExerciseSubmission',
@@ -140,6 +145,14 @@ export default defineComponent({
     },
     passedTestCases (): number {
       return this.submission.outcomes.filter(o => o.passed).length
+    },
+    humanizedTimstamp (): string {
+      moment().locale('it')
+      return (
+        moment(this.submission.timestamp)
+          //.calendar()
+          .format('DD MMMM YYYY, hh:mm')
+      )
     }
   }
 })

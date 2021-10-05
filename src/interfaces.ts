@@ -64,6 +64,7 @@ export interface ExerciseSubmission {
     passed: boolean;
     details?: string;
   }[];
+  timestamp: string;
 }
 
 export interface TrainingSession {
