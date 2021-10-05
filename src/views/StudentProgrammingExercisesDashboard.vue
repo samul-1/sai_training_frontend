@@ -46,6 +46,7 @@
     :yesText="'Avvia'"
     :noText="'Annulla'"
     :dismissible="true"
+    :disableOk="amount <= 0"
     @no="cancelSession()"
     @yes="startSession()"
   >
@@ -57,7 +58,7 @@
           type="number"
           v-model="amount"
           :class="{
-            'bg-red-100 text-red-900 border-red-200': amount < 0
+            'bg-red-100 text-red-900 border-red-200': amount <= 0
           }"
         />
       </div>

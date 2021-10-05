@@ -51,6 +51,7 @@ export interface ProgrammingExercise {
   testcases: TestCase[];
   difficulty?: string;
   draftCode?: string;
+  initial_code?: string;
   submissions?: ExerciseSubmission[];
 }
 

@@ -91,7 +91,7 @@
           <button
             class="px-4 py-1 mt-auto ml-auto text-white transition-colors duration-100 bg-green-700 rounded-tl rounded-tr-lg cursor-pointer disabled:opacity-60 w-36 hover:bg-green-800 active:bg-green-900"
             :disabled="
-              submissionCoolDown > 0 || currentExercise.draftCode.length == 0
+              submissionCoolDown > 0 || currentExercise.draftCode?.length == 0
             "
             @click="submitCode()"
           >
@@ -231,8 +231,17 @@ export default defineComponent({
     } else {
       this.exercises = await getProgrammingExercisesHistory(courseId)
     }
-    this.exercises.forEach(e => (e.draftCode = ''))
-    this.currentExerciseId = this.exercises[0].id
+    if (this.exercises.length == 0) {
+      this.$store.commit('pushNotification', {
+        message: 'Non è stato possibile trovare gli esercizi richiesti',
+        severity: 2,
+        autoHide: 1500
+      })
+      this.$router.push(`/course/${courseId}/exercises`)
+    } else {
+      this.exercises.forEach(e => (e.draftCode = e.initial_code || ''))
+      this.currentExerciseId = this.exercises[0].id
+    }
     this.loading = false
   },
   data () {
