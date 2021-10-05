@@ -54,20 +54,18 @@ app
     appendToBody: true
 })
     .mount('#app');
-if (!dev) {
-    Sentry.init({
-        app: app,
-        dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
-        integrations: [
-            new tracing_1.Integrations.BrowserTracing({
-                routingInstrumentation: Sentry.vueRouterInstrumentation(router_1["default"]),
-                tracingOrigins: ['training.di.unipi.it', /^\//]
-            }),
-        ],
-        // Set tracesSampleRate to 1.0 to capture 100%
-        // of transactions for performance monitoring.
-        // We recommend adjusting this value in production
-        tracesSampleRate: 0.7,
-        logErrors: true
-    });
-}
+Sentry.init({
+    app: app,
+    dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
+    integrations: [
+        new tracing_1.Integrations.BrowserTracing({
+            routingInstrumentation: Sentry.vueRouterInstrumentation(router_1["default"]),
+            tracingOrigins: ['training.di.unipi.it', /^\//]
+        }),
+    ],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 0.7,
+    logErrors: true
+});
