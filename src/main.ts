@@ -11,6 +11,7 @@ import VueCodeHighlight from 'vue-code-highlight';
 import './index.css';
 import * as Sentry from '@sentry/vue';
 import { Integrations } from '@sentry/tracing';
+import VueClipboard from 'vue3-clipboard';
 
 const dev = process.env.NODE_ENV !== 'production';
 
@@ -63,20 +64,27 @@ app
   .use(store)
   .use(router)
   .use(VueCodeHighlight)
+  .use(VueClipboard, {
+    autoSetContainer: true,
+    appendToBody: true,
+  })
   .mount('#app');
 
-Sentry.init({
-  app,
-  dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
-  integrations: [
-    new Integrations.BrowserTracing({
-      routingInstrumentation: Sentry.vueRouterInstrumentation(router),
-      tracingOrigins: ['sai.di.unipi.it:9090', /^\//],
-    }),
-  ],
-  // Set tracesSampleRate to 1.0 to capture 100%
-  // of transactions for performance monitoring.
-  // We recommend adjusting this value in production
-  tracesSampleRate: 0.7,
-  logErrors: true,
-});
+if (!dev) {
+  Sentry.init({
+    app,
+    dsn: 'https://771586995fe64d069b3b42a357de621b@o1003719.ingest.sentry.io/5964305',
+    integrations: [
+      new Integrations.BrowserTracing({
+        routingInstrumentation:
+          Sentry.vueRouterInstrumentation(router),
+        tracingOrigins: ['training.di.unipi.it', /^\//],
+      }),
+    ],
+    // Set tracesSampleRate to 1.0 to capture 100%
+    // of transactions for performance monitoring.
+    // We recommend adjusting this value in production
+    tracesSampleRate: 0.7,
+    logErrors: true,
+  });
+}

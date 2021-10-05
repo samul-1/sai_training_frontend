@@ -11,7 +11,30 @@
     <Skeleton class="ml-60" :singleLine="true"></Skeleton>
   </div>
   <div class="h-full">
-    <h1 class="-mb-2 text-4xl text-center">{{ course.name }}</h1>
+    <div class="relative w-full">
+      <h1 class="-mb-2 text-4xl text-center">{{ course.name }}</h1>
+      <div class="absolute left-0 right-0 mx-auto mt-4 w-max md:mt-8 md:w-max">
+        <p class="md:inline">
+          <i class="mr-1 text-sm fas fa-link opacity-70"></i> Link al corso per
+          gli studenti:
+        </p>
+        <p
+          class="inline text-blue-700 cursor-pointer hover:underline"
+          v-clipboard:copy="linkToCourse"
+          v-clipboard:success="onCopy"
+        >
+          {{ linkToCourse }}
+        </p>
+        <UIButton
+          v-clipboard:copy="linkToCourse"
+          v-clipboard:success="onCopy"
+          class="ml-1 md:ml-2"
+          :size="'xs'"
+          :variant="'indigo'"
+          >Copia</UIButton
+        >
+      </div>
+    </div>
 
     <!-- <p v-if="course.description.length" v-html="course.description"></p> -->
     <div
@@ -135,9 +158,22 @@ export default defineComponent({
       loading: false
     }
   },
+  methods: {
+    onCopy () {
+      this.$store.commit('pushNotification', {
+        message: 'Link copiato',
+        severity: 1,
+        autoHide: 1000
+      })
+    }
+  },
   computed: {
     allowedTeachersAsJSON (): string {
       return JSON.stringify(this.course.allowed_teachers)
+    },
+    linkToCourse (): string {
+      return `${window.location.protocol}//${window.location.host}/course/${this
+        .$route.params.courseId as string}`
     }
   }
 })
