@@ -10,7 +10,7 @@
       <progress-bar
         class="my-auto"
         :value="session.score"
-        :max="session.questions.length"
+        :max="multipleChoiceQuestionsAmount"
       ></progress-bar>
     </div>
     <div class="flex mt-6">
@@ -37,17 +37,21 @@ export default defineComponent({
   name: 'TrainingSessionResultsPreview',
   props: {
     session: {
-      type: Object as PropType<TrainingSessionResults>
+      type: Object as PropType<TrainingSessionResults>,
+      required: true
     }
   },
   computed: {
     humanizedTimstamp (): string {
       moment().locale('it')
       return (
-        moment(this.session?.begin_timestamp)
+        moment(this.session.begin_timestamp)
           //.calendar()
           .format('DD MMMM YYYY')
       )
+    },
+    multipleChoiceQuestionsAmount (): number {
+      return this.session.questions.filter(q => !q.is_open_ended).length
     }
   }
 })

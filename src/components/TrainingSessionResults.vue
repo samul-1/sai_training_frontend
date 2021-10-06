@@ -10,12 +10,12 @@
   <div class="">
     <h1 class="mb-8 text-4xl">Risultati esercitazione</h1>
     <div class="flex flex-col md:flex-row md:space-x-3">
-      <p class="my-auto mb-2 md:mb-0">
-        <span class="font-medium">Risposte corrette:</span>
-        {{ results.score }} su {{ multipleChoiceQuestionsAmount }}
+      <p class="my-auto mb-2 text-xl md:mb-0">
+        <span class="mr-2 font-medium">Risposte corrette:</span>
+        <span>{{ results.score }} su {{ multipleChoiceQuestionsAmount }}</span>
       </p>
       <p
-        class="my-auto ml-2 text-sm opacity-80"
+        class="my-auto ml-4 text-sm opacity-70"
         v-if="areThereOpenEndedQuestions"
       >
         Non sono conteggiate le domande a risposta aperta
@@ -27,6 +27,10 @@
         v-if="areThereWrong"
         >Mostra {{ wrongOnly ? 'tutte' : 'solo sbagliate' }}</UIButton
       >
+    </div>
+    <div v-if="loading">
+      <skeleton></skeleton>
+      <skeleton></skeleton>
     </div>
     <div v-if="areThereHelpTexts" class="p-8 pb-5 my-4 border rounded-xl">
       <p class="mb-2">
@@ -65,6 +69,7 @@
 import { getTrainingSessionResults } from '@/api/trainingSessions'
 import { defineComponent } from '@vue/runtime-core'
 import FullQuestion from '@/components/FullQuestion.vue'
+import Skeleton from '@/components/Skeleton.vue'
 import UIButton from './UIButton.vue'
 import { Question, TrainingSessionResults } from '@/interfaces'
 
@@ -72,10 +77,12 @@ export default defineComponent({
   name: 'TrainingSessionResults',
   components: {
     FullQuestion,
-    UIButton
+    UIButton,
+    Skeleton
   },
   data () {
     return {
+      loading: false,
       results: {
         score: 0,
         questions: [] as Question[],
@@ -88,7 +95,9 @@ export default defineComponent({
   async created () {
     const courseId = this.$route.params.courseId as string
     const sessionId = this.$route.params.sessionId as string
+    this.loading = true
     this.results = await getTrainingSessionResults(courseId, sessionId)
+    this.loading = false
     setTimeout(() => {
       this.showCorrectAnswers = true
     }, 500)
@@ -99,13 +108,17 @@ export default defineComponent({
         return this.results.questions
       }
       return this.results.questions.filter(
-        q => q.selected_choice !== q.choices.find(c => c.correct)?.id
+        q =>
+          !q.is_open_ended &&
+          q.selected_choice !== q.choices.find(c => c.correct)?.id
       )
     },
     areThereWrong (): boolean {
       return (
         this.results.questions.filter(
-          q => q.selected_choice !== q.choices.find(c => c.correct)?.id
+          q =>
+            !q.is_open_ended &&
+            q.selected_choice !== q.choices.find(c => c.correct)?.id
         ).length > 0
       )
     },

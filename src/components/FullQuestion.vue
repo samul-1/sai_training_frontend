@@ -36,12 +36,12 @@
       </li>
     </ul>
     <div v-if="question.open_answer_text.length > 0">
-      <p class="mb-2 font-medium">La tua risposta</p>
+      <p class="mb-1 text-lg font-medium">La tua risposta</p>
       <div class="whitespace-pre">{{ question.open_answer_text }}</div>
     </div>
     <div class="mt-4" v-if="question.solution.length > 0">
       <UIButton
-        :variant="'dark'"
+        :variant="'negative'"
         :size="'xs'"
         @click="showSolution = !showSolution"
         >{{ showSolution ? 'Nascondi' : 'Mostra' }} soluzione</UIButton
