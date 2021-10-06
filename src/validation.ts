@@ -9,9 +9,11 @@ export function isValidQuestion(question: Question): boolean {
     question.topic == '_' ||
     parseInt(question.difficulty ?? '-1') < 0 ||
     parseInt(question.difficulty ?? '-1') > 4 ||
-    !question.choices ||
-    question.choices.some((choice) => choice.text.length == 0) ||
-    question.choices.filter((choice) => choice.correct).length == 0
+    (!question.is_open_ended &&
+      (!question.choices ||
+        question.choices.some((choice) => choice.text.length == 0) ||
+        question.choices.filter((choice) => choice.correct).length ==
+          0))
   );
 }
 

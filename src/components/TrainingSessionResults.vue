@@ -12,7 +12,13 @@
     <div class="flex flex-col md:flex-row md:space-x-3">
       <p class="my-auto mb-2 md:mb-0">
         <span class="font-medium">Risposte corrette:</span>
-        {{ results.score }} su {{ results.questions.length }}
+        {{ results.score }} su {{ multipleChoiceQuestionsAmount }}
+      </p>
+      <p
+        class="my-auto ml-2 text-sm opacity-80"
+        v-if="areThereOpenEndedQuestions"
+      >
+        Non sono conteggiate le domande a risposta aperta
       </p>
       <UIButton
         :variant="'indigo'"
@@ -108,6 +114,12 @@ export default defineComponent({
         Object.keys(this.results.help_texts as Record<string, string>).length >
         0
       )
+    },
+    multipleChoiceQuestionsAmount (): number {
+      return this.results.questions.filter(q => !q.is_open_ended).length
+    },
+    areThereOpenEndedQuestions (): boolean {
+      return this.multipleChoiceQuestionsAmount < this.results.questions.length
     }
   }
 })

@@ -31,6 +31,13 @@
           v-highlight
           v-html="highlightCode(question.text)"
         ></div>
+        <div v-if="question.is_open_ended">
+          <textarea
+            placeholder="La tua risposta"
+            class="w-full h-40 p-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-gray-900"
+            v-model="answers[question.id]"
+          ></textarea>
+        </div>
         <div
           v-for="choice in question.choices"
           :key="'q-' + question.id + '-c-' + choice.id"

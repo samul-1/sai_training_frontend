@@ -7,9 +7,12 @@
       class="absolute top-0 right-0 mt-4 mr-4 text-lg transition-opacity duration-300 md:text-2xl fas opacity-40 group-hover:opacity-70 group-hover:shadow-lg"
       :class="{
         'fa-check-circle text-green-600':
+          !question.is_open_ended &&
           question.choices.find(c => c.correct)?.id == question.selected_choice,
         'fa-times-circle text-red-600':
-          question.choices.find(c => c.correct)?.id != question.selected_choice
+          !question.is_open_ended &&
+          question.choices.find(c => c.correct)?.id != question.selected_choice,
+        'fa-minus-circle text-gray-300': question.is_open_ended
       }"
     ></i>
     <div v-highlight v-html="highlightCode(question.text)"></div>
@@ -32,6 +35,10 @@
         </div>
       </li>
     </ul>
+    <div v-if="question.open_answer_text.length > 0">
+      <p class="mb-2 font-medium">La tua risposta</p>
+      <div class="whitespace-pre">{{ question.open_answer_text }}</div>
+    </div>
     <div class="mt-4" v-if="question.solution.length > 0">
       <UIButton
         :variant="'dark'"

@@ -177,7 +177,8 @@ export default defineComponent({
         topic: '',
         solution: '',
         difficulty: '2',
-        choices: [] as Choice[]
+        choices: [] as Choice[],
+        is_open_ended: false
       } as Question
     }
   },
@@ -256,7 +257,8 @@ export default defineComponent({
             topic: '',
             solution: '',
             difficulty: '2',
-            choices: [] as Choice[]
+            choices: [] as Choice[],
+            is_open_ended: false
           } as Question
           this.$store.commit('pushNotification', {
             message: 'Domanda creata con successo',

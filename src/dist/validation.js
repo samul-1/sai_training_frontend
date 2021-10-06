@@ -10,9 +10,11 @@ function isValidQuestion(question) {
         question.topic == '_' ||
         parseInt((_a = question.difficulty) !== null && _a !== void 0 ? _a : '-1') < 0 ||
         parseInt((_b = question.difficulty) !== null && _b !== void 0 ? _b : '-1') > 4 ||
-        !question.choices ||
-        question.choices.some(function (choice) { return choice.text.length == 0; }) ||
-        question.choices.filter(function (choice) { return choice.correct; }).length == 0);
+        (!question.is_open_ended &&
+            (!question.choices ||
+                question.choices.some(function (choice) { return choice.text.length == 0; }) ||
+                question.choices.filter(function (choice) { return choice.correct; }).length ==
+                    0)));
 }
 exports.isValidQuestion = isValidQuestion;
 function isValidProgrammingExercise(exercise) {

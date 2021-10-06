@@ -50,6 +50,30 @@
       </div>
     </div>
     <div v-if="!collapse">
+      <div class="flex mb-4 space-x-2">
+        <p class="my-auto font-medium">
+          Domanda
+          {{ questionData.is_open_ended ? 'aperta' : 'a risposta multipla' }}
+        </p>
+        <UIButton
+          @click="toggleOpenQuestion()"
+          :variant="'negative'"
+          :size="'xs'"
+          >Cambia in domanda
+          {{
+            questionData.is_open_ended ? 'a risposta multipla' : 'aperta'
+          }}</UIButton
+        >
+        <!-- <input
+          :id="'q-' + questionData.id ?? questionTempKey + '-open'"
+          type="checkbox"
+          v-model="questionData.is_open_ended"
+          class="mr-1"
+        />
+        <label :for="'q-' + questionData.id ?? questionTempKey + '-open'"
+          >Domanda aperta</label
+        > -->
+      </div>
       <h1 class="mb-2 font-medium">Testo</h1>
       <!-- <textarea
         rows="5"
@@ -68,36 +92,37 @@
         v-model="questionData.solution"
       ></textarea> -->
       <RichEditor v-model="questionData.solution"></RichEditor>
-
-      <div class="flex mt-4 mb-2 space-x-2 ">
-        <h1 class="font-medium">Risposte</h1>
-        <UIButton :variant="'green'" :size="'2xs'" @click="pushNewChoice()"
-          >Nuova</UIButton
-        >
-      </div>
-      <transition-group name="bounce">
-        <div
-          v-for="(choice, c_index) in questionData.choices"
-          :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
-          class="flex mt-2"
-        >
-          <RichEditor class="w-10/12" v-model="choice.text"></RichEditor>
-          <div class="my-auto ml-4">
-            <input
-              type="checkbox"
-              v-model="choice.correct"
-              class="mr-1"
-            /><label>Corretta</label>
-          </div>
-          <UIButton
-            @click="questionData.choices.splice(c_index, 1)"
-            class="my-auto ml-4"
-            :variant="'negative-red'"
-            :size="'xs'"
-            ><i class="fas fa-trash"></i
-          ></UIButton>
+      <div v-if="!questionData.is_open_ended">
+        <div class="flex mt-4 mb-2 space-x-2 ">
+          <h1 class="font-medium">Risposte</h1>
+          <UIButton :variant="'green'" :size="'2xs'" @click="pushNewChoice()"
+            >Nuova</UIButton
+          >
         </div>
-      </transition-group>
+        <transition-group name="bounce">
+          <div
+            v-for="(choice, c_index) in questionData.choices"
+            :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
+            class="flex mt-2"
+          >
+            <RichEditor class="w-10/12" v-model="choice.text"></RichEditor>
+            <div class="my-auto ml-4">
+              <input
+                type="checkbox"
+                v-model="choice.correct"
+                class="mr-1"
+              /><label>Corretta</label>
+            </div>
+            <UIButton
+              @click="questionData.choices.splice(c_index, 1)"
+              class="my-auto ml-4"
+              :variant="'negative-red'"
+              :size="'xs'"
+              ><i class="fas fa-trash"></i
+            ></UIButton>
+          </div>
+        </transition-group>
+      </div>
     </div>
     <div
       v-highlight
@@ -260,6 +285,19 @@ export default defineComponent({
   },
   methods: {
     highlightCode,
+    toggleOpenQuestion() {
+      if(this.questionData.is_open_ended) {
+        this.questionData.is_open_ended = false
+      } else {
+        if(this.questionData.choices.length == 0 ||
+            this.questionData.choices.length > 0 && confirm(
+              'Se trasformi questa domanda in una domanda aperta, le risposte che hai già aggiunto verranno cancellate. Confermi l\'operazione?'
+          )) {
+          this.questionData.is_open_ended = true
+          this.questionData.choices = []
+        }
+      }
+    },
     pushNewChoice() {
         this.questionData.choices.push({
             text: "",

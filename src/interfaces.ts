@@ -39,6 +39,7 @@ export interface Question {
   choices: Choice[];
   selected_choice?: string;
   difficulty?: string;
+  is_open_ended: boolean;
 }
 
 export interface TestCase {
