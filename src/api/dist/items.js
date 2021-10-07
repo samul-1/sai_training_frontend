@@ -12,10 +12,11 @@ function bulkCreateQuestions(courseId, questions) {
     });
 }
 exports.bulkCreateQuestions = bulkCreateQuestions;
-function getQuestions(courseId, topicId, difficulty, page) {
+function getQuestions(courseId, topicId, difficulty, page // if -1, get all questions
+) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]
-            .get("/courses/" + courseId + "/" + (topicId ? 'topics/' + topicId + '/' : '') + "questions/" + (difficulty ? '?difficulty=' + difficulty : '') + (difficulty ? '&' : '?') + "page=" + page)
+            .get("/courses/" + courseId + "/" + (topicId ? 'topics/' + topicId + '/' : '') + "questions/" + (difficulty ? '?difficulty=' + difficulty : '') + (difficulty ? '&' : '?') + "page=" + (page != -1 ? page : '1&size=0'))
             .then(function (response) {
             resolve(response.data.results);
         })["catch"](function (error) { return reject(error); });

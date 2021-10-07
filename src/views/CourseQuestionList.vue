@@ -51,17 +51,26 @@
     </div>
   </div>
   <div class="flex">
-    <UIButton
-      :disabled="showDraft"
+    <router-link
       class="ml-auto"
+      :to="`/course-panel/${$route.params.courseId}/import`"
+      ><UIButton :variant="'negative'">
+        Importa da JSON
+      </UIButton></router-link
+    >
+    <UIButton
+      :variant="'negative'"
+      class="ml-2"
+      @click="showExportPanel = true"
+    >
+      Esporta come JSON
+    </UIButton>
+    <UIButton
+      class="ml-2"
+      :disabled="showDraft"
       @click="showDraft = true"
       :variant="'green'"
       >Nuova domanda</UIButton
-    >
-    <router-link :to="`/course-panel/${$route.params.courseId}/import`"
-      ><UIButton :variant="'negative'" class="ml-2">
-        Importa da JSON
-      </UIButton></router-link
     >
   </div>
 
@@ -102,6 +111,30 @@
       Carica più domande
     </p>
   </div>
+
+  <modal
+    v-if="showExportPanel"
+    :title="'Scegli argomento'"
+    :confirmOnly="true"
+    :dismissible="true"
+    @yes="showExportPanel = false"
+    ><template v-slot:body>
+      <div class="grid grid-cols-2">
+        <div
+          class="flex my-2 space-x-2"
+          v-for="topic in topics"
+          :key="'export-t-' + topic.id"
+        >
+          <p>{{ topic.name }}</p>
+          <UIButton
+            :variant="'light'"
+            :size="'2xs'"
+            @click="downloadQuestions(topic.id)"
+            ><i class="opacity-80 fas fa-download"></i
+          ></UIButton>
+        </div>
+      </div> </template
+  ></modal>
 </template>
 
 <script lang="ts">
@@ -114,9 +147,18 @@ import Skeleton from '@/components/Skeleton.vue'
 import { Choice, Question, Topic } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import Spinner from '@/components/Spinner.vue'
+import Modal from '@/components/Modal.vue'
+import { downloadObjectAsJson } from '@/utils'
 
 export default defineComponent({
-  components: { Skeleton, QuestionEditor, DifficultyInput, UIButton, Spinner },
+  components: {
+    Skeleton,
+    QuestionEditor,
+    DifficultyInput,
+    UIButton,
+    Spinner,
+    Modal
+  },
   name: 'CourseQuestionList',
   async created () {
     window.addEventListener('beforeunload', this.beforeWindowUnload)
@@ -171,6 +213,7 @@ export default defineComponent({
       loading: false,
       firstLoading: false,
       showDraft: false,
+      showExportPanel: false,
       draftQuestion: {
         id: '_',
         text: '',
@@ -270,6 +313,14 @@ export default defineComponent({
       } finally {
         this.loading = false
       }
+    },
+    async downloadQuestions (topicId: string): Promise<void> {
+      const courseId = this.$route.params.courseId as string
+      const questions = await getQuestions(courseId, topicId, null, -1)
+      downloadObjectAsJson(
+        questions,
+        `${this.topics.find(t => t.id === topicId)?.name}.json`
+      )
     }
   },
   computed: {

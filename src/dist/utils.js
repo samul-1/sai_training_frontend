@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.wrapInBackTicks = exports.codify = exports.highlightCode = exports.renderTex = void 0;
+exports.downloadObjectAsJson = exports.wrapInBackTicks = exports.codify = exports.highlightCode = exports.renderTex = void 0;
 function renderTex() {
     setTimeout(function () {
         return window.MathJax.Hub.Queue([
@@ -30,3 +30,14 @@ function wrapInBackTicks(text) {
     return '```' + text + '```';
 }
 exports.wrapInBackTicks = wrapInBackTicks;
+function downloadObjectAsJson(exportObj, exportName) {
+    var dataStr = 'data:text/json;charset=utf-8,' +
+        encodeURIComponent(JSON.stringify(exportObj, undefined, 2));
+    var downloadAnchorNode = document.createElement('a');
+    downloadAnchorNode.setAttribute('href', dataStr);
+    downloadAnchorNode.setAttribute('download', exportName);
+    document.body.appendChild(downloadAnchorNode); // required for firefox
+    downloadAnchorNode.click();
+    downloadAnchorNode.remove();
+}
+exports.downloadObjectAsJson = downloadObjectAsJson;

@@ -24,7 +24,7 @@ export function getQuestions(
   courseId: string,
   topicId: string | null,
   difficulty: string | null,
-  page: number
+  page: number // if -1, get all questions
 ): Promise<Question[]> {
   return new Promise((resolve, reject) => {
     axios
@@ -33,7 +33,7 @@ export function getQuestions(
           topicId ? 'topics/' + topicId + '/' : ''
         }questions/${difficulty ? '?difficulty=' + difficulty : ''}${
           difficulty ? '&' : '?'
-        }page=${page}`
+        }page=${page != -1 ? page : '1&size=0'}`
       )
       .then((response) => {
         resolve(response.data.results);

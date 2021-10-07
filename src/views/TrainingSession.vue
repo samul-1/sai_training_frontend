@@ -101,11 +101,13 @@ export default defineComponent({
     // restore previously given answers if session was interrupted
     if (localStorage.getItem(`answers_${courseId}`)) {
       if (localStorage.getItem(`sessionId_${courseId}`) == this.session.id) {
+        // TODO investigate bug
         this.answers = JSON.parse(
           localStorage.getItem(`answers_${courseId}`) as string
         )
       } else {
         localStorage.removeItem(`answers_${courseId}`)
+        localStorage.removeItem(`sessionId_${courseId}`)
       }
     }
     localStorage.setItem(`sessionId_${courseId}`, this.session.id)

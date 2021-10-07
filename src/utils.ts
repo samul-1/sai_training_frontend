@@ -49,3 +49,18 @@ export function codify(text: string): string {
 export function wrapInBackTicks(text: string): string {
   return '```' + text + '```';
 }
+
+export function downloadObjectAsJson(
+  exportObj: unknown,
+  exportName: string
+): void {
+  const dataStr =
+    'data:text/json;charset=utf-8,' +
+    encodeURIComponent(JSON.stringify(exportObj, undefined, 2));
+  const downloadAnchorNode = document.createElement('a');
+  downloadAnchorNode.setAttribute('href', dataStr);
+  downloadAnchorNode.setAttribute('download', exportName);
+  document.body.appendChild(downloadAnchorNode); // required for firefox
+  downloadAnchorNode.click();
+  downloadAnchorNode.remove();
+}
