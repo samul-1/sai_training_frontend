@@ -35,7 +35,7 @@
         </div>
       </li>
     </ul>
-    <div v-if="question.open_answer_text.length > 0">
+    <div v-if="question.open_answer_text?.length > 0">
       <p class="mb-1 text-lg font-medium">La tua risposta</p>
       <div class="whitespace-pre">{{ question.open_answer_text }}</div>
     </div>
