@@ -316,7 +316,9 @@ export default defineComponent({
     },
     async downloadQuestions (topicId: string): Promise<void> {
       const courseId = this.$route.params.courseId as string
+      this.loading = true
       const questions = await getQuestions(courseId, topicId, null, -1)
+      this.loading = false
       downloadObjectAsJson(
         questions,
         `${this.topics.find(t => t.id === topicId)?.name}.json`
