@@ -98,18 +98,28 @@ export default defineComponent({
     await this.getOrCreateSession()
     this.loading = false
 
+    // console.log(
+    //   `answers_${courseId}`,
+    //   localStorage.getItem(`answers_${courseId}`),
+    //   `sessionId_${courseId}`,
+    //   localStorage.getItem(`sessionId_${courseId}`),
+    //   'this session id',
+    //   this.session.id
+    // )
     // restore previously given answers if session was interrupted
     if (localStorage.getItem(`answers_${courseId}`)) {
       if (localStorage.getItem(`sessionId_${courseId}`) == this.session.id) {
-        // TODO investigate bug
+        //console.log('RESTORING ANSWERS FROM LOCAL STORAGE')
         this.answers = JSON.parse(
           localStorage.getItem(`answers_${courseId}`) as string
         )
       } else {
+        //console.log('REMOVING ANSWERS AND SESSION FROM LOCAL STORAGE')
         localStorage.removeItem(`answers_${courseId}`)
         localStorage.removeItem(`sessionId_${courseId}`)
       }
     }
+    //console.log('SETTING SESSION ID')
     localStorage.setItem(`sessionId_${courseId}`, this.session.id)
   },
   watch: {
@@ -123,6 +133,7 @@ export default defineComponent({
     },
     answersAsJson (newVal) {
       const courseId = this.$route.params.courseId as string
+      console.log('SETTING ANSWERS', newVal)
       localStorage.setItem(`answers_${courseId}`, newVal)
     }
   },
@@ -149,7 +160,7 @@ export default defineComponent({
       const response = await turnInTrainingSession(courseId, this.answers)
       this.loadingResults = false
 
-      localStorage.removeItem(`answers${courseId}`)
+      localStorage.removeItem(`answers_${courseId}`)
       localStorage.removeItem(`sessionId_${courseId}`)
       this.$router.push(`/course/${courseId}/sessions/${response.id}`)
     }
