@@ -33,7 +33,7 @@ export function getQuestions(
           topicId ? 'topics/' + topicId + '/' : ''
         }questions/${difficulty ? '?difficulty=' + difficulty : ''}${
           difficulty ? '&' : '?'
-        }page=${page != -1 ? page : '1&size=0'}`
+        }page=${page != -1 ? page : '1&size=99999999'}`
       )
       .then((response) => {
         resolve(response.data.results);
