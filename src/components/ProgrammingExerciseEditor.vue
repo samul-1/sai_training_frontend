@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-12 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg hover:shadow-lg"
+    class="relative px-2 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg md:px-12 hover:shadow-lg"
   >
     <div class="absolute top-0 right-0 mt-4 mr-4">
       <UIButton
@@ -44,30 +44,34 @@
       <div class="grid grid-cols-5 md:gap-24 lg:gap-32">
         <h1 class="font-medium">Difficoltà</h1>
         <difficulty-input
-          class="col-span-5 md:col-span-4"
+          class="col-span-5 ml-4 md:col-span-4 md:ml-0"
           v-model="exerciseData.difficulty"
         ></difficulty-input>
       </div>
     </div>
     <div v-if="!collapse">
       <h1 class="mb-2 font-medium">Testo</h1>
-      <!-- <textarea
-        rows="5"
-        cols="100"
-        class="p-3 border rounded-lg"
-        v-model="exerciseData.text"
-      ></textarea> -->
       <RichEditor v-model="exerciseData.text"></RichEditor>
-      <h1 class="mt-4 mb-2 font-medium">
-        Soluzione (opzionale, mostrata a fine esercitazione)
-      </h1>
-      <!-- <textarea
-        rows="5"
-        cols="100"
-        class="p-3 border rounded-lg"
-        v-model="exerciseData.solution"
-      ></textarea> -->
-      <RichEditor v-model="exerciseData.solution"></RichEditor>
+      <div class="flex flex-col w-full md:space-x-4 md:flex-row">
+        <div class="md:w-1/2">
+          <h1 class="mt-4 mb-2 font-medium">
+            Soluzione (opzionale, mostrata a fine esercitazione)
+          </h1>
+          <RichEditor v-model="exerciseData.solution"></RichEditor>
+        </div>
+        <div class="md:w-1/2">
+          <h1 class="mt-4 mb-2 font-medium">
+            Codice iniziale
+          </h1>
+          <VAceEditor
+            v-model:value="exerciseData.initial_code"
+            lang="javascript"
+            theme="monokai"
+            style="height: 80px;"
+            :options="aceEditorOptions"
+          />
+        </div>
+      </div>
 
       <div class="flex mt-4 mb-2 space-x-2 ">
         <h1 class="font-medium">Test case</h1>
@@ -81,17 +85,17 @@
           :key="'q-' + exerciseData.id ?? exerciseTempKey + '-c-' + c_index"
           class="flex mt-2"
         >
-          <RichEditor class="w-10/12" v-model="testcase.code"></RichEditor>
-          <!-- <div class="my-auto ml-4">
-            <input
-              type="checkbox"
-              v-model="testcase.correct"
-              class="mr-1"
-            /><label>Corretta</label>
-          </div> -->
+          <VAceEditor
+            v-model:value="testcase.code"
+            lang="javascript"
+            theme="monokai"
+            style="height: 30px;"
+            class="w-11/12 md:w-10/12"
+            :options="aceEditorOptions"
+          />
           <UIButton
             @click="exerciseData.testcases.splice(c_index, 1)"
-            class="my-auto ml-4"
+            class="my-auto ml-2 md:ml-4"
             :variant="'negative-red'"
             :size="'xs'"
             ><i class="fas fa-trash"></i
@@ -176,9 +180,13 @@ import Modal from './Modal.vue'
 import { createTopic } from '@/api/courses'
 import { isValidProgrammingExercise } from '@/validation'
 import { highlightCode } from '@/utils'
+import { VAceEditor } from 'vue3-ace-editor'
+import { aceEditorOptions } from "@/constants"
+import 'ace-builds/src-noconflict/mode-javascript'
+import 'ace-builds/src-noconflict/theme-monokai'
 export default defineComponent({
   name: 'ProgrammingExerciseEditor',
-  components: { DifficultyInput, UIButton, Modal, RichEditor },
+  components: { DifficultyInput, UIButton, Modal, RichEditor, VAceEditor },
   props: {
     modelValue: {
       type: Object as PropType<ProgrammingExercise>,
@@ -239,6 +247,7 @@ export default defineComponent({
   },
   data() {
     return {
+      aceEditorOptions,
       dirty: false,
       showPreview: false,
       exerciseData: {} as ProgrammingExercise,
@@ -292,4 +301,26 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style scoped>
+.ace-monokai {
+  background-color: #1f2937 !important;
+  color: #f8f8f2;
+}
+
+.ace-monokai .ace_marker-layer .ace_active-line {
+  background: #2f3e53 !important;
+}
+
+.ace-monokai .ace_gutter {
+  background: #111827 !important;
+  color: #8f908a;
+}
+
+.ace-monokai .ace_gutter-active-line {
+  background-color: #2f3e53 !important;
+}
+
+.ace_editor {
+  border-radius: 0.5rem !important;
+}
+</style>

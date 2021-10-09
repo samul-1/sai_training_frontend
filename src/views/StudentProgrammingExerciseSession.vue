@@ -172,6 +172,7 @@ import Skeleton from '@/components/Skeleton.vue'
 import 'ace-builds/src-noconflict/mode-javascript'
 import 'ace-builds/src-noconflict/theme-monokai'
 import ProgrammingExerciseSubmission from '@/components/ProgrammingExerciseSubmission.vue'
+import { aceEditorOptions } from '@/constants'
 
 export default defineComponent({
   name: 'StudentProgrammingExerciseSession',
@@ -247,17 +248,7 @@ export default defineComponent({
   data () {
     return {
       exercises: [] as ProgrammingExercise[],
-      aceEditorOptions: {
-        enableBasicAutocompletion: true,
-        enableLiveAutocompletion: true,
-        fontSize: 17,
-        highlightActiveLine: true,
-        enableSnippets: true,
-        showLineNumbers: true,
-        tabSize: 2,
-        showPrintMargin: false,
-        showGutter: true
-      },
+      aceEditorOptions,
       processingSubmission: false,
       currentExerciseId: '_',
       loading: false,
@@ -328,7 +319,7 @@ export default defineComponent({
 })
 </script>
 
-<style>
+<style scoped>
 .ace-monokai {
   background-color: #1f2937 !important;
   color: #f8f8f2;

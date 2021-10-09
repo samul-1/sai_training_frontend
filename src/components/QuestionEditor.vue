@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-12 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg hover:shadow-lg"
+    class="relative px-4 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg md:px-12 hover:shadow-lg"
   >
     <div class="absolute top-0 right-0 mt-4 mr-4">
       <UIButton
@@ -44,19 +44,20 @@
       <div class="grid grid-cols-5 md:gap-24 lg:gap-32">
         <h1 class="font-medium">Difficoltà</h1>
         <difficulty-input
-          class="col-span-5 md:col-span-4"
+          class="col-span-5 ml-4 md:ml-0 md:col-span-4"
           v-model="questionData.difficulty"
         ></difficulty-input>
       </div>
     </div>
     <div v-if="!collapse">
-      <div class="flex mb-4 space-x-2">
+      <div class="flex flex-col mb-4 md:space-x-2 md:flex-row">
         <p class="my-auto font-medium">
           Domanda
           {{ questionData.is_open_ended ? 'aperta' : 'a risposta multipla' }}
         </p>
         <UIButton
           @click="toggleOpenQuestion()"
+          class="mt-2 md:mt-0"
           :variant="'negative'"
           :size="'xs'"
           >Cambia in domanda
@@ -64,33 +65,12 @@
             questionData.is_open_ended ? 'a risposta multipla' : 'aperta'
           }}</UIButton
         >
-        <!-- <input
-          :id="'q-' + questionData.id ?? questionTempKey + '-open'"
-          type="checkbox"
-          v-model="questionData.is_open_ended"
-          class="mr-1"
-        />
-        <label :for="'q-' + questionData.id ?? questionTempKey + '-open'"
-          >Domanda aperta</label
-        > -->
       </div>
       <h1 class="mb-2 font-medium">Testo</h1>
-      <!-- <textarea
-        rows="5"
-        cols="100"
-        class="p-3 border rounded-lg"
-        v-model="questionData.text"
-      ></textarea> -->
       <RichEditor v-model="questionData.text"></RichEditor>
       <h1 class="mt-4 mb-2 font-medium">
         Soluzione (opzionale, mostrata a fine esercitazione)
       </h1>
-      <!-- <textarea
-        rows="5"
-        cols="100"
-        class="p-3 border rounded-lg"
-        v-model="questionData.solution"
-      ></textarea> -->
       <RichEditor v-model="questionData.solution"></RichEditor>
       <div v-if="!questionData.is_open_ended">
         <div class="flex mt-4 mb-2 space-x-2 ">
@@ -103,23 +83,26 @@
           <div
             v-for="(choice, c_index) in questionData.choices"
             :key="'q-' + questionData.id ?? questionTempKey + '-c-' + c_index"
-            class="flex mt-2"
+            class="flex flex-col mt-2 md:flex-row"
           >
-            <RichEditor class="w-10/12" v-model="choice.text"></RichEditor>
-            <div class="my-auto ml-4">
+            <RichEditor
+              class="w-full md:w-10/12"
+              v-model="choice.text"
+            ></RichEditor>
+            <div class="my-auto mt-2 md:ml-4 md:mt-0">
               <input
                 type="checkbox"
                 v-model="choice.correct"
                 class="mr-1"
               /><label>Corretta</label>
+              <UIButton
+                @click="questionData.choices.splice(c_index, 1)"
+                class="my-auto ml-4"
+                :variant="'negative-red'"
+                :size="'xs'"
+                ><i class="fas fa-trash"></i
+              ></UIButton>
             </div>
-            <UIButton
-              @click="questionData.choices.splice(c_index, 1)"
-              class="my-auto ml-4"
-              :variant="'negative-red'"
-              :size="'xs'"
-              ><i class="fas fa-trash"></i
-            ></UIButton>
           </div>
         </transition-group>
       </div>
@@ -130,23 +113,25 @@
       v-html="highlightCode(questionData.text)"
       class="overflow-x-auto overflow-y-auto break-words max-h-32"
     ></div>
-    <div class="flex mt-8 space-x-2" v-if="showSave">
-      <UIButton
-        :disabled="!valid || !dirty"
-        @click="$emit('save')"
-        class="my-auto"
-        :variant="'green'"
-        >Salva</UIButton
-      >
-      <UIButton
-        class="my-auto"
-        @click="showPreview = true"
-        :variant="'negative'"
-        >Anteprima</UIButton
-      >
+    <div class="flex flex-col mt-8 md:space-x-2 md:flex-row" v-if="showSave">
+      <div class="flex space-x-2">
+        <UIButton
+          :disabled="!valid || !dirty"
+          @click="$emit('save')"
+          class="my-auto"
+          :variant="'green'"
+          >Salva</UIButton
+        >
+        <UIButton
+          class="my-auto"
+          @click="showPreview = true"
+          :variant="'negative'"
+          >Anteprima</UIButton
+        >
+      </div>
       <p
         v-if="dirty"
-        class="px-2 my-auto text-white bg-gray-600 rounded-md animate-pulse"
+        class="px-2 mt-2 text-white bg-gray-600 rounded-md md:my-auto animate-pulse"
       >
         Modifiche non salvate
       </p>

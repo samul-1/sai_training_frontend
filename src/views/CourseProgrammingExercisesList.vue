@@ -8,7 +8,7 @@
     >
   </teleport>
   <h1 class="mb-8 text-4xl text-center">Esercizi JS</h1>
-  <div class="flex my-12">
+  <div class="flex flex-col my-12 space-y-2 md:space-y-0 md:flex-row">
     <p class="my-auto mr-8 font-medium">Filtra per</p>
     <div class="flex my-auto mr-8 space-x-2">
       <input

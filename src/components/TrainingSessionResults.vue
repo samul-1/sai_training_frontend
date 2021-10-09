@@ -9,13 +9,18 @@
   </teleport>
   <div class="">
     <h1 class="mb-8 text-4xl">Risultati esercitazione</h1>
-    <div class="flex flex-col md:flex-row md:space-x-3">
+    <div class="flex flex-col mx-2 md:mx-0 md:flex-row">
       <p class="my-auto mb-2 text-xl md:mb-0">
         <span class="mr-2 font-medium">Risposte corrette:</span>
         <span>{{ results.score }} su {{ multipleChoiceQuestionsAmount }}</span>
       </p>
+      <progress-bar
+        class="my-auto md:mx-4"
+        :value="results.score"
+        :max="multipleChoiceQuestionsAmount"
+      ></progress-bar>
       <p
-        class="my-auto ml-4 text-sm opacity-70"
+        class="my-2 text-sm md:my-auto md:mx-4 opacity-70"
         v-if="areThereOpenEndedQuestions"
       >
         Non sono conteggiate le domande a risposta aperta
@@ -32,11 +37,12 @@
       <skeleton></skeleton>
       <skeleton></skeleton>
     </div>
-    <div v-if="areThereHelpTexts" class="p-8 pb-5 my-4 border rounded-xl">
+    <div
+      v-if="areThereHelpTexts"
+      class="p-6 pb-5 my-4 border rounded-md shadow-md md:p-8"
+    >
       <p class="mb-2">
-        <i
-          class="mr-1 text-lg text-red-500 opacity-80 fas fa-exclamation-triangle"
-        ></i>
+        <i class="mr-1 text-lg text-red-300 fas fa-exclamation-triangle"></i>
         Hai sbagliato almeno il 50% delle domande nelle seguenti categorie:
       </p>
       <div
@@ -72,13 +78,15 @@ import FullQuestion from '@/components/FullQuestion.vue'
 import Skeleton from '@/components/Skeleton.vue'
 import UIButton from './UIButton.vue'
 import { Question, TrainingSessionResults } from '@/interfaces'
+import ProgressBar from '@/components/ProgressBar.vue'
 
 export default defineComponent({
   name: 'TrainingSessionResults',
   components: {
     FullQuestion,
     UIButton,
-    Skeleton
+    Skeleton,
+    ProgressBar
   },
   data () {
     return {

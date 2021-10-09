@@ -92,6 +92,34 @@ export default createStore({
           });
       });
     },
+    refreshToken: ({ commit }, token) => {
+      console.log('refreshing');
+      return new Promise((resolve, reject) => {
+        axios
+          .post('/auth/convert-token', {
+            refresh_token: token,
+            grant_type: 'refresh_token',
+            client_id: process.env.VUE_APP_GOOGLE_OAUTH_CLIENT_ID,
+            client_secret:
+              process.env.VUE_APP_GOOGLE_OAUTH_CLIENT_SECRET,
+            //backend: 'google-oauth2',
+          })
+          .then((response) => {
+            // console.log('committing setToken');
+            console.log(response);
+            commit('setToken', response.data.access_token);
+
+            // console.log('committing setRefreshToken');
+            //commit('setRefreshToken', response.data.refresh_token);
+
+            // console.log('resolving');
+            resolve(response);
+          })
+          .catch((error) => {
+            reject(error);
+          });
+      });
+    },
     getUserData: ({ commit }) => {
       // console.log('getting user...');
       // console.log(

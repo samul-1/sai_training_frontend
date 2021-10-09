@@ -1,6 +1,6 @@
 <template>
   <div
-    class="px-10 py-6 transition-shadow duration-150 border rounded-xl hover:shadow-md"
+    class="px-10 py-6 transition-shadow duration-150 bg-opacity-50 border border-gray-200 rounded-md bg-gray-40 hover:shadow-md"
   >
     <p class="text-center uppercase">
       {{ humanizedTimstamp }}

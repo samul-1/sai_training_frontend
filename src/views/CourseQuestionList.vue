@@ -8,7 +8,7 @@
     >
   </teleport>
   <h1 class="mb-8 text-4xl text-center">Domande</h1>
-  <div class="flex my-12">
+  <div class="flex flex-col my-12 md:flex-row">
     <p class="my-auto mr-8 font-medium">Filtra per</p>
     <div class="flex my-auto mr-8 space-x-2">
       <input
@@ -36,7 +36,7 @@
         </select>
       </p>
     </div>
-    <div class="flex my-auto">
+    <div class="flex my-auto mt-2 md:mt-0">
       <input
         class="my-auto mr-2"
         type="checkbox"
@@ -50,23 +50,23 @@
       ></difficulty-input>
     </div>
   </div>
-  <div class="flex">
+  <div class="flex flex-col space-y-2 md:flex-row md:space-y-0">
     <router-link
-      class="ml-auto"
+      class="md:ml-auto"
       :to="`/course-panel/${$route.params.courseId}/import`"
-      ><UIButton :variant="'negative'">
+      ><UIButton :variant="'negative'" class="w-full md:w-max">
         Importa da JSON
       </UIButton></router-link
     >
     <UIButton
       :variant="'negative'"
-      class="ml-2"
+      class="md:ml-2"
       @click="showExportPanel = true"
     >
       Esporta come JSON
     </UIButton>
     <UIButton
-      class="ml-2"
+      class="md:ml-2"
       :disabled="showDraft"
       @click="showDraft = true"
       :variant="'green'"

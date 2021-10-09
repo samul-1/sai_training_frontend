@@ -1,5 +1,5 @@
 <template>
-  <div class="p-4 my-4 border rounded-2xl md:flex hover:shadow-inner">
+  <div class="p-4 my-4 border rounded-md md:flex hover:shadow-inner">
     <div>
       <p class="text-xl font-medium">
         {{ course.name }}

@@ -90,6 +90,30 @@ exports["default"] = vuex_1.createStore({
                 });
             });
         },
+        refreshToken: function (_a, token) {
+            var commit = _a.commit;
+            console.log('refreshing');
+            return new Promise(function (resolve, reject) {
+                axios_1["default"]
+                    .post('/auth/convert-token', {
+                    refresh_token: token,
+                    grant_type: 'refresh_token',
+                    client_id: process.env.VUE_APP_GOOGLE_OAUTH_CLIENT_ID,
+                    client_secret: process.env.VUE_APP_GOOGLE_OAUTH_CLIENT_SECRET
+                })
+                    .then(function (response) {
+                    // console.log('committing setToken');
+                    console.log(response);
+                    commit('setToken', response.data.access_token);
+                    // console.log('committing setRefreshToken');
+                    //commit('setRefreshToken', response.data.refresh_token);
+                    // console.log('resolving');
+                    resolve(response);
+                })["catch"](function (error) {
+                    reject(error);
+                });
+            });
+        },
         getUserData: function (_a) {
             // console.log('getting user...');
             // console.log(

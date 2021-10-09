@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-4 py-6 my-6 transition-shadow duration-300 border md:px-8 rounded-xl group hover:shadow-md"
+    class="relative px-2 py-6 my-6 transition-shadow duration-300 border rounded-md md:px-8 group hover:shadow-md"
   >
     <i
       v-if="showIcon"
@@ -20,10 +20,10 @@
       <li
         v-for="choice in question.choices"
         :key="'q-' + question.id + '-c-' + choice.id"
-        class="px-1 py-0.5 my-1.5 transition-colors duration-700 rounded-lg"
+        class="px-1 py-0.5 my-1.5 transition-colors duration-700 rounded-md"
         :class="{
           'bg-green-100': choice.correct && showCorrect,
-          'bg-red-100': !choice.correct && showCorrect
+          'bg-red-100 bg-opacity-80': !choice.correct && showCorrect
         }"
       >
         <div class="flex">
@@ -37,16 +37,26 @@
     </ul>
     <div v-if="question.open_answer_text?.length > 0">
       <p class="mb-1 text-lg font-medium">La tua risposta</p>
-      <div class="whitespace-pre">{{ question.open_answer_text }}</div>
+      <div class="p-2 whitespace-pre rounded-md bg-blue-50">
+        {{ question.open_answer_text }}
+      </div>
     </div>
     <div class="mt-4" v-if="question.solution.length > 0">
-      <UIButton
-        :variant="'negative'"
-        :size="'xs'"
-        @click="showSolution = !showSolution"
-        >{{ showSolution ? 'Nascondi' : 'Mostra' }} soluzione</UIButton
-      >
-      <div class="mt-2" v-if="showSolution" v-html="question.solution"></div>
+      <div class="flex space-x-2">
+        <p class="mb-1 text-lg font-medium">Soluzione</p>
+        <UIButton
+          :variant="'negative'"
+          :size="'2xs'"
+          class="my-auto"
+          @click="showSolution = !showSolution"
+          >{{ showSolution ? 'Nascondi' : 'Mostra' }} soluzione</UIButton
+        >
+      </div>
+      <div
+        class="p-2 mt-2 rounded-md bg-blue-50"
+        v-if="showSolution"
+        v-html="question.solution"
+      ></div>
     </div>
   </div>
 </template>
