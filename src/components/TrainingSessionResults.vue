@@ -20,13 +20,14 @@
         :max="multipleChoiceQuestionsAmount"
       ></progress-bar>
       <p
-        class="my-2 text-sm md:my-auto md:mx-4 opacity-70"
+        class="mt-2 text-sm md:my-auto md:mx-4 opacity-70"
         v-if="areThereOpenEndedQuestions"
       >
         Non sono conteggiate le domande a risposta aperta
       </p>
       <UIButton
         :variant="'indigo'"
+        class="mt-2"
         :size="'xs'"
         @click="wrongOnly = !wrongOnly"
         v-if="areThereWrong"

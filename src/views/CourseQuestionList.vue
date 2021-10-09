@@ -12,7 +12,7 @@
     <p class="my-auto mr-8 font-medium">Filtra per</p>
     <div class="flex my-auto mr-8 space-x-2">
       <input
-        class="my-auto"
+        class="my-auto min-w-15px"
         type="checkbox"
         v-model="filter.byTopic"
         id="filter-by-topic"
@@ -38,7 +38,7 @@
     </div>
     <div class="flex my-auto mt-2 md:mt-0">
       <input
-        class="my-auto mr-2"
+        class="my-auto mr-2 min-w-15px"
         type="checkbox"
         id="filter-by-difficulty"
         v-model="filter.byDifficulty"
@@ -342,4 +342,8 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.min-w-15px {
+  min-width: 15px;
+}
+</style>

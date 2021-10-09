@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative px-2 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg md:px-12 hover:shadow-lg"
+    class="relative px-4 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg md:px-12 hover:shadow-lg"
   >
     <div class="absolute top-0 right-0 mt-4 mr-4">
       <UIButton

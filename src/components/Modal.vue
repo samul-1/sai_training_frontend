@@ -11,7 +11,7 @@
       <transition name="bounce" @after-leave="$emit(choice)">
         <div
           v-if="showContent"
-          class="z-20 max-h-full overflow-y-auto w-full px-10 py-10 mx-1.5 bg-white rounded-lg shadow-lg md:mx-0"
+          class="z-20 max-h-full overflow-y-auto w-full px-4 md:px-10 py-10 mx-1.5 bg-white rounded-lg shadow-lg md:mx-0"
           :class="{ 'md:w-3/5': !large, 'md:w-4/5': large }"
         >
           <div class="mb-10 text-black">

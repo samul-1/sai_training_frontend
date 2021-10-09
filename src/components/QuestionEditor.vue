@@ -152,9 +152,8 @@
           v-model="draftTopic.name"/>
         <h1 class="mt-2 font-medium">Testo di aiuto (opzionale)</h1>
         <textarea
-          cols="50"
           rows="4"
-          class="p-1 border rounded-lg"
+          class="w-full p-1 border rounded-lg"
           v-model="draftTopic.help_text"
           placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
         ></textarea></template
