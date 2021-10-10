@@ -29,7 +29,7 @@
         <div class="flex">
           <input
             type="radio"
-            class="mb-auto mt-1.5 mr-2 text-red-900 pointer-events-none"
+            class="min-w-15px mb-auto mt-1.5 mr-2 text-red-900 pointer-events-none"
             :checked="choice.id == question.selected_choice"
           /><span v-highlight v-html="highlightCode(choice.text)"></span>
         </div>
@@ -95,4 +95,8 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.min-w-15px {
+  min-width: 15px;
+}
+</style>

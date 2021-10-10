@@ -20,7 +20,7 @@
     <div
       v-for="i in [1, 2, 3]"
       :key="'skeleton-' + i"
-      class="px-10 py-6 transition-shadow duration-150 border rounded-xl hover:shadow-md"
+      class="px-10 py-6 transition-shadow duration-150 border rounded-md hover:shadow-md"
     >
       <Skeleton :short="true"></Skeleton>
     </div>
