@@ -87,6 +87,7 @@ export interface Topic {
   id?: string;
   name: string;
   help_text?: string;
+  items_count?: number;
 }
 
 export interface User {

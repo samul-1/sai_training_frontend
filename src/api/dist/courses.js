@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-exports.enroll = exports.createTopic = exports.updateTopic = exports.getTopics = exports.updateTrainingTemplate = exports.createTrainingTemplate = exports.getTrainingTemplates = exports.createCourse = exports.getCourse = exports.getCourses = void 0;
+exports.enroll = exports.createTopic = exports.updateTopic = exports.deleteTopic = exports.getTopics = exports.updateTrainingTemplate = exports.createTrainingTemplate = exports.getTrainingTemplates = exports.createCourse = exports.getCourse = exports.getCourses = void 0;
 var axios_1 = require("axios");
 function getCourses() {
     return new Promise(function (resolve, reject) {
@@ -83,6 +83,15 @@ function getTopics(courseId) {
     });
 }
 exports.getTopics = getTopics;
+function deleteTopic(courseId, topicId) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]["delete"]("/courses/" + courseId + "/topics/" + topicId + "/")
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.deleteTopic = deleteTopic;
 function updateTopic(courseId, topicId, topic) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]

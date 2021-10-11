@@ -92,6 +92,20 @@ export function getTopics(courseId: string): Promise<Topic[]> {
   });
 }
 
+export function deleteTopic(
+  courseId: string,
+  topicId: string
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(`/courses/${courseId}/topics/${topicId}/`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function updateTopic(
   courseId: string,
   topicId: string,

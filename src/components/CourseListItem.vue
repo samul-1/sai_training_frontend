@@ -3,8 +3,11 @@
     <div>
       <p class="text-xl font-medium">
         {{ course.name }}
-        <span class="ml-3 text-sm text-green-700" v-if="course.enrolled">
-          <i class="fas fa-certificate"></i> Iscritto</span
+        <span
+          class="ml-3 text-sm text-green-700 whitespace-nowrap"
+          v-if="course.enrolled"
+        >
+          <i class="fas fa-certificate"></i>&nbsp;Iscritto</span
         >
       </p>
       <p

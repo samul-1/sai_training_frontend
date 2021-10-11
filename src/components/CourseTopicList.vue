@@ -29,7 +29,7 @@
           placeholder="Questo testo verrà mostrato agli studenti che sbagliano più del 50% delle domande di questo argomento."
         ></textarea>
       </div>
-      <div v-if="editing != topic.id">
+      <div class="flex" v-if="editing != topic.id">
         <UIButton
           :variant="'light'"
           :size="'xs'"
@@ -38,10 +38,23 @@
           class="mb-auto"
           ><i class="text-xs fas fa-edit"></i
         ></UIButton>
+        <UIButton
+          @click="_deleteTopic(topic)"
+          class="my-auto ml-2"
+          :variant="'negative-red'"
+          :size="'xs'"
+          ><i class="fas fa-trash"></i
+        ></UIButton>
         <i
           :class="{ 'opacity-100': success == topic.id }"
           class="ml-2 text-green-600 transition-opacity duration-200 opacity-0 fas fa-check"
         ></i>
+        <p class="my-auto text-sm opacity-60">
+          ({{ topic.items_count
+          }}<span class="hidden md:inline"
+            >&nbsp;domand{{ topic.items_count == 1 ? 'a' : 'e' }}</span
+          >)
+        </p>
       </div>
       <div class="flex mb-auto space-x-2" v-else>
         <UIButton
@@ -70,7 +83,7 @@
 </template>
 
 <script lang="ts">
-import { createTopic, getTopics, updateTopic } from '@/api/courses'
+import { createTopic, deleteTopic, getTopics, updateTopic } from '@/api/courses'
 import { Topic } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import UIButton from './UIButton.vue'
@@ -115,6 +128,22 @@ export default defineComponent({
       }
       this.editedBeforeState = {} as Topic
       this.editing = null
+    },
+    async _deleteTopic (topic: Topic): Promise<void> {
+      if ((topic.items_count as number) > 0) {
+        alert(
+          `L'argomento ${topic.name} contiene ${topic.items_count} esercizi. Per poter cancellare un argomento, devi prima assicurarti che non contenga esercizi.`
+        )
+        return
+      }
+      if (
+        confirm(
+          `Sei sicuro di voler eliminare l'argomento ${topic.name}? Quest'azione è irreversibile.`
+        )
+      ) {
+        await deleteTopic(this.courseId, topic.id as string)
+      }
+      this.topics = await getTopics(this.courseId)
     },
     async _updateTopic (topic: Topic): Promise<void> {
       //const courseId = this.$route.params.courseId as string
