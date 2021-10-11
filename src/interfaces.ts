@@ -22,6 +22,7 @@ export interface TrainingTemplate {
   name: string;
   description?: string;
   rules: TrainingTemplateRule[];
+  custom?: boolean;
 }
 
 export interface Choice {

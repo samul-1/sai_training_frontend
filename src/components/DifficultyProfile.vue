@@ -13,7 +13,7 @@
     ></vue-slider>
     <p
       v-else
-      class="my-auto font-semibold small-caps"
+      class="my-auto small-caps"
       :class="{
         'text-green-700': profile == 'easy_only' || profile == 'mostly_easy',
         'text-gray-800': profile == 'balanced',

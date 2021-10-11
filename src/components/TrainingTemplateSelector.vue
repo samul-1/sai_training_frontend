@@ -4,7 +4,7 @@
     <p class="mb-4">Scegli un modello per l'esercitazione o creane uno.</p>
     <div class="grid grid-cols-1 gap-6 mb-4 md:grid-cols-2">
       <TrainingTemplateItem
-        v-for="template in templates"
+        v-for="template in nonCustomTemplates"
         :key="'template-' + template.id"
         :trainingTemplate="template"
         class="transition-all duration-75 cursor-pointer hover:shadow-inner"
@@ -32,6 +32,23 @@
           <i class="mx-auto my-auto fas fa-plus-circle"></i>
         </div>
       </div>
+    </div>
+    <p class="my-4" v-if="customTemplates.length > 0">
+      ... oppure riutilizza un modello tra quelli che hai creato di recente.
+    </p>
+    <div class="grid grid-cols-1 gap-6 mb-6 md:grid-cols-2">
+      <TrainingTemplateItem
+        v-for="template in customTemplates"
+        :key="'template-' + template.id"
+        :trainingTemplate="template"
+        class="transition-all duration-75 cursor-pointer hover:shadow-inner"
+        :class="{
+          'ring-green-600 ring-inset ring ring-opacity-60 bg-green-50':
+            template.id == selected
+        }"
+        @click="selected = template.id"
+      >
+      </TrainingTemplateItem>
     </div>
     <!-- class="absolute bottom-0 right-0 mb-8 mr-12"-->
     <UIButton
@@ -118,6 +135,14 @@ export default defineComponent({
       const response = await createTrainingTemplate(courseId, this.drafTemplate)
       this.showTemplateEditor = false
       this.$emit('setTemplate', response.id)
+    }
+  },
+  computed: {
+    nonCustomTemplates (): TrainingTemplate[] {
+      return this.templates.filter(t => !t.custom)
+    },
+    customTemplates (): TrainingTemplate[] {
+      return this.templates.filter(t => t.custom)
     }
   }
 })
