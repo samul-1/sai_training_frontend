@@ -18,7 +18,7 @@ function highlightCode(text) {
         return ("\n        <div class=\"p-2 my-1 text-xs text-white break-all bg-gray-800 rounded-md shadow-sm -mono\"><pre style=\"padding: 0.25rem\" class=\" language-javascript\"><code class=\" language-javascript\">" +
             code.replace(/<p>/g, '').replace(/(?!^)<\/p>/g, '\n') +
             "</code></pre>\n        </div>\n      ");
-    })) === null || _a === void 0 ? void 0 : _a.replace(/`([^`]*)`/g, "\n    <div\n    class=\"inline-block p-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm\"\n    >\n      <pre style=\"line-height: 0.95; overflow-y: hidden\" class=\" language-javascript\"><code style=\"line-height: 0.5\" class=\" language-javascript\">$1</code></pre>\n    </div>\n  ");
+    })) === null || _a === void 0 ? void 0 : _a.replace(/`([^`]*)`/g, "\n    <div\n    class=\"inline-block p-1 font-mono text-xs mx-1 text-white break-all bg-gray-800 rounded-md shadow-sm\"\n    >\n      <pre style=\"padding: 0 !important; margin: 0 !important; line-height: 0.95; overflow-y: hidden\" class=\" language-javascript\"><code style=\"line-height: 0.5\" class=\" language-javascript\">$1</code></pre>\n    </div>\n  ");
 }
 exports.highlightCode = highlightCode;
 // wraps passed string into divs with code highlight classes

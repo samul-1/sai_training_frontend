@@ -27,9 +27,9 @@ export function highlightCode(text: string): string {
       /`([^`]*)`/g,
       `
     <div
-    class="inline-block p-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm"
+    class="inline-block p-1 font-mono text-xs mx-1 text-white break-all bg-gray-800 rounded-md shadow-sm"
     >
-      <pre style="line-height: 0.95; overflow-y: hidden" class=" language-javascript"><code style="line-height: 0.5" class=" language-javascript">$1</code></pre>
+      <pre style="padding: 0 !important; margin: 0 !important; line-height: 0.95; overflow-y: hidden" class=" language-javascript"><code style="line-height: 0.5" class=" language-javascript">$1</code></pre>
     </div>
   `
     );
