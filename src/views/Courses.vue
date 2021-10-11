@@ -3,8 +3,8 @@
   <!-- <Skeleton v-if="loading"></Skeleton> -->
   <div class="flex mb-8 space-x-2">
     <p class="my-auto">
-      <i class="mr-1 fas fa-search"></i>Cerca
-      <span class="hidden md:inline">corsi</span>
+      <i class="mr-1 fas fa-search"></i>
+      <span class="hidden md:inline">Cerca corsi</span>
     </p>
     <input
       type="text"
@@ -64,6 +64,7 @@ export default defineComponent({
       // if (!this.searchText.length) {
       //   return this.courses
       // }
+      // TODO better filtering
       return this.courses.filter(c => {
         return (c.name + c.creator.toLowerCase())
           .toLowerCase()
