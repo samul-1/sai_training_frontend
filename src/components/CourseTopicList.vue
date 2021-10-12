@@ -40,7 +40,7 @@
         ></UIButton>
         <UIButton
           @click="_deleteTopic(topic)"
-          class="my-auto ml-2"
+          class="mb-auto ml-2"
           :variant="'negative-red'"
           :size="'xs'"
           ><i class="fas fa-trash"></i
@@ -49,7 +49,7 @@
           :class="{ 'opacity-100': success == topic.id }"
           class="ml-2 text-green-600 transition-opacity duration-200 opacity-0 fas fa-check"
         ></i>
-        <p class="my-auto text-sm opacity-60">
+        <p class="mt-1 mb-auto text-sm opacity-60">
           ({{ topic.items_count
           }}<span class="hidden md:inline"
             >&nbsp;domand{{ topic.items_count == 1 ? 'a' : 'e' }}</span
