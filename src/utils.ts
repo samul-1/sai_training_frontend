@@ -39,9 +39,9 @@ export function highlightCode(text: string): string {
 export function codify(text: string): string {
   return `
   <div
-  class="w-full inline-block px-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md shadow-sm"
+  class="w-full inline-block px-1 font-mono text-xs text-white break-all bg-gray-800 rounded-md"
   >
-    <pre style="line-height: 0.1; overflow-y: hidden; padding: 0.25rem" class=" language-javascript"><code style="line-height: 0.5" class=" language-javascript">${text}</code></pre>
+    <pre style="line-height: 0.1; overflow-y: hidden; padding: 0.5rem" class="rounded-md language-javascript"><code style="line-height: 0.5" class=" language-javascript">${text}</code></pre>
   </div>
 `;
 }
