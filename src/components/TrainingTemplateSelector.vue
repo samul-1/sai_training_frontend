@@ -142,7 +142,7 @@ export default defineComponent({
       return this.templates.filter(t => !t.custom)
     },
     customTemplates (): TrainingTemplate[] {
-      return this.templates.filter(t => t.custom)
+      return this.templates.filter(t => t.custom).reverse()
     }
   }
 })
