@@ -1,24 +1,36 @@
 <template>
   <Skeleton v-if="loading"></Skeleton>
-  <div
-    v-for="teacher in teachers"
-    :key="'teacher-' + teacher.id"
-    class="flex my-2 space-x-2"
-  >
-    <p>{{ teacher.full_name }}</p>
-    <UIButton
-      @click="toggle(teacher.id)"
-      v-if="
-        (course.id && teacher.id != course.creator_id) ||
-          (!course.id && teacher.id != $store.state.user.id)
-      "
-      :size="'xs'"
-      :variant="course.allowed_teachers.includes(teacher.id) ? 'red' : 'green'"
-      >{{
-        course.allowed_teachers.includes(teacher.id) ? 'Rimuovi' : 'Aggiungi'
-      }}</UIButton
+  <div class="md:grid md:grid-cols-2">
+    <div
+      v-for="teacher in teachers"
+      :key="'teacher-' + teacher.id"
+      class="flex my-3 space-x-2"
     >
-    <div class="italic text-gray-400" v-else>(creatore del corso)</div>
+      <p>{{ teacher.full_name }}</p>
+      <UIButton
+        @click="toggle(teacher.id)"
+        v-if="
+          teacher.id != $store.state.user.id &&
+            (!course.id || teacher.id != course.creator_id)
+        "
+        :size="'xs'"
+        :variant="
+          course.allowed_teachers.includes(teacher.id) ? 'red' : 'green'
+        "
+        >{{
+          course.allowed_teachers.includes(teacher.id) ? 'Rimuovi' : 'Aggiungi'
+        }}</UIButton
+      >
+      <div
+        class="italic text-gray-400"
+        v-else-if="
+          (!course.id && teacher.id == $store.state.user.id) ||
+            teacher.id == course.creator_id
+        "
+      >
+        (creatore del corso)
+      </div>
+    </div>
   </div>
 </template>
 
