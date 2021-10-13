@@ -19,14 +19,14 @@
     <div
       class="grid grid-cols-3 gap-2 mt-6 mb-2 text-lg font-medium md:grid-cols-7"
     >
-      <h1 class="col-span-2">Argomento</h1>
-      <h1>Quantità</h1>
+      <h1 class="col-span-2 ml-1 md:ml-0">Argomento</h1>
+      <h1 class="ml-5 md:ml-0">Quantità</h1>
       <h1 class="hidden col-span-3 md:block">Distribuzione difficoltà</h1>
     </div>
     <div v-if="!loading">
       <div
         v-for="topic in topics"
-        class="grid grid-cols-2 gap-2 my-10 md:my-4 md:grid-cols-7"
+        class="grid grid-cols-2 gap-2 mx-2 my-10 md:mx-0 md:my-4 md:grid-cols-7"
         :key="'topic-' + topic.id"
       >
         <div class="col-span-2">{{ topic.name }}</div>
@@ -43,7 +43,7 @@
           }"
         />
         <DifficultyProfile
-          class="col-span-3 border-b pb-14 md:pb-0 md:border-b-0"
+          class="col-span-3 ml-4 mr-2 border-b md:ml-0 md:mr-0 pb-14 md:pb-0 md:border-b-0"
           :readOnly="false"
           v-model="
             templateData.rules.find(rule => rule.topic == topic.name)
