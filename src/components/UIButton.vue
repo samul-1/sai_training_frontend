@@ -13,7 +13,7 @@
         variant == 'green',
       'bg-indigo-700 hover:bg-indigo-800 active:bg-indigo-900 text-white':
         variant == 'indigo',
-      'bg-gray-600 hover:bg-gray-700 active:bg-gray-800 text-white':
+      'bg-gray-700 hover:bg-gray-800 active:bg-gray-900 text-white':
         variant == 'dark',
       'bg-gray-100 border border-gray-200 hover:bg-gray-200 hover:shadow-inner active:bg-gray-300 text-black':
         variant == 'light',

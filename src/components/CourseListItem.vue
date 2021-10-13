@@ -33,42 +33,60 @@
         :to="'/course/' + course.id"
       >
         <UIButton :variant="course.enrolled ? 'indigo' : 'green'">
-          <!-- <i
-            :class="{
-              'fas fa-plus-circle mr-1': !course.enrolled,
-              'fas fa-arrow-right mr-1': course.enrolled
-            }"
-          ></i> -->
           {{ course.enrolled ? 'Vai al corso' : 'Iscriviti' }}
         </UIButton></router-link
       >
-      <router-link v-else :to="'/course-panel/' + course.id">
-        <UIButton :variant="'green'">
-          <!-- <i
-            :class="{
-              'fas fa-plus-circle mr-1': !course.enrolled,
-              'fas fa-arrow-right mr-1': course.enrolled
-            }"
-          ></i> -->
-          Pannello di controllo
-        </UIButton></router-link
-      >
+      <div v-else>
+        <UIButton
+          class="my-auto mr-2"
+          :variant="'dark'"
+          :size="'sm'"
+          @click="showStats = true"
+        >
+          <i class="fas fa-chart-pie"></i>
+        </UIButton>
+        <router-link :to="'/course-panel/' + course.id">
+          <UIButton :variant="'green'">
+            Pannello di controllo
+          </UIButton>
+        </router-link>
+      </div>
     </div>
   </div>
+  <modal
+    v-if="showStats"
+    :confirmOnly="true"
+    :dismissible="true"
+    :title="'Statistiche corso ' + course.name"
+    @yes="showStats = false"
+  >
+    <template v-slot:body>
+      <CourseStats :courseId="course.id"></CourseStats></template
+  ></modal>
 </template>
 
 <script lang="ts">
 import { Course } from '@/interfaces'
 import { defineComponent, PropType } from '@vue/runtime-core'
+import Modal from './Modal.vue'
 import UIButton from './UIButton.vue'
-
+import CourseStats from '@/components/CourseStats.vue'
 export default defineComponent({
-  components: { UIButton },
+  components: {
+    UIButton,
+    Modal,
+    CourseStats
+  },
   name: 'CourseListItem',
   props: {
     course: {
       type: Object as PropType<Course>,
       required: true
+    }
+  },
+  data () {
+    return {
+      showStats: false
     }
   }
 })

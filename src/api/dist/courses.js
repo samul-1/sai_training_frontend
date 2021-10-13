@@ -11,7 +11,7 @@ var __assign = (this && this.__assign) || function () {
     return __assign.apply(this, arguments);
 };
 exports.__esModule = true;
-exports.enroll = exports.createTopic = exports.updateTopic = exports.deleteTopic = exports.getTopics = exports.updateTrainingTemplate = exports.createTrainingTemplate = exports.getTrainingTemplates = exports.createCourse = exports.getCourse = exports.getCourses = void 0;
+exports.enroll = exports.createTopic = exports.updateTopic = exports.deleteTopic = exports.getTopics = exports.updateTrainingTemplate = exports.createTrainingTemplate = exports.getTrainingTemplates = exports.createCourse = exports.getCourseStats = exports.getCourse = exports.getCourses = void 0;
 var axios_1 = require("axios");
 function getCourses() {
     return new Promise(function (resolve, reject) {
@@ -33,6 +33,16 @@ function getCourse(courseId) {
     });
 }
 exports.getCourse = getCourse;
+function getCourseStats(courseId) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]
+            .get("/courses/" + courseId + "/stats/")
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.getCourseStats = getCourseStats;
 function createCourse(course) {
     return new Promise(function (resolve, reject) {
         axios_1["default"]

@@ -11,6 +11,12 @@ export interface Course {
   uses_programming_exercises: boolean;
 }
 
+export interface CourseStats {
+  number_enrolled: number;
+  training_sessions: number;
+  average_correct_percentage: number;
+}
+
 export interface TrainingTemplateRule {
   topic: string;
   amount: number;

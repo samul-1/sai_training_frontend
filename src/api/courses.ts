@@ -1,4 +1,9 @@
-import { Course, Topic, TrainingTemplate } from '@/interfaces';
+import {
+  Course,
+  CourseStats,
+  Topic,
+  TrainingTemplate,
+} from '@/interfaces';
 import axios, { AxiosResponse } from 'axios';
 export function getCourses(): Promise<Array<Course>> {
   return new Promise((resolve, reject) => {
@@ -15,6 +20,19 @@ export function getCourse(courseId: string): Promise<Course> {
   return new Promise((resolve, reject) => {
     axios
       .get(`/courses/${courseId}/`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export function getCourseStats(
+  courseId: string
+): Promise<CourseStats> {
+  return new Promise((resolve, reject) => {
+    axios
+      .get(`/courses/${courseId}/stats/`)
       .then((response) => {
         resolve(response.data);
       })
