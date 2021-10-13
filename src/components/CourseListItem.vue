@@ -41,6 +41,7 @@
           class="my-auto mr-2"
           :variant="'dark'"
           :size="'sm'"
+          v-if="!course.uses_programming_exercises"
           @click="showStats = true"
         >
           <i class="fas fa-chart-pie"></i>
