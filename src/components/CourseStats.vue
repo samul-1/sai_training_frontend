@@ -1,6 +1,6 @@
 <template>
-  <Skeleton v-if="loading"></Skeleton>
-  <div class="space-y-2">
+  <Skeleton :short="true" v-if="loading"></Skeleton>
+  <div v-else class="space-y-2">
     <p>
       <strong class="font-medium">Numero di iscritti:</strong>
       {{ stats.number_enrolled }}
@@ -11,7 +11,7 @@
     </p>
     <div class="flex flex-col md:flex-row md:space-x-2">
       <p>
-        <strong class="font-medium"
+        <strong class="font-semibold"
           >Percentuale media di risposte corrette:</strong
         >
         {{ averageCorrectPercentage }}%
