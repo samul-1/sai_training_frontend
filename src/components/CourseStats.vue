@@ -11,7 +11,7 @@
     </p>
     <div class="flex flex-col md:flex-row md:space-x-2">
       <p>
-        <strong class="font-semibold"
+        <strong class="font-medium"
           >Percentuale media di risposte corrette:</strong
         >
         {{ averageCorrectPercentage }}%
