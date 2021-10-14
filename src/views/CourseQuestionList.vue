@@ -101,6 +101,7 @@
     :ref="'question-editor-' + question.id"
     @updateTopics="updateTopics()"
     @save="saveQuestion(question)"
+    @delete="deletingId = question.id"
   ></QuestionEditor>
 
   <div class="mt-6 text-center">
@@ -135,11 +136,29 @@
         </div>
       </div> </template
   ></modal>
+  <modal
+    v-if="deletingId"
+    :title="'Conferma operazione'"
+    :dismissible="true"
+    :severity="2"
+    @yes="_deleteQuestion(deletingId)"
+    @no="deletingId = null"
+    ><template v-slot:body>
+      Stai per eliminare questa domanda:
+      <FullQuestion :question="deletingQuestion"></FullQuestion>
+      Confermi di volerla eliminare? Quest'azione è irreversibile.</template
+    ></modal
+  >
 </template>
 
 <script lang="ts">
 import { getTopics } from '@/api/courses'
-import { createQuestion, getQuestions, updateQuestion } from '@/api/items'
+import {
+  createQuestion,
+  deleteQuestion,
+  getQuestions,
+  updateQuestion
+} from '@/api/items'
 import DifficultyInput from '@/components/DifficultyInput.vue'
 import QuestionEditor from '@/components/QuestionEditor.vue'
 import UIButton from '@/components/UIButton.vue'
@@ -148,7 +167,8 @@ import { Choice, Question, Topic } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import Spinner from '@/components/Spinner.vue'
 import Modal from '@/components/Modal.vue'
-import { downloadObjectAsJson } from '@/utils'
+import { downloadObjectAsJson, renderTex } from '@/utils'
+import FullQuestion from '@/components/FullQuestion.vue'
 
 export default defineComponent({
   components: {
@@ -157,7 +177,8 @@ export default defineComponent({
     DifficultyInput,
     UIButton,
     Spinner,
-    Modal
+    Modal,
+    FullQuestion
   },
   name: 'CourseQuestionList',
   async created () {
@@ -197,6 +218,11 @@ export default defineComponent({
     },
     async currentPage (_newVal) {
       await this.reloadQuestions(false)
+    },
+    deletingId (newVal: number | null) {
+      if (newVal) {
+        setTimeout(() => renderTex(), 1000)
+      }
     }
   },
   data () {
@@ -222,7 +248,8 @@ export default defineComponent({
         difficulty: '2',
         choices: [] as Choice[],
         is_open_ended: false
-      } as Question
+      } as Question,
+      deletingId: null as string | null
     }
   },
   methods: {
@@ -266,6 +293,25 @@ export default defineComponent({
         }
       } finally {
         this.loading = false
+      }
+    },
+    async _deleteQuestion (questionId: string): Promise<void> {
+      const courseId = this.$route.params.courseId as string
+      this.loading = true
+      try {
+        await deleteQuestion(courseId, questionId)
+        this.questions.splice(
+          this.questions.findIndex(q => q.id === questionId),
+          1
+        )
+        this.$store.commit('pushNotification', {
+          message: 'Domanda eliminata con successo',
+          severity: 1,
+          autoHide: 2000
+        })
+      } finally {
+        this.loading = false
+        this.deletingId = null
       }
     },
     async saveQuestion (question: Question): Promise<void> {
@@ -337,6 +383,12 @@ export default defineComponent({
             .dirty
         })
         .reduce((a, b) => a || b, false)
+    },
+    deletingQuestion (): Question | undefined {
+      if (!this.deletingId) {
+        return
+      }
+      return this.questions.find(q => q.id === this.deletingId)
     }
   }
 })

@@ -5,7 +5,7 @@
     <div
       v-for="topic in topics"
       :key="'topic-' + topic.id"
-      class="flex my-3 space-x-2"
+      class="flex my-2 space-x-2"
     >
       <p v-if="editing != topic.id" class="mb-auto">
         {{ topic.name }}
@@ -32,7 +32,7 @@
       <div class="flex" v-if="editing != topic.id">
         <UIButton
           :variant="'light'"
-          :size="'xs'"
+          :size="'2xs'"
           @click="editTopic(topic)"
           :disabled="editing && editing != topic.id"
           class="mb-auto"
@@ -42,7 +42,7 @@
           @click="_deleteTopic(topic)"
           class="mb-auto ml-2"
           :variant="'negative-red'"
-          :size="'xs'"
+          :size="'2xs'"
           ><i class="fas fa-trash"></i
         ></UIButton>
         <i

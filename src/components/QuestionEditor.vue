@@ -1,7 +1,16 @@
 <template>
   <div
-    class="relative px-4 py-10 transition-shadow duration-100 border border-gray-200 rounded-lg md:px-12 hover:shadow-lg"
+    class="relative px-4 pb-10 transition-shadow duration-100 border border-gray-200 rounded-lg pt-14 md:px-12 hover:shadow-lg"
   >
+    <div class="absolute top-0 left-0 mt-4 ml-4">
+      <UIButton
+        v-if="collapsible"
+        @click="$emit('delete')"
+        :size="'2xs'"
+        :variant="'negative-red'"
+        ><i class="fas fa-trash"></i
+      ></UIButton>
+    </div>
     <div class="absolute top-0 right-0 mt-4 mr-4">
       <UIButton
         v-if="collapsible"

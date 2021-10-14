@@ -20,6 +20,36 @@ export function bulkCreateQuestions(
   });
 }
 
+export function deleteQuestion(
+  courseId: string,
+  questionId: string
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(`/courses/${courseId}/questions/${questionId}/`)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
+export function deleteProgrammingExercise(
+  courseId: string,
+  exerciseId: string
+): Promise<void> {
+  return new Promise((resolve, reject) => {
+    axios
+      .delete(
+        `/courses/${courseId}/programming_exercises/${exerciseId}/`
+      )
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
+
 export function getQuestions(
   courseId: string,
   topicId: string | null,

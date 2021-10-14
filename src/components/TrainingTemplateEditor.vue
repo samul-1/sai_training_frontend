@@ -20,7 +20,7 @@
       class="grid grid-cols-3 gap-2 mt-6 mb-2 text-lg font-medium md:grid-cols-7"
     >
       <h1 class="col-span-2 ml-1 md:ml-0">Argomento</h1>
-      <h1 class="ml-5 md:ml-0">Quantità</h1>
+      <h1 class="ml-6 md:ml-0">Quantità</h1>
       <h1 class="hidden col-span-3 md:block">Distribuzione difficoltà</h1>
     </div>
     <div v-if="!loading">
@@ -43,7 +43,7 @@
           }"
         />
         <DifficultyProfile
-          class="col-span-3 ml-4 mr-2 border-b md:ml-0 md:mr-0 pb-14 md:pb-0 md:border-b-0"
+          class="col-span-3 ml-4 mr-1 border-b md:ml-0 md:mr-0 pb-14 md:pb-0 md:border-b-0"
           :readOnly="false"
           v-model="
             templateData.rules.find(rule => rule.topic == topic.name)
@@ -52,7 +52,7 @@
         ></DifficultyProfile>
       </div>
     </div>
-    <skeleton v-else></skeleton>
+    <Skeleton v-else></Skeleton>
     <teleport v-if="!loading" to="#training-template-editor-footer">
       <p>
         <strong class="font-medium">Totale domande:</strong>

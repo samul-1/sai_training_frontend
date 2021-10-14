@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-exports.getProgrammingExercisesHistory = exports.getRandomProgrammingExercises = exports.postExerciseSubmission = exports.getProgrammingExercisesById = exports.createProgrammingExercise = exports.createQuestion = exports.updateProgrammingExercise = exports.updateQuestion = exports.getProgrammingExercises = exports.getQuestions = exports.bulkCreateQuestions = void 0;
+exports.getProgrammingExercisesHistory = exports.getRandomProgrammingExercises = exports.postExerciseSubmission = exports.getProgrammingExercisesById = exports.createProgrammingExercise = exports.createQuestion = exports.updateProgrammingExercise = exports.updateQuestion = exports.getProgrammingExercises = exports.getQuestions = exports.deleteProgrammingExercise = exports.deleteQuestion = exports.bulkCreateQuestions = void 0;
 var axios_1 = require("axios");
 function bulkCreateQuestions(courseId, questions) {
     return new Promise(function (resolve, reject) {
@@ -12,6 +12,24 @@ function bulkCreateQuestions(courseId, questions) {
     });
 }
 exports.bulkCreateQuestions = bulkCreateQuestions;
+function deleteQuestion(courseId, questionId) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]["delete"]("/courses/" + courseId + "/questions/" + questionId + "/")
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.deleteQuestion = deleteQuestion;
+function deleteProgrammingExercise(courseId, exerciseId) {
+    return new Promise(function (resolve, reject) {
+        axios_1["default"]["delete"]("/courses/" + courseId + "/programming_exercises/" + exerciseId + "/")
+            .then(function (response) {
+            resolve(response.data);
+        })["catch"](function (error) { return reject(error); });
+    });
+}
+exports.deleteProgrammingExercise = deleteProgrammingExercise;
 function getQuestions(courseId, topicId, difficulty, page // if -1, get all questions
 ) {
     return new Promise(function (resolve, reject) {

@@ -4,7 +4,8 @@ import {
   Topic,
   TrainingTemplate,
 } from '@/interfaces';
-import axios, { AxiosResponse } from 'axios';
+import axios from 'axios';
+
 export function getCourses(): Promise<Array<Course>> {
   return new Promise((resolve, reject) => {
     axios
