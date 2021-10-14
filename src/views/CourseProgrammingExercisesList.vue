@@ -92,6 +92,7 @@
     :ref="'exercise-editor-' + exercise.id"
     @updateTopics="updateTopics()"
     @save="saveExercise(exercise)"
+    @delete="deletingId = exercise.id"
   ></ProgrammingExerciseEditor>
 
   <div class="mt-6 text-center">
@@ -102,12 +103,26 @@
       Carica più domande
     </p>
   </div>
+  <modal
+    v-if="deletingId"
+    :title="'Conferma operazione'"
+    :dismissible="true"
+    :severity="2"
+    @yes="_deleteExercise(deletingId)"
+    @no="deletingId = null"
+    ><template v-slot:body>
+      Stai per eliminare questo esercizio:
+      <div class="my-4" v-html="deletingExercise.text"></div>
+      Confermi di volerla eliminare? Quest'azione è irreversibile.</template
+    ></modal
+  >
 </template>
 
 <script lang="ts">
 import { getTopics } from '@/api/courses'
 import {
   createProgrammingExercise,
+  deleteProgrammingExercise,
   getProgrammingExercises,
   updateProgrammingExercise
 } from '@/api/items'
@@ -118,6 +133,7 @@ import Skeleton from '@/components/Skeleton.vue'
 import { ProgrammingExercise, TestCase, Topic } from '@/interfaces'
 import { defineComponent } from '@vue/runtime-core'
 import Spinner from '@/components/Spinner.vue'
+import Modal from '@/components/Modal.vue'
 
 export default defineComponent({
   components: {
@@ -125,7 +141,8 @@ export default defineComponent({
     DifficultyInput,
     UIButton,
     Spinner,
-    ProgrammingExerciseEditor
+    ProgrammingExerciseEditor,
+    Modal
   },
   name: 'CourseProgrammingExerciseList',
   async created () {
@@ -188,7 +205,8 @@ export default defineComponent({
         solution: '',
         difficulty: '2',
         testcases: [] as TestCase[]
-      } as ProgrammingExercise
+      } as ProgrammingExercise,
+      deletingId: null as string | null
     }
   },
   methods: {
@@ -232,6 +250,25 @@ export default defineComponent({
         }
       } finally {
         this.loading = false
+      }
+    },
+    async _deleteExercise (exerciseId: string): Promise<void> {
+      const courseId = this.$route.params.courseId as string
+      this.loading = true
+      try {
+        await deleteProgrammingExercise(courseId, exerciseId)
+        this.exercises.splice(
+          this.exercises.findIndex(q => q.id === exerciseId),
+          1
+        )
+        this.$store.commit('pushNotification', {
+          message: 'Esercizio eliminata con successo',
+          severity: 1,
+          autoHide: 2000
+        })
+      } finally {
+        this.loading = false
+        this.deletingId = null
       }
     },
     async saveExercise (exercise: ProgrammingExercise): Promise<void> {
@@ -292,6 +329,12 @@ export default defineComponent({
             .dirty
         })
         .reduce((a, b) => a || b, false)
+    },
+    deletingExercise (): ProgrammingExercise | undefined {
+      if (!this.deletingId) {
+        return
+      }
+      return this.exercises.find(q => q.id === this.deletingId)
     }
   }
 })
