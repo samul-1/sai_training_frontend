@@ -13,13 +13,12 @@ import Login from '../views/Login.vue';
 import CourseQuestionList from '../views/CourseQuestionList.vue';
 import CourseProgrammingExercisesList from '../views/CourseProgrammingExercisesList.vue';
 import Courses from '../views/Courses.vue';
-import StudentDashboard from '../views/StudentDashboard.vue';
 import TeacherDashboard from '../views/TeacherDashboard.vue';
 import StudentCourseDashboard from '../views/StudentCourseDashboard.vue';
 import TeacherCourseDashboard from '../views/TeacherCourseDashboard.vue';
 import TrainingSession from '../views/TrainingSession.vue';
 import TrainingSessionResults from '../components/TrainingSessionResults.vue';
-import CourseTopicList from '../components/CourseTopicList.vue';
+import ProgrammingExerciseImport from '../components/ProgrammingExerciseImport.vue';
 import QuestionImport from '../components/QuestionImport.vue';
 import TexToJson from '../views/TexToJson.vue';
 import TrainingSessionsHistory from '../views/TrainingSessionsHistory.vue';
@@ -138,6 +137,14 @@ const routes: Array<RouteRecordRaw> = [
     path: '/course-panel/:courseId/import',
     name: 'QuestionImport',
     component: QuestionImport,
+    meta: {
+      teachersOnly: true,
+    },
+  },
+  {
+    path: '/course-panel/:courseId/import_exercises',
+    name: 'ProgrammingExerciseImport',
+    component: ProgrammingExerciseImport,
     meta: {
       teachersOnly: true,
     },

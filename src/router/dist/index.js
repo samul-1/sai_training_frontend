@@ -13,6 +13,7 @@ var StudentCourseDashboard_vue_1 = require("../views/StudentCourseDashboard.vue"
 var TeacherCourseDashboard_vue_1 = require("../views/TeacherCourseDashboard.vue");
 var TrainingSession_vue_1 = require("../views/TrainingSession.vue");
 var TrainingSessionResults_vue_1 = require("../components/TrainingSessionResults.vue");
+var ProgrammingExerciseImport_vue_1 = require("../components/ProgrammingExerciseImport.vue");
 var QuestionImport_vue_1 = require("../components/QuestionImport.vue");
 var TexToJson_vue_1 = require("../views/TexToJson.vue");
 var TrainingSessionsHistory_vue_1 = require("../views/TrainingSessionsHistory.vue");
@@ -129,6 +130,14 @@ var routes = [
         path: '/course-panel/:courseId/import',
         name: 'QuestionImport',
         component: QuestionImport_vue_1["default"],
+        meta: {
+            teachersOnly: true
+        }
+    },
+    {
+        path: '/course-panel/:courseId/import_exercises',
+        name: 'ProgrammingExerciseImport',
+        component: ProgrammingExerciseImport_vue_1["default"],
         meta: {
             teachersOnly: true
         }

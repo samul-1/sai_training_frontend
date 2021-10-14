@@ -19,6 +19,19 @@ export function bulkCreateQuestions(
       .catch((error) => reject(error));
   });
 }
+export function bulkCreateProgrammingExercises(
+  courseId: string,
+  exercises: ProgrammingExercise[]
+): Promise<Question[]> {
+  return new Promise((resolve, reject) => {
+    axios
+      .post(`/courses/${courseId}/programming_exercises/`, exercises)
+      .then((response) => {
+        resolve(response.data);
+      })
+      .catch((error) => reject(error));
+  });
+}
 
 export function deleteQuestion(
   courseId: string,

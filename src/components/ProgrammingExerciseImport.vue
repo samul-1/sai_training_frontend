@@ -7,17 +7,17 @@
       ></router-link
     >
   </teleport>
-  <h1 class="mb-8 text-4xl text-center">Importa domande</h1>
+  <h1 class="mb-8 text-4xl text-center">Importa esercizi JS</h1>
   <div>
     <div class="ml-4">
       <ol class="list-decimal">
         <li :class="{ 'text-green-800': exercises.length }">
           Seleziona un file in formato <strong>JSON</strong> contenente una
-          lista di domande.
+          lista di esercizi JS.
           <i class="ml-2 fas fa-check" v-if="exercises.length"></i>
         </li>
         <li :class="{ 'text-green-800': exercises.length && valid }">
-          Per ogni domanda, seleziona un argomento in cui includerla e un
+          Per ogni esercizio, seleziona un argomento in cui includerla e un
           livello di difficoltà.
           <i class="ml-2 fas fa-check" v-if="exercises.length && valid"></i>
         </li>
@@ -32,19 +32,34 @@
     />
   </div>
   <div
-    class="grid grid-cols-10 gap-20 my-4 mr-10"
+    class="relative grid grid-cols-10 gap-20 my-4 mr-10"
     v-for="(exercise, index) in exercises"
     :key="'q-tmp-' + index"
   >
-    <programmnig-exercise-editor
+    <div
+      v-if="skippedIndices.includes(index)"
+      class="absolute text-gray-900 transform -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2"
+    >
+      Questo esercizio non verrà importato.
+      <span
+        @click="skippedIndices.splice(skippedIndices.indexOf(index), 1)"
+        class="font-medium text-blue-800 cursor-pointer"
+        >Annulla</span
+      >
+    </div>
+    <ProgrammingExerciseEditor
       class="col-span-10"
       v-model="exercises[index]"
       :topicChoices="topics"
       @updateTopics="updateTopics()"
+      @delete="skippedIndices.push(index)"
+      :class="{
+        'opacity-40 pointer-events-none': skippedIndices.includes(index)
+      }"
       :showSave="false"
       :startCollapsed="true"
       :exerciseTempKey="index"
-    ></programmnig-exercise-editor>
+    ></ProgrammingExerciseEditor>
   </div>
   <UIButton
     @click="_importexercises()"
@@ -65,13 +80,17 @@ import UIButton from './UIButton.vue'
 import { bulkCreateProgrammingExercises } from '@/api/items'
 
 export default defineComponent({
-  components: { ProgrammingxerciseEditor, UIButton },
+  components: {
+    ProgrammingExerciseEditor,
+    UIButton
+  },
   //components: { Fullexercise },
   name: 'ProgrammingExerciseImport',
   data () {
     return {
       exercises: [] as ProgrammingExercise[],
-      topics: [] as Topic[]
+      topics: [] as Topic[],
+      skippedIndices: [] as number[]
     }
   },
   async created () {
@@ -84,11 +103,12 @@ export default defineComponent({
     },
     async _importexercises () {
       const courseId = this.$route.params.courseId as string
-      await bulkCreateProgrammingExercises(courseId, this.exercises)
+      await bulkCreateProgrammingExercises(courseId, this.nonSkippedExercises)
       this.exercises = []
+      this.skippedIndices = []
 
       this.$store.commit('pushNotification', {
-        message: 'Domande importate con successo',
+        message: 'Esercizi importati con successo',
         autoHide: 2500,
         severity: 1
       })
@@ -121,6 +141,9 @@ export default defineComponent({
       return this.exercises
         .map(exercise => isValidProgrammingExercise(exercise))
         .every(val => val)
+    },
+    nonSkippedExercises (): ProgrammingExercise[] {
+      return this.exercises.filter((_e, i) => !this.skippedIndices.includes(i))
     }
   }
 })
