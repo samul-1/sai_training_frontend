@@ -58,11 +58,12 @@
       :variant="'green'"
       >Nuovo esercizio</UIButton
     >
-    <!-- <router-link :to="`/course-panel/${$route.params.courseId}/import`"
+    <router-link
+      :to="`/course-panel/${$route.params.courseId}/import_exercises`"
       ><UIButton :variant="'negative'" class="ml-2">
         Importa da JSON
       </UIButton></router-link
-    > -->
+    >
   </div>
 
   <Skeleton v-if="firstLoading"></Skeleton>
@@ -78,6 +79,7 @@
       :showSave="true"
       @updateTopics="updateTopics()"
       @save="saveExercise(draftExercise)"
+      @delete="showDraft = false"
     ></ProgrammingExerciseEditor>
   </transition>
 

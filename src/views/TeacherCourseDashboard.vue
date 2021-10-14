@@ -66,7 +66,10 @@
         @click="showAllowedTeachers = true"
         >Gestisci insegnanti
       </UIButton>
-      <router-link :to="`/course-panel/${$route.params.courseId}/templates`">
+      <router-link
+        v-if="!course.uses_programming_exercises"
+        :to="`/course-panel/${$route.params.courseId}/templates`"
+      >
         <UIButton :variant="'indigo'" :size="'lg'" class="w-full"
           >Modelli esercitazioni
         </UIButton></router-link

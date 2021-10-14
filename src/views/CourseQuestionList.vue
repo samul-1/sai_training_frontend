@@ -87,6 +87,7 @@
       :showSave="true"
       @updateTopics="updateTopics()"
       @save="saveQuestion(draftQuestion)"
+      @delete="showDraft = false"
     ></QuestionEditor
   ></transition>
 
