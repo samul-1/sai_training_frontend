@@ -30,6 +30,30 @@
       @change="processFile"
       class="mt-4 mb-10"
     />
+    <div class="flex items-center my-4 space-x-2" v-else>
+      <p>Imposta lo stesso argomento per tutte le domande:</p>
+      <select
+        v-model="selectedTopicForAll"
+        class="col-span-5 md:col-span-4 p-0.5 bg-white border rounded-md"
+      >
+        <option :value="''" selected disabled class="text-red-900"
+          >Seleziona un argomento</option
+        >
+        <option
+          class="text-black bg-white"
+          v-for="topic in topics"
+          :key="'global-topic-' + topic.id"
+          :value="topic.id"
+          >{{ topic.name }}</option
+        >
+      </select>
+      <UIButton
+        @click="setTopicToAll()"
+        :size="'sm'"
+        :disabled="selectedTopicForAll == ''"
+        >Imposta</UIButton
+      >
+    </div>
   </div>
   <div
     class="relative grid grid-cols-10 gap-20 my-4 mr-10"
@@ -87,7 +111,8 @@ export default defineComponent({
     return {
       questions: [] as Question[],
       topics: [] as Topic[],
-      skippedIndices: [] as number[]
+      skippedIndices: [] as number[],
+      selectedTopicForAll: '' as string
     }
   },
   async created () {
@@ -109,6 +134,11 @@ export default defineComponent({
         autoHide: 2500,
         severity: 1
       })
+    },
+    setTopicToAll () {
+      this.questions.forEach(
+        q => (q.topic = this.selectedTopicForAll as string)
+      )
     },
     processFile (event: HTMLInputEvent) {
       console.log(event.target?.files)

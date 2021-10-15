@@ -264,8 +264,10 @@ export default defineComponent({
       if(newVal == '_') {
         this.showTopicCreation = true
       }
+    },
+    topicProp(newVal: string) {
+      this.questionData.topic = newVal
     }
-
   },
   data () {
     return {
@@ -332,6 +334,9 @@ export default defineComponent({
     },
     valid() : boolean {
       return isValidQuestion(this.questionData)
+    },
+    topicProp() : string | null {
+      return this.modelValue.topic
     }
   }
 })

@@ -80,9 +80,10 @@ export default defineComponent({
             return
           }
           newItem.choices.push({
-            text: /\\eChoices/.test(answer)
-              ? answer.trim().slice(2, -43) //.slice(2, -33)
-              : answer.trim().slice(2, -5), // slice(2, -6),
+            text: answer
+              .trim()
+              .replace(/\\eAns(\s*\\eChoices\s*\\end\{answers\}\s*\})?/, '')
+              .slice(2),
             correct: answer[0] === '1'
           } as Choice)
         })
