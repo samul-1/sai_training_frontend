@@ -84,6 +84,13 @@ export default defineComponent({
       default: true
     }
   },
+  watch: {
+    showSolution (newVal) {
+      if (newVal) {
+        this.$emit('showSolution')
+      }
+    }
+  },
   data () {
     return {
       showSolution: false

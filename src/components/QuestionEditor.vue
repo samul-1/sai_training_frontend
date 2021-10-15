@@ -176,7 +176,11 @@
       :confirmOnly="true"
     >
       <template v-slot:body>
-        <FullQuestion :showIcon="false" :question="questionData"></FullQuestion
+        <FullQuestion
+          :showIcon="false"
+          :question="questionData"
+          @showSolution="renderTex()"
+        ></FullQuestion
       ></template>
     </modal>
   </div>
@@ -278,6 +282,7 @@ export default defineComponent({
   },
   methods: {
     highlightCode,
+    renderTex,
     toggleOpenQuestion() {
       if(this.questionData.is_open_ended) {
         this.questionData.is_open_ended = false

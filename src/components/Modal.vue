@@ -25,7 +25,7 @@
             <div class="flex mt-4 ml-auto md:mt-0">
               <UIButton
                 class="mr-2"
-                :class="{ 'w-16': yesText.length == 0 }"
+                :class="{ 'w-16': remainingCoolDown > 0 }"
                 :disabled="disableOk || remainingCoolDown > 0"
                 :variant="severity == 1 ? 'green' : 'red'"
                 @click="chooseAndHide('yes')"
