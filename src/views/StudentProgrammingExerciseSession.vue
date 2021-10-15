@@ -113,6 +113,10 @@
               v-highlight
               v-html="codify(testcase.code)"
             ></div>
+            <p v-if="currentExercise.testcases.length == 0">
+              Non sono presenti test case per questo esercizio. Contatta il
+              docente per maggiori informazioni sulla sua soluzione.
+            </p>
           </div>
           <div
             class="h-full bg-gray-900 rounded-br-lg"
