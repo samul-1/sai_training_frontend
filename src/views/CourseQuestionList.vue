@@ -139,14 +139,19 @@
   ></modal>
   <modal
     v-if="deletingId"
-    :title="'Conferma operazione'"
+    :title="'Conferma eliminazione'"
     :dismissible="true"
+    :yesCooldown="5"
+    :large="true"
     :severity="2"
     @yes="_deleteQuestion(deletingId)"
     @no="deletingId = null"
     ><template v-slot:body>
       Stai per eliminare questa domanda:
-      <FullQuestion :question="deletingQuestion"></FullQuestion>
+      <FullQuestion
+        :showIcon="false"
+        :question="deletingQuestion"
+      ></FullQuestion>
       Confermi di volerla eliminare? Quest'azione è irreversibile.</template
     ></modal
   >

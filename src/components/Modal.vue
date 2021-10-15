@@ -25,11 +25,18 @@
             <div class="flex mt-4 ml-auto md:mt-0">
               <UIButton
                 class="mr-2"
-                :disabled="disableOk"
+                :class="{ 'w-16': yesText.length == 0 }"
+                :disabled="disableOk || remainingCoolDown > 0"
                 :variant="severity == 1 ? 'green' : 'red'"
                 @click="chooseAndHide('yes')"
               >
-                {{ confirmOnly ? 'Ok' : yesText || 'Sì' }}
+                {{
+                  remainingCoolDown == 0
+                    ? confirmOnly
+                      ? 'Ok'
+                      : yesText || 'Sì'
+                    : remainingCoolDown
+                }}
               </UIButton>
               <UIButton
                 :variant="'light'"
@@ -71,13 +78,33 @@ export default defineComponent({
       default: ''
     },
     confirmOnly: Boolean,
-    disableOk: Boolean
+    disableOk: Boolean,
+    yesCooldown: {
+      type: Number,
+      default: 0
+    }
   },
   components: { UIButton },
+  created () {
+    console.log('created')
+    if (this.yesCooldown > 0) {
+      this.remainingCoolDown = this.yesCooldown
+      console.log('remaining', this.remainingCoolDown)
+      this.coolDownHandle = setInterval(() => {
+        this.remainingCoolDown--
+        if (this.remainingCoolDown == 0) {
+          clearInterval(this.coolDownHandle as number)
+          this.coolDownHandle = null
+        }
+      }, 1000)
+    }
+  },
   data () {
     return {
       choice: '',
-      showContent: false
+      showContent: false,
+      remainingCoolDown: 0,
+      coolDownHandle: null as number | null
     }
   },
   methods: {
