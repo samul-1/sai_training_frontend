@@ -57,7 +57,7 @@ export default defineComponent({
   },
   computed: {
     averageCorrectPercentage (): number {
-      return this.stats.average_correct_percentage * 100
+      return Math.round(this.stats.average_correct_percentage * 100)
     }
   }
 })
