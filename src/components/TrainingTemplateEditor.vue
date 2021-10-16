@@ -50,6 +50,11 @@
               templateData.rules.find(rule => rule.topic == topic.name).amount =
                 topic.items_count
             "
+            :class="{
+              'clicked-shadow-inner':
+                templateData.rules.find(rule => rule.topic == topic.name)
+                  .amount == topic.items_count
+            }"
             :size="'2xs'"
             :variant="'light'"
             >Tutte</UIButton
@@ -185,4 +190,8 @@ export default defineComponent({
 })
 </script>
 
-<style></style>
+<style>
+.clicked-shadow-inner {
+  --tw-shadow: inset 0px 1px 6px 1px rgba(0, 0, 0, 0.35);
+}
+</style>
