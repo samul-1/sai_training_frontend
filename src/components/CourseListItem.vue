@@ -1,15 +1,17 @@
 <template>
   <div class="p-4 my-4 border rounded-md md:flex hover:shadow-inner">
     <div>
-      <p class="text-xl font-medium">
-        {{ course.name }}
-        <span
-          class="ml-3 text-sm text-green-700 whitespace-nowrap"
+      <div class="flex items-center space-x-3">
+        <p class="text-xl font-medium">
+          {{ course.name }}
+        </p>
+        <p
+          class="px-2 text-sm font-normal text-green-700 transition-colors duration-100 border border-green-700 rounded-md hover:text-white hover:bg-green-700"
           v-if="course.enrolled"
         >
-          <i class="fas fa-certificate"></i>&nbsp;Iscritto</span
-        >
-      </p>
+          Iscritto
+        </p>
+      </div>
       <p
         v-if="course.description.length"
         v-html="course.description"
@@ -17,11 +19,11 @@
       ></p>
       <div class="mt-4 text-sm font-light">
         <p>
-          <i class="mr-1 text-xs text-indigo-900 fas fa-user-shield"></i
+          <i class="mr-1 text-xs text-indigo-700 fas fa-user-shield"></i
           ><span class="font-medium">Docente:</span> {{ course.creator }}
         </p>
         <p>
-          <i class="mr-1 text-xs text-indigo-900 fas fa-user-friends"></i>
+          <i class="mr-1 text-xs text-indigo-700 fas fa-user-friends"></i>
           <span class="font-medium">Iscritti:</span>
           {{ course.number_enrolled }}
         </p>

@@ -1,5 +1,5 @@
 <template>
-  <div class="px-10 py-6 border rounded-xl">
+  <div class="px-10 py-6 border rounded-md">
     <h1 class="mb-4 text-xl">{{ trainingTemplate.name }}</h1>
     <p v-if="trainingTemplate.description">
       {{ trainingTemplate.description }}

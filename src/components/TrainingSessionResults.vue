@@ -10,7 +10,7 @@
   <div class="">
     <h1 class="mb-8 text-4xl">Risultati esercitazione</h1>
     <div class="flex flex-col mx-2 md:mx-0 md:flex-row">
-      <p class="my-auto mb-2 text-xl md:mb-0">
+      <p class="mb-2 text-xl md:mb-0">
         <span class="mr-2 font-medium">Risposte corrette:</span>
         <span>{{ results.score }} su {{ multipleChoiceQuestionsAmount }}</span>
       </p>
@@ -27,7 +27,7 @@
       </p>
       <UIButton
         :variant="'indigo'"
-        class="mt-2"
+        class=""
         :size="'xs'"
         @click="wrongOnly = !wrongOnly"
         v-if="areThereWrong"
