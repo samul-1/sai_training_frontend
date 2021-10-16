@@ -17,7 +17,7 @@
           <p
             class="overflow-x-hidden text-xs whitespace-nowrap overflow-ellipsis md:text-sm"
           >
-            <i class="mr-2 far fa-user"></i>
+            <i class="mr-1 md:mr-2 far fa-user"></i>
             {{ $store.state.user.email }}
           </p>
           <UIButton
