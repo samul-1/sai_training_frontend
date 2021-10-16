@@ -16,7 +16,6 @@
         >
           <div class="mb-10 text-black">
             <h1 v-html="title" class="mb-4 text-2xl"></h1>
-            <!--<p v-html="subText" class="mt-4 text-md"></p>-->
             <slot name="body"></slot>
           </div>
 

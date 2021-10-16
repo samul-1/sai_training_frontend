@@ -6,7 +6,7 @@
       integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu"
       crossorigin="anonymous"
     />
-    <nav class="flex w-full px-2 py-2 text-white bg-gray-900 md:px-6">
+    <nav class="flex w-full px-2.5 py-2 text-white bg-gray-900 md:px-6">
       <img class="w-24 md:w-32" src="./assets/unipi-logo.svg" />
       <div class="flex my-auto ml-auto">
         <div class="hidden mr-5 md:flex" id="nav-buttons">
@@ -19,10 +19,16 @@
             ><i class="mr-1 text-xs fas fa-chevron-left"></i>Indietro</UIButton
           >
         </div>
-        <div class="my-auto" v-if="$store.getters.isAuthenticated">
-          <span class="text-sm md:text-md"
-            ><i class="mr-2 far fa-user"></i>{{ $store.state.user.email }}</span
+        <div
+          class="flex items-center my-auto max-width-md"
+          v-if="$store.getters.isAuthenticated"
+        >
+          <p
+            class="overflow-x-hidden text-xs whitespace-nowrap overflow-ellipsis md:text-sm"
           >
+            <i class="mr-2 far fa-user"></i>
+            {{ $store.state.user.email }}
+          </p>
           <UIButton
             :size="'3xs'"
             :variant="'transparent'"
@@ -30,9 +36,6 @@
             @click="logOut()"
             ><i class="fas fa-sign-out-alt"></i
           ></UIButton>
-          <!-- <router-link v-if="$store.state.user.is_teacher" to="/dashboard"
-            ><span><i class="ml-6 mr-2 text-lg fas fa-home"></i></span
-          ></router-link> -->
         </div>
       </div>
     </nav>
@@ -221,5 +224,12 @@ export default defineComponent({
 .token.property,
 .token.function {
   color: #a0b4ff !important;
+}
+
+@media (max-width: 767px) {
+  .max-width-md {
+    max-width: 14rem;
+    text-overflow: ellipsis;
+  }
 }
 </style>

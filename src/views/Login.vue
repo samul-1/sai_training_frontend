@@ -43,11 +43,11 @@
           :variant="'green'"
           :size="'lg'"
           class="relative md:w-max"
-          :disabled="loadingLogin || loading"
+          :disabled="!googleOauthReady || loading"
         >
           <div
             class="absolute ml-2.5 mt-0.5 left-1/2 top-1/2"
-            v-if="loadingLogin"
+            v-if="!googleOauthReady && !googleOauthHadError"
           >
             <spinner :fixed="false"></spinner>
           </div>
@@ -85,89 +85,42 @@ export default {
         if (!googleUser) {
           return null
         }
-        console.log('googleUser', googleUser)
         this.user = googleUser.getBasicProfile().getEmail()
         const token = googleUser.getAuthResponse().access_token
-        console.log('token', token)
-
-        console.log('calling converToken')
         await this.$store.dispatch('convertToken', token)
-
-        // console.log('calling getUserData')
         await this.$store.dispatch('getUserData')
 
-        // console.log('pushing to main view')
         this.$router.push(getMainView())
       } catch (error) {
-        //on fail do something
         this.$store.commit('pushNotification', {
           severity: 2,
           autoHide: 9000,
-          message:
-            'Pare che tu sia in modalità in incognito o abbia disattivato i cookie. Se non è così e non riesci ad accedere, inviaci una segnalazione.'
+          message: 'Si è verificato un errore durante il login. Riprova.'
         })
-        // console.error(error)
         throw error
       } finally {
         this.loading = false
       }
-    },
-    async handleClickGetAuthCode () {
-      try {
-        const authCode = await this.$gAuth.getAuthCode()
-        // console.log('authCode', authCode)
-      } catch (error) {
-        //on fail do something
-        // console.error(error)
-        return null
-      }
-    },
-    async handleClickSignOut () {
-      try {
-        await this.$gAuth.signOut()
-        // console.log('isAuthorized', this.Vue3GoogleOauth.isAuthorized)
-        this.user = ''
-      } catch (error) {
-        // console.error(error)
-      }
-    },
-    handleClickDisconnect () {
-      window.location.href = `https://www.google.com/accounts/Logout?continue=https://appengine.google.com/_ah/logout?continue=${window.location.href}`
-    },
-    printDebug () {
-      // // console.log('DEBUG INFO')
-      // // console.log(
-      //   "axios.defaults.headers.common['Authorization']",
-      //   axios.defaults.headers.common['Authorization']
-      // )
-      throw new Error('abc')
-    },
-    async testGetUser () {
-      // console.log('calling getUserData')
-      await this.$store.dispatch('getUserData')
-
-      // console.log('pushing to main view')
-      this.$router.push(getMainView())
     }
   },
-  setup (props) {
-    const { isSignIn } = toRefs(props)
+  setup () {
     const Vue3GoogleOauth = inject('Vue3GoogleOauth')
-    // console.log('google', Vue3GoogleOauth)
-    const handleClickLogin = () => {}
     return {
-      Vue3GoogleOauth,
-      handleClickLogin,
-      isSignIn
+      Vue3GoogleOauth
     }
   },
   created () {
     if (this.$store.getters.isAuthenticated) {
       this.$router.push(getMainView())
     }
-
-    setTimeout(() => (this.loadingLogin = false), 1500)
-    // console.log('options', this.$gAuth)
+  },
+  computed: {
+    googleOauthReady () {
+      return this.Vue3GoogleOauth.isInit
+    },
+    googleOauthHadError () {
+      return this.Vue3GoogleOauth.hadError
+    }
   }
 }
 </script>

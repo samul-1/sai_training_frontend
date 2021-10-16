@@ -1,11 +1,11 @@
 "use strict";
-/* eslint-disable */
 exports.__esModule = true;
+/* eslint-disable */
 var vue_1 = require("vue");
 var App_vue_1 = require("./App.vue");
 var router_1 = require("./router");
 var store_1 = require("./store");
-var vue3_google_oauth2_1 = require("vue3-google-oauth2");
+var vue3_google_oauth2_1 = require("./plugins/vue3-google-oauth2"); //'vue3-google-oauth2';
 var axios_1 = require("axios");
 var vue_axios_1 = require("vue-axios");
 var vue_code_highlight_1 = require("vue-code-highlight");

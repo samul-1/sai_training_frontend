@@ -19,11 +19,11 @@
       ></p>
       <div class="mt-4 text-sm font-light">
         <p>
-          <i class="mr-1 text-xs text-indigo-700 fas fa-user-shield"></i
+          <i class="mr-1 text-xs text-indigo-900 fas fa-user-shield"></i
           ><span class="font-medium">Docente:</span> {{ course.creator }}
         </p>
         <p>
-          <i class="mr-1 text-xs text-indigo-700 fas fa-user-friends"></i>
+          <i class="mr-1 text-xs text-indigo-900 fas fa-user-friends"></i>
           <span class="font-medium">Iscritti:</span>
           {{ course.number_enrolled }}
         </p>

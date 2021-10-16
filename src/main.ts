@@ -1,10 +1,9 @@
 /* eslint-disable */
-
 import { createApp } from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
-import GAuth from 'vue3-google-oauth2';
+import GAuth from './plugins/vue3-google-oauth2'; //'vue3-google-oauth2';
 import axios from 'axios';
 import VueAxios from 'vue-axios';
 import VueCodeHighlight from 'vue-code-highlight';
