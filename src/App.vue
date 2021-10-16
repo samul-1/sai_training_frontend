@@ -9,16 +9,7 @@
     <nav class="flex w-full px-2.5 py-2 text-white bg-gray-900 md:px-6">
       <img class="w-24 md:w-32" src="./assets/unipi-logo.svg" />
       <div class="flex my-auto ml-auto">
-        <div class="hidden mr-5 md:flex" id="nav-buttons">
-          <UIButton
-            v-if="false && $route.path != '/student' && $route.path != '/login'"
-            @click="$router.go(-1)"
-            :variant="'transparent'"
-            :size="'xs'"
-            class="hidden mr-5 md:inline"
-            ><i class="mr-1 text-xs fas fa-chevron-left"></i>Indietro</UIButton
-          >
-        </div>
+        <div class="hidden mr-5 md:flex" id="nav-buttons"></div>
         <div
           class="flex items-center my-auto max-width-md"
           v-if="$store.getters.isAuthenticated"

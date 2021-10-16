@@ -113,7 +113,7 @@
               v-highlight
               v-html="codify(testcase.code)"
             ></div>
-            <p v-if="currentExercise.testcases.length == 0">
+            <p v-if="currentExercise.testcases?.length == 0">
               Non sono presenti test case per questo esercizio. Contatta il
               docente per maggiori informazioni sulla sua soluzione.
             </p>
@@ -144,7 +144,7 @@
             <p
               v-if="
                 currentExercise.submissions &&
-                  currentExercise.submissions.length == 0
+                  currentExercise.submissions?.length == 0
               "
             >
               Non ci sono sottomissioni.
