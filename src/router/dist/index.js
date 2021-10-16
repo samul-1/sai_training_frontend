@@ -22,10 +22,10 @@ var PageNotFound_vue_1 = require("../views/PageNotFound.vue");
 var StudentProgrammingExercisesDashboard_vue_1 = require("../views/StudentProgrammingExercisesDashboard.vue");
 var StudentProgrammingExerciseSession_vue_1 = require("../views/StudentProgrammingExerciseSession.vue");
 var routes = [
-    {
-        path: '/',
-        redirect: '/login'
-    },
+    // {
+    //   path: '/',
+    //   redirect: '/login',
+    // },
     {
         path: '/login/:role?',
         name: 'Login',
@@ -211,12 +211,19 @@ var router = vue_router_1.createRouter({
     routes: routes
 });
 router.beforeEach(function (to, _from, next) {
+    if (to.path == '/') {
+        console.log('triggering guard');
+        next({
+            path: isAuthenticated() ? getMainView() : '/login'
+        });
+        return;
+    }
     if (studentsOnly(to) && !isStudent()) {
-        //store.commit('setRedirectToAfterLogin', to);
+        store_1["default"].commit('resetToken');
         next({ path: '/login', query: { redirect: to.fullPath } });
     }
     else if (teachersOnly(to) && !isTeacher()) {
-        //store.commit('setRedirectToAfterLogin', to);
+        store_1["default"].commit('resetToken');
         next({
             path: '/login/teacher',
             query: { redirect: to.fullPath }

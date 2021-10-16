@@ -162,7 +162,10 @@ export default {
     }
   },
   created () {
-    this.$store.commit('resetToken')
+    if (this.$store.getters.isAuthenticated) {
+      this.$router.push(getMainView())
+    }
+
     setTimeout(() => (this.loadingLogin = false), 1500)
     // console.log('options', this.$gAuth)
   }

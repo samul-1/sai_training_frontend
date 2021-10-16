@@ -25,10 +25,12 @@ axios.interceptors.response.use(
   },
   (error) => {
     if (
-      error.response?.status == 403 ||
+      // error.response?.status == 403 ||
       error.response?.status == 401
     ) {
+      store.commit('resetToken');
       router.push('/login');
+      return;
     }
     console.log('ERROR', error);
     store.commit('pushNotification', {

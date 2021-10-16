@@ -3,6 +3,7 @@
     class="transition-colors duration-150 shadow-sm disabled:cursor-not-allowed disabled:opacity-60"
     :disabled="disabled"
     :class="{
+      'py-0.5 px-1 md:px-1.5 text-xs rounded-lg': size == '3xs',
       'py-0.5 px-1.5 text-sm rounded-lg': size == '2xs',
       'py-1 px-2 text-sm rounded-lg': size == 'xs',
       'py-1.5 px-4 rounded-lg': size == 'sm',

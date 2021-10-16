@@ -29,10 +29,10 @@ import StudentProgrammingExerciseSession from '../views/StudentProgrammingExerci
 import { User } from '@/interfaces';
 
 const routes: Array<RouteRecordRaw> = [
-  {
-    path: '/',
-    redirect: '/login',
-  },
+  // {
+  //   path: '/',
+  //   redirect: '/login',
+  // },
   {
     path: '/login/:role?',
     name: 'Login',
@@ -226,11 +226,18 @@ const router = createRouter({
 });
 
 router.beforeEach((to, _from, next) => {
+  if (to.path == '/') {
+    console.log('triggering guard');
+    next({
+      path: isAuthenticated() ? (getMainView() as string) : '/login',
+    });
+    return;
+  }
   if (studentsOnly(to) && !isStudent()) {
-    //store.commit('setRedirectToAfterLogin', to);
+    store.commit('resetToken');
     next({ path: '/login', query: { redirect: to.fullPath } });
   } else if (teachersOnly(to) && !isTeacher()) {
-    //store.commit('setRedirectToAfterLogin', to);
+    store.commit('resetToken');
     next({
       path: '/login/teacher',
       query: { redirect: to.fullPath },
