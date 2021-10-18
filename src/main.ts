@@ -51,9 +51,9 @@ axios.interceptors.response.use(
 const gAuthOptions = {
   clientId:
     '956826904172-mcsaj1bqcllv93bpad7dmd0e3oil4758.apps.googleusercontent.com',
-  scope: 'email',
+  scope: 'profile',
   prompt: 'consent',
-  fetch_basic_profile: false,
+  fetch_basic_profile: true,
   //hosted_domain: ["studenti.unipi.it"]
 };
 

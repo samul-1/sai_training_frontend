@@ -138,7 +138,7 @@ var _default = {
     //set config
     var config = null;
     var defaultConfig = {
-      scope: 'profile email',
+      scope: 'profile',
       prompt: 'select_account'
     };
 

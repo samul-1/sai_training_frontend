@@ -131,7 +131,7 @@ export default {
     /* eslint-disable */
     //set config
     let config = null
-    let defaultConfig = { scope: 'profile email', prompt: 'select_account' }
+    let defaultConfig = { scope: 'profile', prompt: 'select_account' }
     if (typeof options === 'object') {
       config = Object.assign(defaultConfig, options)
       if (!options.clientId) {
