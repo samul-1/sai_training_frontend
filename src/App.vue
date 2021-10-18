@@ -174,7 +174,7 @@ export default defineComponent({
   animation: bounce-in 0.3s;
 }
 .bounce-leave-active {
-  animation: bounce-in 0.3s reverse;
+  animation: shrink-out 0.3s;
 }
 @keyframes bounce-in {
   0% {
@@ -188,6 +188,21 @@ export default defineComponent({
   100% {
     transform: scale(1);
     opacity: 1;
+  }
+}
+
+@keyframes shrink-out {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(0.85);
+    opacity: 0;
   }
 }
 .fade-enter-active,
