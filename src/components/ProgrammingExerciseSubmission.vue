@@ -151,7 +151,7 @@ export default defineComponent({
       return (
         moment(this.submission.timestamp)
           //.calendar()
-          .format('DD MMMM YYYY, hh:mm')
+          .format('DD MMMM YYYY, HH:mm')
       )
     }
   }
