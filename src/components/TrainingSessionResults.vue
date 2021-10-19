@@ -20,7 +20,7 @@
         :max="multipleChoiceQuestionsAmount"
       ></progress-bar>
       <p
-        class="mt-2 text-sm md:my-auto md:mx-4 opacity-70"
+        class="my-2 text-sm md:my-auto md:mx-4 opacity-70"
         v-if="areThereOpenEndedQuestions"
       >
         Non sono conteggiate le domande a risposta aperta
