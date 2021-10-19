@@ -15,7 +15,7 @@
         <span>{{ results.score }} su {{ multipleChoiceQuestionsAmount }}</span>
       </p>
       <progress-bar
-        class="my-auto md:mx-4"
+        class="w-full mt-1 mb-4 md:my-auto md:mx-4 md:w-52"
         :value="results.score"
         :max="multipleChoiceQuestionsAmount"
       ></progress-bar>

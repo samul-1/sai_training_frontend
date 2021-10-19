@@ -1,9 +1,7 @@
 <template>
-  <div
-    class="w-full h-4 rounded-lg md:w-32 lg:w-44 bg-gradient-to-tl from-gray-100 to-gray-200"
-  >
+  <div class="h-4 rounded-md bg-gradient-to-tl from-gray-100 to-gray-200">
     <div
-      class="h-4 rounded-lg"
+      class="h-4 rounded-md"
       :class="{
         'bg-red-400': widthAsPercentage < 45,
         'bg-yellow-400': widthAsPercentage >= 45 && widthAsPercentage <= 50,
@@ -27,6 +25,10 @@ export default defineComponent({
     max: {
       type: Number,
       required: true
+    },
+    fullWidth: {
+      type: Boolean,
+      default: false
     }
   },
   computed: {

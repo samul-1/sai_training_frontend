@@ -6,9 +6,9 @@
     </p>
     <div v-if="loading">
       <div
-        v-for="i in [1, 2]"
+        v-for="i in [1, 2, 3]"
         :key="'skeleton-' + i"
-        class="p-4 my-4 border rounded-2xl hover:shadow-inner"
+        class="p-4 my-4 border rounded-md hover:shadow-inner"
       >
         <Skeleton :short="true"></Skeleton>
       </div>

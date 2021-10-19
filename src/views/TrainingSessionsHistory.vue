@@ -18,9 +18,9 @@
   </p>
   <div class="grid grid-cols-1 gap-6 md:grid-cols-3" v-if="loading">
     <div
-      v-for="i in [1, 2, 3]"
+      v-for="i in [1, 2, 3, 4, 5, 6]"
       :key="'skeleton-' + i"
-      class="px-10 py-6 transition-shadow duration-150 border rounded-md hover:shadow-md"
+      class="px-12 py-4 transition-shadow duration-150 border rounded-md hover:shadow-md"
     >
       <Skeleton :short="true"></Skeleton>
     </div>
