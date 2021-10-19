@@ -25,7 +25,7 @@
         {{ passedTestCases }}/{{ submission.outcomes.length }}
       </p>
       <progress-bar
-        class="my-auto ml-2"
+        :class="[preview ? 'w-2/5' : 'w-1/5', 'my-auto ml-2']"
         :max="submission.outcomes.length"
         :value="passedTestCases"
       ></progress-bar>

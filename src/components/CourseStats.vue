@@ -9,7 +9,7 @@
       <strong class="font-medium">Esercitazioni effettuate:</strong>
       {{ stats.training_sessions }}
     </p>
-    <div class="flex flex-col md:flex-row md:space-x-2">
+    <div class="flex flex-col md:flex-row md:space-x-4">
       <p>
         <strong class="font-medium"
           >Percentuale media di risposte corrette:</strong
@@ -17,7 +17,7 @@
         {{ averageCorrectPercentage }}%
       </p>
       <progress-bar
-        class="my-2 md:my-auto"
+        class="w-full my-2 md:w-2/5 md:my-auto"
         :max="100"
         :value="averageCorrectPercentage"
       ></progress-bar>
