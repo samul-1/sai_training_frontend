@@ -30,7 +30,7 @@
         :key="'topic-' + topic.id"
       >
         <div class="col-span-2">{{ topic.name }}</div>
-        <div class="flex col-span-2 space-x-2">
+        <div class="my-auto flex col-span-2 space-x-2">
           <input
             class="w-16 px-2 py-0.5 ml-2 border rounded-lg"
             type="number"
