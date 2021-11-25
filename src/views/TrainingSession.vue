@@ -110,9 +110,7 @@ export default defineComponent({
     if (localStorage.getItem(`answers_${courseId}`)) {
       if (localStorage.getItem(`sessionId_${courseId}`) == this.session.id) {
         //console.log('RESTORING ANSWERS FROM LOCAL STORAGE')
-        this.answers = JSON.parse(
-          localStorage.getItem(`answers_${courseId}`) as string
-        )
+        this.restoreAnswersFromLocalStorage()
       } else {
         //console.log('REMOVING ANSWERS AND SESSION FROM LOCAL STORAGE')
         localStorage.removeItem(`answers_${courseId}`)
@@ -133,7 +131,6 @@ export default defineComponent({
     },
     answersAsJson (newVal) {
       const courseId = this.$route.params.courseId as string
-      console.log('SETTING ANSWERS', newVal)
       localStorage.setItem(`answers_${courseId}`, newVal)
     }
   },
@@ -163,6 +160,26 @@ export default defineComponent({
       localStorage.removeItem(`answers_${courseId}`)
       localStorage.removeItem(`sessionId_${courseId}`)
       this.$router.push(`/course/${courseId}/sessions/${response.id}`)
+    },
+    restoreAnswersFromLocalStorage () {
+      const courseId = this.$route.params.courseId as string
+
+      const parsedAnswers = JSON.parse(
+        localStorage.getItem(`answers_${courseId}`) as string
+      ) as { [key: string]: string | null }
+
+      Object.keys(parsedAnswers).forEach(key => {
+        const currQuestion = this.questions.find(q => q.id == key)
+        if (
+          currQuestion &&
+          parsedAnswers[key] != null &&
+          currQuestion.choices
+            .map(c => c.id)
+            .includes(parsedAnswers[key] as string)
+        ) {
+          this.answers[key] = parsedAnswers[key]
+        }
+      })
     }
   },
   computed: {
