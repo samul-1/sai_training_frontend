@@ -23,16 +23,17 @@
           v-model="filter.topic"
           class="col-span-4 p-0.5 bg-white border rounded-md"
         >
-          <option :value="''" selected disabled class="text-red-900"
-            >Seleziona un argomento</option
-          >
+          <option :value="''" selected disabled class="text-red-900">
+            Seleziona un argomento
+          </option>
           <option
             class="text-black bg-white"
             v-for="topic in topics"
             :key="'filter-topic-' + topic.id"
             :value="topic.id"
-            >{{ topic.name }}</option
           >
+            {{ topic.name }}
+          </option>
         </select>
       </p>
     </div>
@@ -158,23 +159,23 @@
 </template>
 
 <script lang="ts">
-import { getTopics } from '@/api/courses'
+import { getTopics } from "@/api/courses";
 import {
   createQuestion,
   deleteQuestion,
   getQuestions,
-  updateQuestion
-} from '@/api/items'
-import DifficultyInput from '@/components/DifficultyInput.vue'
-import QuestionEditor from '@/components/QuestionEditor.vue'
-import UIButton from '@/components/UIButton.vue'
-import Skeleton from '@/components/Skeleton.vue'
-import { Choice, Question, Topic } from '@/interfaces'
-import { defineComponent } from '@vue/runtime-core'
-import Spinner from '@/components/Spinner.vue'
-import Modal from '@/components/Modal.vue'
-import { downloadObjectAsJson, renderTex } from '@/utils'
-import FullQuestion from '@/components/FullQuestion.vue'
+  updateQuestion,
+} from "@/api/items";
+import DifficultyInput from "@/components/DifficultyInput.vue";
+import QuestionEditor from "@/components/QuestionEditor.vue";
+import UIButton from "@/components/UIButton.vue";
+import Skeleton from "@/components/Skeleton.vue";
+import { Choice, Question, Topic } from "@/interfaces";
+import { defineComponent } from "@vue/runtime-core";
+import Spinner from "@/components/Spinner.vue";
+import Modal from "@/components/Modal.vue";
+import { downloadObjectAsJson, renderTex } from "@/utils";
+import FullQuestion from "@/components/FullQuestion.vue";
 
 export default defineComponent({
   components: {
@@ -184,62 +185,62 @@ export default defineComponent({
     UIButton,
     Spinner,
     Modal,
-    FullQuestion
+    FullQuestion,
   },
-  name: 'CourseQuestionList',
-  async created () {
-    window.addEventListener('beforeunload', this.beforeWindowUnload)
+  name: "CourseQuestionList",
+  async created() {
+    window.addEventListener("beforeunload", this.beforeWindowUnload);
 
-    const courseId = this.$route.params.courseId as string
-    this.firstLoading = true
-    this.questions = await getQuestions(courseId, null, null, 1)
-    this.topics = await getTopics(courseId)
-    this.firstLoading = false
+    const courseId = this.$route.params.courseId as string;
+    this.firstLoading = true;
+    this.questions = await getQuestions(courseId, null, null, 1);
+    this.topics = await getTopics(courseId);
+    this.firstLoading = false;
   },
-  beforeUnmount () {
-    window.removeEventListener('beforeunload', this.beforeWindowUnload)
+  beforeUnmount() {
+    window.removeEventListener("beforeunload", this.beforeWindowUnload);
   },
-  beforeRouteLeave (_to, _from, next) {
+  beforeRouteLeave(_to, _from, next) {
     if (this.confirmStayInDirtyForm()) {
-      next(false)
+      next(false);
     } else {
-      next()
+      next();
     }
   },
   watch: {
     filterAsJSON: {
-      async handler (_newVal, _oldVal) {
-        console.log('firing')
-        const newVal = JSON.parse(_newVal)
-        const oldVal = JSON.parse(_oldVal)
+      async handler(_newVal, _oldVal) {
+        console.log("firing");
+        const newVal = JSON.parse(_newVal);
+        const oldVal = JSON.parse(_oldVal);
         if (
           (newVal.topic != oldVal.topic && !newVal.byTopic) ||
           (newVal.difficulty != oldVal.difficulty && !newVal.byDifficulty)
         ) {
-          return
+          return;
         }
-        this.currentPage = 1
-        await this.reloadQuestions(true)
-      }
+        this.currentPage = 1;
+        await this.reloadQuestions(true);
+      },
     },
-    async currentPage (_newVal) {
-      await this.reloadQuestions(false)
+    async currentPage(_newVal) {
+      await this.reloadQuestions(false);
     },
-    deletingId (newVal: number | null) {
+    deletingId(newVal: number | null) {
       if (newVal) {
-        setTimeout(() => renderTex(), 1000)
+        setTimeout(() => renderTex(), 1000);
       }
-    }
+    },
   },
-  data () {
+  data() {
     return {
       currentPage: 1,
       questions: [] as Question[],
       filter: {
-        difficulty: '2',
-        topic: '',
+        difficulty: "2",
+        topic: "",
         byDifficulty: false,
-        byTopic: false
+        byTopic: false,
       },
       topics: [] as Topic[],
       loading: false,
@@ -247,157 +248,158 @@ export default defineComponent({
       showDraft: false,
       showExportPanel: false,
       draftQuestion: {
-        id: '_',
-        text: '',
-        topic: '',
-        solution: '',
-        difficulty: '2',
+        id: "_",
+        text: "",
+        topic: "",
+        solution: "",
+        difficulty: "2",
         choices: [] as Choice[],
-        is_open_ended: false
+        is_open_ended: false,
       } as Question,
-      deletingId: null as string | null
-    }
+      deletingId: null as string | null,
+    };
   },
   methods: {
-    confirmLeave () {
+    confirmLeave() {
       return window.confirm(
-        'Hai effettuato delle modifiche che non hai salvato. Sei sicuro di voler uscire dalla pagina?'
-      )
+        "Hai effettuato delle modifiche che non hai salvato. Sei sicuro di voler uscire dalla pagina?"
+      );
     },
-    confirmStayInDirtyForm () {
-      return this.dirty && !this.confirmLeave()
+    confirmStayInDirtyForm() {
+      return this.dirty && !this.confirmLeave();
     },
-    beforeWindowUnload (e: {
-      preventDefault: () => void
-      returnValue: string
-    }) {
+    beforeWindowUnload(e: { preventDefault: () => void; returnValue: string }) {
       if (this.confirmStayInDirtyForm()) {
         // Cancel the event
-        e.preventDefault()
+        e.preventDefault();
         // Chrome requires returnValue to be set
-        e.returnValue = ''
+        e.returnValue = "";
       }
     },
-    async updateTopics () {
-      const courseId = this.$route.params.courseId as string
-      this.topics = await getTopics(courseId)
+    async updateTopics() {
+      const courseId = this.$route.params.courseId as string;
+      this.topics = await getTopics(courseId);
     },
-    async reloadQuestions (overwrite: boolean): Promise<void> {
-      const courseId = this.$route.params.courseId as string
+    async reloadQuestions(overwrite: boolean): Promise<void> {
+      const courseId = this.$route.params.courseId as string;
       try {
-        this.loading = true
+        this.loading = true;
         const response = await getQuestions(
           courseId,
           this.filter.byTopic ? this.filter.topic : null,
           this.filter.byDifficulty ? this.filter.difficulty : null,
           this.currentPage
-        )
+        );
         if (overwrite) {
-          this.questions = response
+          this.questions = response;
         } else {
-          this.questions = [...this.questions, ...response]
+          this.questions = [...this.questions, ...response];
         }
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
-    async _deleteQuestion (questionId: string): Promise<void> {
-      const courseId = this.$route.params.courseId as string
-      this.loading = true
+    async _deleteQuestion(questionId: string): Promise<void> {
+      const courseId = this.$route.params.courseId as string;
+      this.loading = true;
       try {
-        await deleteQuestion(courseId, questionId)
+        await deleteQuestion(courseId, questionId);
         this.questions.splice(
-          this.questions.findIndex(q => q.id === questionId),
+          this.questions.findIndex((q) => q.id === questionId),
           1
-        )
-        this.$store.commit('pushNotification', {
-          message: 'Domanda eliminata con successo',
+        );
+        this.$store.commit("pushNotification", {
+          message: "Domanda eliminata con successo",
           severity: 1,
-          autoHide: 2000
-        })
+          autoHide: 2000,
+        });
       } finally {
-        this.loading = false
-        this.deletingId = null
+        this.loading = false;
+        this.deletingId = null;
       }
     },
-    async saveQuestion (question: Question): Promise<void> {
-      const courseId = this.$route.params.courseId as string
-      this.loading = true
+    async saveQuestion(question: Question): Promise<void> {
+      const courseId = this.$route.params.courseId as string;
+      this.loading = true;
 
       try {
-        if (question.id != '_') {
-          const response = await updateQuestion(courseId, question)
+        if (question.id != "_") {
+          const response = await updateQuestion(courseId, question);
           this.questions[
-            this.questions.findIndex(q => question.id === q.id)
-          ] = response
+            this.questions.findIndex((q) => question.id === q.id)
+          ] = response;
 
           // remove the "unsaved changes" warning from editor and collapse it
-          ;(this.$refs['question-editor-' + question.id] as {
-            dirty: boolean
-          }).dirty = false
-          ;(this.$refs['question-editor-' + question.id] as {
-            collapse: boolean
-          }).collapse = true
-          this.$store.commit('pushNotification', {
-            message: 'Domanda aggiornata con successo',
+          (
+            this.$refs["question-editor-" + question.id] as {
+              dirty: boolean;
+            }
+          ).dirty = false;
+          (
+            this.$refs["question-editor-" + question.id] as {
+              collapse: boolean;
+            }
+          ).collapse = true;
+          this.$store.commit("pushNotification", {
+            message: "Domanda aggiornata con successo",
             autoHide: 1500,
-            severity: 1
-          })
+            severity: 1,
+          });
         } else {
-          const response = await createQuestion(courseId, question)
-          this.questions.unshift(response)
+          const response = await createQuestion(courseId, question);
+          this.questions.unshift(response);
           this.draftQuestion = {
-            id: '_',
-            text: '',
-            topic: '',
-            solution: '',
-            difficulty: '2',
+            id: "_",
+            text: "",
+            topic: "",
+            solution: "",
+            difficulty: "2",
             choices: [] as Choice[],
-            is_open_ended: false
-          } as Question
-          this.$store.commit('pushNotification', {
-            message: 'Domanda creata con successo',
+            is_open_ended: false,
+          } as Question;
+          this.$store.commit("pushNotification", {
+            message: "Domanda creata con successo",
             autoHide: 1500,
-            severity: 1
-          })
-          this.showDraft = false
+            severity: 1,
+          });
+          this.showDraft = false;
         }
       } finally {
-        this.loading = false
+        this.loading = false;
       }
     },
-    async downloadQuestions (topicId: string): Promise<void> {
-      const courseId = this.$route.params.courseId as string
-      this.loading = true
-      const questions = await getQuestions(courseId, topicId, null, -1)
-      this.loading = false
+    async downloadQuestions(topicId: string): Promise<void> {
+      const courseId = this.$route.params.courseId as string;
+      this.loading = true;
+      const questions = await getQuestions(courseId, topicId, null, -1, true);
+      this.loading = false;
       downloadObjectAsJson(
         questions,
-        `${this.topics.find(t => t.id === topicId)?.name}.json`
-      )
-    }
+        `${this.topics.find((t) => t.id === topicId)?.name}.json`
+      );
+    },
   },
   computed: {
-    filterAsJSON (): string {
-      return JSON.stringify(this.filter)
+    filterAsJSON(): string {
+      return JSON.stringify(this.filter);
     },
-    dirty (): boolean {
+    dirty(): boolean {
       // returns true if any of the question editors are dirty
       return this.questions
-        .map(q => {
-          return (this.$refs['question-editor-' + q.id] as { dirty: boolean })
-            .dirty
+        .map((q) => {
+          return (this.$refs["question-editor-" + q.id] as { dirty: boolean })
+            .dirty;
         })
-        .reduce((a, b) => a || b, false)
+        .reduce((a, b) => a || b, false);
     },
-    deletingQuestion (): Question | undefined {
+    deletingQuestion(): Question | undefined {
       if (!this.deletingId) {
-        return
+        return;
       }
-      return this.questions.find(q => q.id === this.deletingId)
-    }
-  }
-})
+      return this.questions.find((q) => q.id === this.deletingId);
+    },
+  },
+});
 </script>
 
 <style>

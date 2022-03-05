@@ -3,8 +3,8 @@ import {
   ExerciseSubmission,
   ProgrammingExercise,
   Question,
-} from '@/interfaces';
-import axios from 'axios';
+} from "@/interfaces";
+import axios from "axios";
 
 export function bulkCreateQuestions(
   courseId: string,
@@ -53,9 +53,7 @@ export function deleteProgrammingExercise(
 ): Promise<void> {
   return new Promise((resolve, reject) => {
     axios
-      .delete(
-        `/courses/${courseId}/programming_exercises/${exerciseId}/`
-      )
+      .delete(`/courses/${courseId}/programming_exercises/${exerciseId}/`)
       .then((response) => {
         resolve(response.data);
       })
@@ -67,16 +65,19 @@ export function getQuestions(
   courseId: string,
   topicId: string | null,
   difficulty: string | null,
-  page: number // if -1, get all questions
+  page: number, // if -1, get all questions
+  forExport = false
 ): Promise<Question[]> {
   return new Promise((resolve, reject) => {
     axios
       .get(
         `/courses/${courseId}/${
-          topicId ? 'topics/' + topicId + '/' : ''
-        }questions/${difficulty ? '?difficulty=' + difficulty : ''}${
-          difficulty ? '&' : '?'
-        }page=${page != -1 ? page : '1&size=99999999'}`
+          topicId ? "topics/" + topicId + "/" : ""
+        }questions/${difficulty ? "?difficulty=" + difficulty : ""}${
+          difficulty ? "&" : "?"
+        }page=${page != -1 ? page : "1&size=99999999"}${
+          forExport ? "&export=1" : ""
+        }`
       )
       .then((response) => {
         resolve(response.data.results);
@@ -95,10 +96,10 @@ export function getProgrammingExercises(
     axios
       .get(
         `/courses/${courseId}/${
-          topicId ? 'topics/' + topicId + '/' : ''
+          topicId ? "topics/" + topicId + "/" : ""
         }programming_exercises/${
-          difficulty ? '?difficulty=' + difficulty : ''
-        }${difficulty ? '&' : '?'}page=${page}`
+          difficulty ? "?difficulty=" + difficulty : ""
+        }${difficulty ? "&" : "?"}page=${page}`
       )
       .then((response) => {
         resolve(response.data.results);
@@ -174,7 +175,7 @@ export function getProgrammingExercisesById(
     axios
       .get(
         `courses/${courseId}/programming_exercises/bulk_get/?ids=${idList.join(
-          ','
+          ","
         )}`
       )
       .then((response) => {
@@ -193,12 +194,9 @@ export function postExerciseSubmission(
 ): Promise<ExerciseSubmission> {
   return new Promise((resolve, reject) => {
     axios
-      .post(
-        `courses/${courseId}/programming_exercises/${exerciseId}/submit/`,
-        {
-          code,
-        }
-      )
+      .post(`courses/${courseId}/programming_exercises/${exerciseId}/submit/`, {
+        code,
+      })
       .then((response) => {
         resolve(response.data);
       })
